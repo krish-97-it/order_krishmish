@@ -1,0 +1,21 @@
+{
+  "name": "order_food_backend_service",
+  "version": "1.0.0",
+  "description": "Online Food Delivery app backend service using Node and express",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./server.js",
+    "dev": "export NODE_ENV=DEVELOPMENT&& nodemon ./server.js",
+    "prod": "export NODE_ENV=PRODUCTION&& nodemon ./server.js"
+  },
+  "author": "Krishnendu Nandy",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

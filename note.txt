@@ -1,0 +1,18 @@
+## Day-1 ## [7th august 2024]
+Project Create, understanding structure, initialize frontend react app, initalize backend express  and node app.
+
+## Day-2 ## [8th august 2024]
+Mongo db installation, create db, add collections, fetch data from mongodb to node js using mongoose
+
+## Day-3 ## []
+1. set homepage structure - header,body,footer 
+2. Show data from node api to react app
+
+## Day-4 ## []
+1. React Routes- load data without page loading, add bootstrap
+
+## Day-5 ## []
+2. Save data to db from backend
+
+## Day-6 ## []
+2. Create a form to add user data in react app
