@@ -8,6 +8,7 @@ const fetchFoodMenu = () =>{
             name : String,
             image: Object,
             description: String,
+            cuisine: String,
             quantity: String,
             tags: String,
             price: Number,
