@@ -1,0 +1,25 @@
+.navbar-custom-style{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+.navbar-nav-collapse{
+    text-align: left;
+}
+.offcanvas-body-style{
+    align-items: center;
+}
+
+.offcanvas-header{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-bottom: 1px solid grey;
+}
+.offcanvas-body{
+    padding-top: 0px;
+}
+.nav-link:focus, .nav-link:hover {
+    color: wheat !important;
+}
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+    color: orange !important;
+}
