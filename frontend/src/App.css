@@ -11,17 +11,29 @@
   }
 }
 
+body{
+  line-height: 1.5;
+}
+
 .a-tag-style{
-  color: black;
+  /* color: black; */
   text-decoration: none;
 }
 
 [dark-theme="on"] {
   background-color: black;
-  color: white;
+  color: white !important;
 }
 
 [dark-theme="off"] {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
+}
+
+[dark-theme="on"] .a-tag-style, .item-description{
+  color: white !important;
+}
+
+[dark-theme="off"] .a-tag-style, .item-description{
+  color: black !important;
 }
