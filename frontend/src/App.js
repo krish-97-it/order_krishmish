@@ -3,12 +3,12 @@ import './style/footer.css';
 import './style/header.css';
 import './style/home.css';
 import './style/food-item-card.css';
-import RoutePage from './controller/routes';
+import AppFunction from './controller/app-function';
 
 function App() {
   return (
-    <div className="App" id="app-theme">
-      <RoutePage/>
+    <div className="App" id="app-theme" dark-theme="off">
+      <AppFunction/>
     </div>
   );
 }

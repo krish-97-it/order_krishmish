@@ -10,6 +10,9 @@ const fetchFoodMenu = () =>{
             description: String,
             cuisine: String,
             quantity: String,
+            rating: String,
+            preptime: String,
+            subtitle:String,
             tags: String,
             price: Number,
         }
