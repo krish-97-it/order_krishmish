@@ -34,6 +34,12 @@
 .search-form{
     display: flex;
 }
+.search-bar-page-load{
+    width: 100%;
+}
+[search-bar-hide="on"]{
+    display: none !important;
+}
 
 @media(max-width: 767.98px){
     .offcanvas{
