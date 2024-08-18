@@ -1,7 +1,10 @@
 import React, {useRef, useState} from "react";
 import ratingSvg from '../assets/rating-star.svg';
+import vegIcon from '../assets/veg-icon.webp';
+import nonVegIcon from '../assets/non-veg-icon.webp';
 
-export default function Cuisine({getItemList, getFilteredItemList, getCuisineName, getFoodName, getTopPicsItemList}){
+
+export default function Cuisine({getItemList, getFilteredItemList, getCuisineName, getFoodName, getTopPicsItemList, addToCartFunction, addedCartItem}){
 
     // Horizontal scroll using buttons for food items
     const cardItem          =   useRef();
@@ -52,9 +55,13 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                             getTopPicsItemList.map((data,index) => {
                                 return (
                                     <div className="top-pics-card mb-sm-0" key={index}>
-                                        <button onClick={getFoodName} value={data.name}><img src={data.image.img_one} className="border-rounded top-pics-item-img" alt="Food Category"/></button>
+                                        <button className="item-btn-background" onClick={getFoodName} value={data.name}>
+                                            <img src={data.image.img_one} className="border-rounded top-pics-item-img" alt="Food Category"/>
+                                        </button>
                                         <div className="top-pics-item-name">
-                                            <a className="a-tag-style" href="/">{data.name}</a>
+                                            <button className="item-name-background" onClick={getFoodName} value={data.name}>
+                                                <span className="a-tag-style">{data.name}</span>
+                                            </button>
                                         </div>
                                     </div> 
                                 )
@@ -100,6 +107,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                                                     
                                                     {/* <a href="/" className="a-tag-style"> */}
                                                         <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
+                                                        <p className="item-category-symbol"><img src={((item.category) === 'veg') ? vegIcon : nonVegIcon} alt="Food Category"/></p>
                                                         <p className="item-rating">{item.rating}<img src={ratingSvg} alt="rating"/></p>
                                                         <div className="card-body card-body-style">
                                                             <h5 className="card-title all-item-card-title">{item.name}<p>{item.subtitle}</p></h5>
@@ -107,7 +115,14 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                                                             <div className="pos-bottom">
                                                                 <div className="price-order">
                                                                     <p>AT {item.price}  • {item.preptime}</p>
-                                                                    <button className="add-to-cart-btn">Add</button>
+                                                                    <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
+                                                                        Add
+                                                                        {
+                                                                            addedCartItem.map(data =>
+                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt">{data.item_quantity}</span> : <></>
+                                                                            )
+                                                                        }
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -120,6 +135,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                                                 <div className="card custom-card-width all-item-card" key={index}>
                                                     {/* <a href="/" className="a-tag-style"> */}
                                                         <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
+                                                        <p className="item-category-symbol"><img src={((item.category) === 'veg') ? vegIcon : nonVegIcon} alt="Food Category"/></p>
                                                         <p className="item-rating">{item.rating}<img src={ratingSvg} alt="rating"/></p>
                                                         <div className="card-body card-body-style">
                                                             <h5 className="card-title all-item-card-title">{item.name}<p>{item.subtitle}</p></h5>
@@ -127,7 +143,14 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                                                             <div className="pos-bottom">
                                                                 <div className="price-order">
                                                                     <p>AT {item.price}  • {item.preptime}</p>
-                                                                    <button className="add-to-cart-btn">Add</button>
+                                                                    <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
+                                                                        Add
+                                                                        {
+                                                                            addedCartItem.map(data =>
+                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt">{data.item_quantity}</span> : <></>
+                                                                            )
+                                                                        }
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -141,36 +164,44 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                                 <div>
                                     <p>No Results Found !! Please Select specific cuisine and go for a dish.</p>
                                     <h5>All Our Dishes</h5>
-                                    {
-                                        getItemList.map((item,index)=>{
-                                            return (
-                                                ((foodCategory.toLowerCase !== item.category)) ?
-                                                <div className="card custom-card-width all-item-card" key={index}>
-                                                    {/* <a href="/" className="a-tag-style"> */}
-                                                        <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
-                                                        <p className="item-rating">{item.rating}<img src={ratingSvg} alt="rating"/></p>
-                                                        <div className="card-body card-body-style">
-                                                            <h5 className="card-title all-item-card-title">{item.name}<p>{item.subtitle}</p></h5>
-                                                            <p className="item-description" id={"item-"+index}>{(item.description).substring(0, 50)}<span onClick={()=> showFlullContent(index, item.description)}>...read more</span></p>
-                                                            <div className="pos-bottom">
-                                                                <div className="price-order">
-                                                                    <p>AT {item.price}  • {item.preptime}</p>
-                                                                    <button className="add-to-cart-btn">Add</button>
+                                    <div className="food-card-section all-product-show mt-3 mb-3">
+                                        {
+                                            getItemList.map((item,index)=>{
+                                                return (
+                                                    ((foodCategory.toLowerCase !== item.category)) ?
+                                                    <div className="card custom-card-width all-item-card" key={index}>
+                                                        {/* <a href="/" className="a-tag-style"> */}
+                                                            <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
+                                                            <p className="item-category-symbol"><img src={((item.category) === 'veg') ? vegIcon : nonVegIcon} alt="Food Category"/></p>
+                                                            <p className="item-rating">{item.rating}<img src={ratingSvg} alt="rating"/></p>
+                                                            <div className="card-body card-body-style">
+                                                                <h5 className="card-title all-item-card-title">{item.name}<p>{item.subtitle}</p></h5>
+                                                                <p className="item-description" id={"item-"+index}>{(item.description).substring(0, 50)}<span onClick={()=> showFlullContent(index, item.description)}>...read more</span></p>
+                                                                <div className="pos-bottom">
+                                                                    <div className="price-order">
+                                                                        <p>AT {item.price}  • {item.preptime}</p>
+                                                                        <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
+                                                                            <span>Add</span>
+                                                                            {
+                                                                                addedCartItem.map(data =>
+                                                                                    data.product._id === item._id ? <span className="highlight-quantity-txt">{data.item_quantity}</span> : <></>
+                                                                                )
+                                                                            }
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    {/* </a> */}
-                                                </div>  : <></>
-                                            )
-                                        }) 
-                                    }
+                                                        {/* </a> */}
+                                                    </div>  : <></>
+                                                )
+                                            }) 
+                                        }
+                                    </div>
                                 </div>
                             }
                         </div>
                     </div>
                 </div>
-
-
                 
             </div>
         </div>

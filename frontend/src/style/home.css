@@ -91,6 +91,7 @@
     color: green;
     font-weight: 700;
     font-size: 14px;
+    align-items: center;
 }
 .price-order p{
     margin-bottom: 2px;
