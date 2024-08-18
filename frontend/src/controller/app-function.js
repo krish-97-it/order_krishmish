@@ -6,12 +6,9 @@ import Footer from "../components/footer";
 import Homepage from "../pages/homepage";
 import DrinksnaksPage from "../pages/drinks-snaks";
 import Cuisine from "../pages/cuisine";
-import ItCuisine from "../pages/indian-cuisine";
-import InCuisine from "../pages/indian-cuisine";
-import ChCuisine from "../pages/chineese-cuisine";
 import CombosPage from "../pages/combos";
 import ReviewPage from "../pages/reviews";
-import MostLovedDish from "../pages/most-loved";
+import ShowCartPage from "../pages/show-cart";
 import SearchBar from "../components/searchbar";
 
 export default function AppFunction(){
@@ -55,7 +52,16 @@ export default function AppFunction(){
     }
     // clear search field
     const clearInput = (event) => {
-        setSearchItem('');
+        if(cuisineData === 'cuisines'){
+            setSearchItem('');
+        }else{
+            const tem_data = foodlist.filter((item) =>
+                item.cuisine.toLowerCase().includes(cuisineData)
+            );
+            updateTempFoodList(tem_data);
+            setSearchItem('');
+        }
+        
     }
 
     // update filtered data on depend on cuisine
@@ -92,7 +98,18 @@ export default function AppFunction(){
     const [cartItem, setCartItem]       =   useState([]);
     
     // function to add Item To Cart
-    const addItemToCart = () => {
+    const addItemToCart = (Itemdata) => {
+        const findProduct = cartItem.find(item => item.product._id === Itemdata._id);
+        if (findProduct) {
+            const latestCartUpdate = cartItem.map(item =>
+                item.product._id === Itemdata._id ? { 
+                ...item, item_quantity: item.item_quantity + 1 } 
+                : item
+            );
+            setCartItem(latestCartUpdate);
+        } else {
+            setCartItem([...cartItem, {product: Itemdata, item_quantity: 1}]);
+        }
     }
 
     const deleteItemToCart = () => {
@@ -109,14 +126,11 @@ export default function AppFunction(){
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
                 <Route exact path="/" element={<Homepage/>}/>
-                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getCuisineName={ cuisineData } getFoodName = {getFoodName} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} />} />
-                <Route exact path="/indian-cuisine" element={<InCuisine/>} />
-                <Route exact path="/italian-cuisine" element={<ItCuisine />} />
-                <Route exact path="/chinese-cuisine" element={<ChCuisine />} />
+                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getCuisineName={ cuisineData } getFoodName = {getFoodName} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
                 <Route exact path="/special-combos" element={<CombosPage />} />
-                <Route exact path="/most-loved-dishes" element={<MostLovedDish />} />
                 <Route exact path="/drinks-and-snacks" element={<DrinksnaksPage/>} />
-                <Route exact path="/reviews" element={<ReviewPage />} />
+                <Route exact path="/reviews" element={<ReviewPage addItemToCart = {cartItem} />} />
+                <Route exact path="/mycart" element={<ShowCartPage addItemToCart = {cartItem} />} />
                 {/* <Route exact path="*" element={<NoPage />} /> */}
             </Routes>
             <Footer/>

@@ -1,7 +1,6 @@
-import React, {useEffect} from "react";
+import React from "react";
 
-export default function CombosPage({hideSearchBar}){
-
+export default function combosPage(){
     return(
         <div className="app-body">
             <div className="main-content">
