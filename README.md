@@ -2,10 +2,25 @@
 Online food order service
 
 # install necessary Software
-1. NodeJs
-2. Mongo Db Compass
+1. NodeJs (Ideal Version 20)
 3. Vs Code
-4. Mongo Db comunity server
+4. Mongo Db comunity server & mongo db compass - 
+   Windows:
+      a. Download and install mongo db community server from - https://www.mongodb.com/try/download/community
+      b. During installation you have to select [run service as network service User] and check install mongo db Compass also else you have to install it seperately
+
+   MacOs:
+      a. Open terminal and run this commands -  
+         brew tap mongodb/brew
+         brew update
+         brew install mongodb-community@7.0
+      b. To run mongod server as macos server run this command
+         brew services start mongodb-community@7.0
+      
+      c. Open Shell and type mongosh
+
+      d. download and isntall mongodb compass to manupulate data easily.
+
 5. Postman
 
 
@@ -51,5 +66,25 @@ Online food order service
 
 
 # Local setup
+
+Before Starting Setup check your Node Version should be 20
+
+1. Clone repo inside a Folder.
+
+2. Open Mongo db compass and creeate a database named - krishmish_order_food. Then import collection inside that db.
+
+1. To Run Frontend React Project:
+   a. cd frontend
+   b. npm install
+   c. npm run start
+
+2. To Run Backend Node & Express Project
+   a. cd backend
+   b. npm install
+   c. npm run dev  (To run In development)
+      npm run prod (To run in Production Mode)
+      (For windows go inside backend folder -> package.json -> under scripts-> instead of 'export' use 'set' as export' command is valid only for unix shells)
+
+
 
 
