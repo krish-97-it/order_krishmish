@@ -28,7 +28,6 @@ export default function AppFunction(){
     }
     useEffect(() => {
         loadData();
-        // getCuisineData();
     }, []);
 
 

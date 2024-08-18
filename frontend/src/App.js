@@ -3,6 +3,7 @@ import './style/footer.css';
 import './style/header.css';
 import './style/home.css';
 import './style/food-item-card.css';
+import './style/my-cart.css';
 import AppFunction from './controller/app-function';
 
 function App() {
