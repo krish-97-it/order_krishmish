@@ -68,7 +68,10 @@ export default function AppFunction(){
         let ele_val       = (event.target.value);
         let toLowerCase   = ele_val.toLowerCase();
         if(toLowerCase === 'cuisines'){
-            clearInput();
+            setSearchItem('');
+            updateCuisineData(toLowerCase)
+            updateTempFoodList(foodlist);
+            // clearInput();
         }else{
             updateCuisineData(toLowerCase);
             updateTempFoodList(foodlist);
@@ -81,22 +84,22 @@ export default function AppFunction(){
         setSearchItem(ele_val.toLowerCase());
     }
 
+    const getHomeCuisineName = (cuisine) =>{
+        setSearchItem(cuisine);
+    }
+
     // filtered data from all data by comparing input letters and stored in new array
     const getFilteredItemList   = tempFoodlist.filter((item) =>
         item.tags.toLowerCase().includes(searchItem)
     );
 
-    // filtered data from all data by comparing input letters and stored in new array
+    // filtered toppics data on depend on selected cuisine in dropdown and stored in new array
     const getTopPicsItemList   = foodlist.filter((item) =>
         item.cuisine.toLowerCase().includes(cuisineData)
     );
 
-
-
     // Add to cart Functionality
     const [cartItem, setCartItem]       =   useState([]);
-    
-    // function to add Item To Cart
     const addItemToCart = (Itemdata) => {
         const findProduct = cartItem.find(item => item.product._id === Itemdata._id);
         if (findProduct) {
@@ -111,11 +114,41 @@ export default function AppFunction(){
         }
     }
 
-    const deleteItemToCart = () => {
+    // delete a item from cart
+    const deleteItemToCart = (Itemdata) => {
+        const updated_list = cartItem.filter(item => item.product._id !== Itemdata.product._id)
+        setCartItem(updated_list);
     }
 
-    const totalAmountCalculate = () => {
+    // Evaluate Total Cost and helps to generate bill
+    const getTotalCost  = () =>{
+        let total_cost = 0;
+        for(let i=0; i<cartItem.length; i++){
+            total_cost  = total_cost + ((cartItem[i].item_quantity)*(cartItem[i].product.price));
+        }
+        return total_cost;
+    }
 
+    // increase / decrease item from cart
+    const increaseItemQuantity = (item) => {
+        const updatedCart = cartItem.map((data) =>
+            data.product._id === item.product._id ? 
+            { 
+                ...data, item_quantity: item.item_quantity + 1 
+            } : 
+            data
+        );
+        setCartItem(updatedCart);
+    }
+    const decreaseItemQuantity = (item) => {
+        const updatedCart = cartItem.map((data) =>
+            ((data.product._id === item.product._id) && (item.item_quantity > 1)) ? 
+            { 
+                ...data, item_quantity: item.item_quantity - 1 
+            } : 
+            data
+        );
+        setCartItem(updatedCart);
     }
 
 
@@ -124,12 +157,12 @@ export default function AppFunction(){
             <Navbar searchbar="false" />
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
-                <Route exact path="/" element={<Homepage/>}/>
+                <Route exact path="/" element={<Homepage getFoodName={getFoodName} getHomeCuisineName={getHomeCuisineName}/>}/>
                 <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getCuisineName={ cuisineData } getFoodName = {getFoodName} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
                 <Route exact path="/special-combos" element={<CombosPage />} />
                 <Route exact path="/drinks-and-snacks" element={<DrinksnaksPage/>} />
-                <Route exact path="/reviews" element={<ReviewPage addItemToCart = {cartItem} />} />
-                <Route exact path="/mycart" element={<ShowCartPage addItemToCart = {cartItem} />} />
+                <Route exact path="/reviews" element={<ReviewPage/>} />
+                <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
                 {/* <Route exact path="*" element={<NoPage />} /> */}
             </Routes>
             <Footer/>

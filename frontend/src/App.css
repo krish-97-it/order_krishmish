@@ -37,3 +37,15 @@ body{
 [dark-theme="off"] .a-tag-style, .item-description{
   color: black !important;
 }
+
+[dark-theme="on"] {
+  background-color: black;
+  color: white !important;
+}
+
+[dark-theme="off"] .billing-details-secton{
+  background-color: #f7f7f7;
+}
+[dark-theme="on"] .billing-details-secton{
+  background-color: #2e2e2e;
+}
