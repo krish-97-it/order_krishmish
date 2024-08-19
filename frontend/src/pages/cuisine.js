@@ -39,7 +39,6 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
     const [foodCategory, updateFoodCategory] = useState('All');
     function getFoodCategory(event){
         let ele_val      = event.target.value;
-        console.log(ele_val);
         updateFoodCategory(ele_val);
     }
     return(
@@ -114,12 +113,12 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                                                             <p className="item-description" id={"item-"+index}>{(item.description).substring(0, 50)}<span onClick={()=> showFlullContent(index, item.description)}>...read more</span></p>
                                                             <div className="pos-bottom">
                                                                 <div className="price-order">
-                                                                    <p>AT {item.price}  • {item.preptime}</p>
+                                                                    <p key={"item-"+index}>₹{item.price}  • {item.preptime}</p>
                                                                     <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
                                                                         Add
                                                                         {
                                                                             addedCartItem.map(data =>
-                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt">{data.item_quantity}</span> : <></>
+                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{data.item_quantity}</span> : <></>
                                                                             )
                                                                         }
                                                                     </button>
@@ -142,12 +141,12 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                                                             <p className="item-description" id={"item-"+index}>{(item.description).substring(0, 50)}<span onClick={()=> showFlullContent(index, item.description)}>...read more</span></p>
                                                             <div className="pos-bottom">
                                                                 <div className="price-order">
-                                                                    <p>AT {item.price}  • {item.preptime}</p>
+                                                                    <p key={"item-"+index}>₹{item.price}  • {item.preptime}</p>
                                                                     <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
                                                                         Add
                                                                         {
                                                                             addedCartItem.map(data =>
-                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt">{data.item_quantity}</span> : <></>
+                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{data.item_quantity}</span> : <></>
                                                                             )
                                                                         }
                                                                     </button>
@@ -179,12 +178,12 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                                                                 <p className="item-description" id={"item-"+index}>{(item.description).substring(0, 50)}<span onClick={()=> showFlullContent(index, item.description)}>...read more</span></p>
                                                                 <div className="pos-bottom">
                                                                     <div className="price-order">
-                                                                        <p>AT {item.price}  • {item.preptime}</p>
+                                                                        <p key={"item-"+index}>₹{item.price}  • {item.preptime}</p>
                                                                         <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
                                                                             <span>Add</span>
                                                                             {
                                                                                 addedCartItem.map(data =>
-                                                                                    data.product._id === item._id ? <span className="highlight-quantity-txt">{data.item_quantity}</span> : <></>
+                                                                                    data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{data.item_quantity}</span> : <></>
                                                                                 )
                                                                             }
                                                                         </button>

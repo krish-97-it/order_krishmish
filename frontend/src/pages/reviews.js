@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function reviewPage({addItemToCart}){
+export default function reviewPage({getUserReviews}){
     return(
         <div className="app-body">
             <div className="main-content">
                 {
-                    addItemToCart.map((item) =>{
+                    getUserReviews.map((item) =>{
                         return(
                             <div>
                                 <h5>{item.product.name}</h5>
