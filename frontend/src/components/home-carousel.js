@@ -14,13 +14,13 @@ function homeCarousel(){
 
                 <div className="carousel-inner">
                     <div className="carousel-item carousel-item-style active">
-                    <img src="https://img.perceptpixel.com/pykhlszs/food-banner-chinese.webp" alt="Los Angeles" className="d-block img-w-100"/>
+                        <img src="https://img.perceptpixel.com/pykhlszs/food-banner-chinese.webp" alt="Los Angeles" className="d-block img-w-100 carousel-item-img"/>
                     </div>
                     <div className="carousel-item carousel-item-style">
-                    <img src="https://img.perceptpixel.com/pykhlszs/f_webp/food-banner-three.webp" alt="Chicago" className="d-block img-w-100"/>
+                        <img src="https://img.perceptpixel.com/pykhlszs/f_webp/food-banner-three.webp" alt="Chicago" className="d-block img-w-100 carousel-item-img"/>
                     </div>
                     <div className="carousel-item carousel-item-style">
-                    <img src="https://img.perceptpixel.com/pykhlszs/f_webp/food-banner-two.webp" alt="New York" className="d-block img-w-100"/>
+                        <img src="https://img.perceptpixel.com/pykhlszs/f_webp/food-banner-two.webp" alt="New York" className="d-block img-w-100 carousel-item-img"/>
                     </div>
                 </div>
 

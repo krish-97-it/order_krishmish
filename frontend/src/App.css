@@ -49,3 +49,6 @@ body{
 [dark-theme="on"] .billing-details-secton{
   background-color: #2e2e2e;
 }
+[dark-theme="on"] .food-cat-name{
+  color: black;
+}
