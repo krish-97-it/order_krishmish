@@ -65,9 +65,6 @@ const Navbar = (props) => {
                                 <li className="nav-item">
                                     <NavLink className="nav-link" to="/special-combos">Combos</NavLink>
                                 </li>
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/drinks-and-snacks">Drinks & Snaks</NavLink>
-                                </li>
                                 {/* <li className="nav-item">
                                     <NavLink className="nav-link" to="/most-loved-dishes">Most Loved</NavLink>
                                 </li> */}

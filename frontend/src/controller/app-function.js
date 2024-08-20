@@ -4,7 +4,6 @@ import axios from "axios";
 import Navbar from "../components/header";
 import Footer from "../components/footer";
 import Homepage from "../pages/homepage";
-import DrinksnaksPage from "../pages/drinks-snaks";
 import Cuisine from "../pages/cuisine";
 import CombosPage from "../pages/combos";
 import ReviewPage from "../pages/reviews";
@@ -157,10 +156,9 @@ export default function AppFunction(){
             <Navbar searchbar="false" />
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
-                <Route exact path="/" element={<Homepage getFoodName={getFoodName} getHomeCuisineName={getHomeCuisineName}/>}/>
+                <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName}/>}/>
                 <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getCuisineName={ cuisineData } getFoodName = {getFoodName} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
                 <Route exact path="/special-combos" element={<CombosPage />} />
-                <Route exact path="/drinks-and-snacks" element={<DrinksnaksPage/>} />
                 <Route exact path="/reviews" element={<ReviewPage/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
                 {/* <Route exact path="*" element={<NoPage />} /> */}

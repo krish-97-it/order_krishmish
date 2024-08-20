@@ -4,6 +4,10 @@
 .carousel-item-style{
     max-height: 500px;
 }
+.carousel-item-img{
+    min-height: 180px;
+    object-fit: cover;
+}
 .carousel-indicators{
     bottom: 0.5px !important;
 }
@@ -135,6 +139,54 @@
     color: wheat;
 }
 
+.fav-cat-banner-section{
+    /* background: linear-gradient(271deg, #ff5a5a, #ee6d2f, #570df6); */
+    background: linear-gradient(271deg, #9eb7ff, #c26575);
+    min-height: 131px;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px 10px 80px 80px;
+    font-weight: 600;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.carousel-control-btn-stye{
+    position: relative;
+    width: auto;
+}
+.carousel-control-btn-stye .carousel-control-prev-icon{
+    border-right: 2px solid;
+}
+.carousel-control-btn-stye .carousel-control-next-icon{
+    border-left: 2px solid;
+}
+.fav-cat-item-list{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 40px;
+    padding: 0px 20px;
+}
+.fav-cat-item{
+    background-color: white;
+    border: 2px solid;
+    color: #e9ffda;
+    border-radius: 10%;
+}
+.fav-cat-item-list img{
+    border-radius: 10% 10% 0% 0%;
+}
+.food-cat-name{
+    font-size: 18px;
+    margin-top: .5rem;
+}
+.carousel-indicators-style{
+    margin-top: 20px;
+    position: relative;
+}
+
 @media(max-width: 1499.98px){
     .food-card-section{
         gap: 20px;
@@ -155,6 +207,12 @@
     .price-order{
         font-size: 13px;
     }
+    .fav-cat-banner-section{
+        justify-content: space-between;
+    }
+    .fav-cat-item-list{
+        gap: 20px;
+    }
 }
 @media(max-width:623.98px){
     .food-card-section{
@@ -166,7 +224,9 @@
     .custom-card-width{
         flex: 40% !important;
     }
-    
+    .fav-cat-item-list{
+        flex-wrap: wrap;
+    }
 }
 @media (max-width:499.98px) {
     .food-category-section{
