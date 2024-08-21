@@ -81,6 +81,11 @@ export default function AppFunction(){
     const getFoodName = (event) =>{
         let ele_val= event.currentTarget.value;
         setSearchItem(ele_val.toLowerCase());
+    }   
+
+    const getFoodNameByCategory = (event) =>{
+        let ele_val= event.currentTarget.value;
+        setSearchItem(ele_val.toLowerCase());
     }
 
     const getHomeCuisineName = (cuisine) =>{
@@ -157,7 +162,7 @@ export default function AppFunction(){
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName}/>}/>
-                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getCuisineName={ cuisineData } getFoodName = {getFoodName} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
+                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
                 <Route exact path="/special-combos" element={<CombosPage />} />
                 <Route exact path="/reviews" element={<ReviewPage/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />

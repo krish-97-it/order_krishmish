@@ -1,3 +1,7 @@
+.navbar-container-style{
+    background-color: black;
+    border-bottom: 2px solid #2f2608;
+}
 .navbar-custom-style{
     padding-top: 0px !important;
     padding-bottom: 0px !important;
@@ -17,6 +21,9 @@
 .offcanvas-body{
     padding-top: 0px;
 }
+a.nav-link{
+    color: white;
+}
 .nav-link:focus, .nav-link:hover {
     color: wheat !important;
 }
@@ -30,6 +37,7 @@
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 10px;
+    background-color: black;
 }
 .search-form{
     display: flex;
@@ -39,6 +47,9 @@
 }
 [search-bar-hide="on"]{
     display: none !important;
+}
+.search-input-box, .item-filter-select{
+    background-color: #fffae3;
 }
 
 @media(max-width: 767.98px){

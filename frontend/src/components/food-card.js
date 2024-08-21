@@ -83,18 +83,18 @@ export default function Foodcard({getHomeCuisineName}){
                                             </Link>
                                         </div>
                                         <div className="fav-cat-item">
-                                            <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("desert")}} value="desert">
+                                            <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("dessert")}} value="dessert">
                                                 <img src="https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
                                                 <div className="card-name">
-                                                    <h5 className="food-cat-name">Desert</h5>
+                                                    <h5 className="food-cat-name">Dessert</h5>
                                                 </div>
                                             </Link>
                                         </div>
                                         <div className="fav-cat-item">
-                                            <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("cakes and bakery")}} value="cakes and bakery">
+                                            <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("snacks")}} value="snacks">
                                                 <img src="https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
                                                 <div className="card-name">
-                                                    <h5 className="food-cat-name">Cakes & Bakery</h5>
+                                                    <h5 className="food-cat-name">Snacks</h5>
                                                 </div>
                                             </Link>
                                         </div>
