@@ -4,13 +4,21 @@ import vegIcon from '../assets/veg-icon.webp';
 import nonVegIcon from '../assets/non-veg-icon.webp';
 
 
-export default function Cuisine({getItemList, getFilteredItemList, getCuisineName, getFoodName, getTopPicsItemList, addToCartFunction, addedCartItem}){
+export default function Cuisine({getItemList, getFilteredItemList, getCuisineName, getFoodName, getFoodNameByCategory, getTopPicsItemList, addToCartFunction, addedCartItem}){
 
     // Horizontal scroll using buttons for food items
     const cardItem          =   useRef();
     const handlecardScroll  =   (direction) => {
         sideScroll(cardItem.current,direction,20,160,10);
     }
+
+
+    const filterCatItem     =   useRef();
+    const catFilterScroll   =   (direction) => {
+        sideScroll(filterCatItem.current,direction,20,160,10);
+    }
+
+
     function sideScroll(element,direction,speed,distance,step){
         var scrollAmount    = 0;
         var slideTimer      = setInterval(function(){
@@ -45,7 +53,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
         <div className="app-body">
             <div className="main-content">
                 <h3 className="gradient-bg no-border-radius">What's on your mind?</h3>
-                <div className="top-pics-container container mt-2">
+                <div className="top-pics-container container-fluid mt-2">
                     <div>
                         <button className="chevron-left-button" onClick={() => handlecardScroll('left')}><i className="fa fa-lg fa-chevron-left"></i></button>
                     </div>
@@ -74,6 +82,22 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                 <div className="show-all-products">
                     <h3 className="gradient-bg">Check Our Menu Card</h3>
                     <div className="container-fluid">
+                        <div className="food-category-filter-section">
+                            <div className="btn-for-scroll">
+                                <button className="chevron-left-button" onClick={() => catFilterScroll('left')}><i className="fa fa-lg fa-chevron-left"></i></button>
+                            </div>
+                            <div className="food-category-buttons" ref={filterCatItem}>
+                                <button type="button" className="btn text-nowrap btn-starter font-color-w" onClick={getFoodNameByCategory} value="starter">Starter</button>
+                                <button type="button" className="btn text-nowrap btn-main-course font-color-w" onClick={getFoodNameByCategory} value="main course">Main Course</button>
+                                <button type="button" className="btn text-nowrap btn-side-dish font-color-w" onClick={getFoodNameByCategory} value="side dish">Side Dish</button>
+                                <button type="button" className="btn text-nowrap btn-drinks font-color-w" onClick={getFoodNameByCategory} value="drinks">Drinks</button>
+                                <button type="button" className="btn text-nowrap btn-snacks" onClick={getFoodNameByCategory} value="snacks">Snacks</button>
+                                <button type="button" className="btn text-nowrap btn-desert" onClick={getFoodNameByCategory} value="dessert">Dessert</button>
+                            </div>
+                            <div className="btn-for-scroll">
+                                <button className="chevron-right-button" onClick={() => catFilterScroll('right')}><i className="fa fa-lg fa-chevron-right"></i></button>
+                            </div>
+                        </div>
                         <div className="filter-product-section">
                             <div className="filter-txt">Filter:</div>                                
                             <div className="veg-nonveg-option">

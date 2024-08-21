@@ -52,3 +52,8 @@ body{
 [dark-theme="on"] .food-cat-name{
   color: black;
 }
+
+[dark-theme="on"] .food-category-buttons .btn:hover{
+  border: 2px solid rgb(219, 219, 219);
+  color: rgb(255, 255, 255);
+}

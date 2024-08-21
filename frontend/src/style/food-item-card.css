@@ -144,6 +144,61 @@
     color: white;
 }
 
+.food-category-filter-section{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0px 0px 0px;
+    align-items: baseline;
+}
+.food-category-buttons .btn{
+    font-weight: 600;
+}
+.food-category-buttons .btn:hover{
+    border: 2px solid black;
+    color: black;
+}
+.food-category-buttons{
+    display: flex;
+    gap: 10px;
+    padding: 10px 0px 20px 0px;
+    max-height: 68px;
+    overflow: scroll;
+    scrollbar-width: none;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+.food-category-buttons .font-color-w{
+    color: white;
+}
+.btn-starter{
+    background-color: #0c6ffd;
+}
+.btn-main-course{
+    background-color: #6d757d;
+}
+.btn-side-dish{
+    background-color: #198855;
+}
+.btn-drinks{
+    background-color: #dc3546;
+}
+.btn-snacks{
+    background-color: #ffc108;
+    color: black;
+}
+.btn-desert{
+    background-color: #10caf0;
+    color: black;
+}
+.btn-for-scroll .chevron-left-button,.chevron-right-button{
+    background-color: orange;
+    border-radius: 24px;
+    padding: 4px;
+    border: none;
+}
+
 
 .filter-product-section{
     display: flex;
@@ -167,6 +222,9 @@
     font-weight: 500;
     border: 1px solid #d2d2d2;
 }
+
+
+
 [show-on-cuisine-page='off']{
     display: none;
 }
@@ -197,6 +255,18 @@
     font-weight: 600;
 }
 
+@media(min-width:768px){
+    .top-pics-container{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+@media(min-width:992px){
+    .top-pics-container{
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+}
 
 @media(max-width:991.98px){
     .all-item-card{
