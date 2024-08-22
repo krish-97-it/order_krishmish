@@ -17,7 +17,7 @@ export default function AppFunction(){
     const [tempFoodlist, updateTempFoodList]    =   useState([]);
     const apiURL                        =   'http://localhost:4000/getFoodMenu';
 
-    function loadData(){
+    function loadCuisineData(){
         axios.get(apiURL).then((res) => {
             updateFoodList(res.data[1].data);
             updateTempFoodList(res.data[1].data);
@@ -26,7 +26,7 @@ export default function AppFunction(){
         });
     }
     useEffect(() => {
-        loadData();
+        loadCuisineData();
     }, []);
 
 
@@ -64,7 +64,13 @@ export default function AppFunction(){
 
     // update filtered data on depend on cuisine
     const getInputCuisine = (event) => {
-        let ele_val       = (event.target.value);
+        let ele_val       = ((event.target.value));
+
+        if(ele_val === "All Cuisines"){
+            ele_val           = ele_val.split(" ");
+            ele_val           = ele_val[1];
+        }
+
         let toLowerCase   = ele_val.toLowerCase();
         if(toLowerCase === 'cuisines'){
             setSearchItem('');
@@ -86,10 +92,23 @@ export default function AppFunction(){
     const getFoodNameByCategory = (event) =>{
         let ele_val= event.currentTarget.value;
         setSearchItem(ele_val.toLowerCase());
+        // in case someone search any food but parallely a cuisine is selected then it will first filter data depend on cuisine. then search the item on that particular cuisine.
+        if(cuisineData !== 'cuisines'){
+            const abc = foodlist.filter((item) =>
+                item.cuisine.toLowerCase().includes(cuisineData)
+            );
+            updateTempFoodList(abc);
+        }
     }
 
     const getHomeCuisineName = (cuisine) =>{
         setSearchItem(cuisine);
+        if(cuisineData !== 'cuisines'){
+            const abc = foodlist.filter((item) =>
+                item.cuisine.toLowerCase().includes(cuisineData)
+            );
+            updateTempFoodList(abc);
+        }
     }
 
     // filtered data from all data by comparing input letters and stored in new array
@@ -162,7 +181,7 @@ export default function AppFunction(){
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName}/>}/>
-                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
+                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
                 <Route exact path="/special-combos" element={<CombosPage />} />
                 <Route exact path="/reviews" element={<ReviewPage/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />

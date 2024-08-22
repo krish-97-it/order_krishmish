@@ -18,14 +18,15 @@ export default function SearchBar({searchItem, getSearchInput, clearInput, getIn
             <div className="clear-text-btn-section">
                 <button onClick={()=>clearInput()}>x</button>
             </div>
-            <div className="select-cuisine-section" show-on-cuisine-page = {currentPath === '/cuisine' ? 'on' : 'off'}>
+            {/* <div className="select-cuisine-section" show-on-cuisine-page = {currentPath === '/cuisine' ? 'on' : 'off'}>
                 <select id="cuisineselect" className="form-select item-filter-select" aria-label="Default select example" onChange={getInputCuisine}>
-                    <option defaultValue="cuisines">Cuisines</option>
+                    <option defaultValue="all cuisines">All Cuisines</option>
                     <option value="indian">Indian</option>
                     <option value="chinese">Chinese</option>
+                    <option value="american">american</option>
                     <option value="italian">Italian</option>
                 </select>
-            </div>
+            </div> */}
         </div>
     )
 }
