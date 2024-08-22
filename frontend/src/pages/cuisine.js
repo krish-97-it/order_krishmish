@@ -1,10 +1,14 @@
 import React, {useRef, useState} from "react";
+import { useLocation } from 'react-router-dom';
 import ratingSvg from '../assets/rating-star.svg';
 import vegIcon from '../assets/veg-icon.webp';
 import nonVegIcon from '../assets/non-veg-icon.webp';
 
 
-export default function Cuisine({getItemList, getFilteredItemList, getCuisineName, getFoodName, getFoodNameByCategory, getTopPicsItemList, addToCartFunction, addedCartItem}){
+export default function Cuisine({getItemList, getFilteredItemList, getInputCuisine, getCuisineName, getFoodName, getFoodNameByCategory, getTopPicsItemList, addToCartFunction, addedCartItem}){
+
+    const location = useLocation();
+    const currentPath = location.pathname;
 
     // Horizontal scroll using buttons for food items
     const cardItem          =   useRef();
@@ -53,6 +57,15 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
         <div className="app-body">
             <div className="main-content">
                 <h3 className="gradient-bg no-border-radius">What's on your mind?</h3>
+                <div className="select-cuisine-section" show-on-cuisine-page = {currentPath === '/cuisine' ? 'on' : 'off'}>
+                    <select id="cuisineselect" className="form-select item-filter-select" aria-label="Default select example" onChange={getInputCuisine}>
+                        <option defaultValue="all cuisines">All Cuisines</option>
+                        <option value="indian">Indian</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="american">american</option>
+                        <option value="italian">Italian</option>
+                    </select>
+                </div>
                 <div className="top-pics-container container-fluid mt-2">
                     <div>
                         <button className="chevron-left-button" onClick={() => handlecardScroll('left')}><i className="fa fa-lg fa-chevron-left"></i></button>
@@ -80,7 +93,10 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                     </div>
                 </div>
                 <div className="show-all-products">
-                    <h3 className="gradient-bg">Check Our Menu Card</h3>
+                    <h3 className="gradient-bg">
+                        Food under <span className="cuisine-name-txt">{getCuisineName !== 'cuisines' ? getCuisineName.toUpperCase():'ALL'}</span> cuisine
+                    </h3>
+                    
                     <div className="container-fluid">
                         <div className="food-category-filter-section">
                             <div className="btn-for-scroll">
@@ -185,7 +201,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getCuisineNam
                                 </>
                                 : 
                                 <div>
-                                    <p>No Results Found !! Please Select specific cuisine and go for a dish.</p>
+                                    <p><span className="no-result-txt">No Results Found !!</span> Please Select specific cuisine or all cuisines and search again.</p>
                                     <h5>All Our Dishes</h5>
                                     <div className="food-card-section all-product-show mt-3 mb-3">
                                         {

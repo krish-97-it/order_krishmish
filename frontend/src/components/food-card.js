@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import { Link, NavLink } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Foodcard({getHomeCuisineName}){
     return(
@@ -48,7 +48,7 @@ export default function Foodcard({getHomeCuisineName}){
                                     <div className="fav-cat-item-list">
                                         <div className="fav-cat-item">
                                             <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("starter")}} value="starter">
-                                                <img src="https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
+                                                <img src="https://img.perceptpixel.com/pykhlszs/dragon-chiken.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
                                                 <div className="card-name">
                                                     <h5 className="food-cat-name">Starter</h5>
                                                 </div>
@@ -56,7 +56,7 @@ export default function Foodcard({getHomeCuisineName}){
                                         </div>
                                         <div className="fav-cat-item">
                                             <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("main course")}} value="main course">
-                                                <img src="https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
+                                                <img src="https://img.perceptpixel.com/pykhlszs/mixed-friedrice.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
                                                 <div className="card-name">
                                                     <h5 className="food-cat-name">Main Course</h5>
                                                 </div>
@@ -64,7 +64,7 @@ export default function Foodcard({getHomeCuisineName}){
                                         </div>
                                         <div className="fav-cat-item">
                                             <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("side dish")}} value="side dish">
-                                                <img src="https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
+                                                <img src="https://img.perceptpixel.com/pykhlszs/chicken-do-payaza.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
                                                 <div className="card-name">
                                                     <h5 className="food-cat-name">Side Dish</h5>
                                                 </div>
@@ -76,7 +76,7 @@ export default function Foodcard({getHomeCuisineName}){
                                     <div className="fav-cat-item-list">
                                         <div className="fav-cat-item">
                                             <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("drinks")}} value="drinks">
-                                                <img src="https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
+                                                <img src="https://img.perceptpixel.com/pykhlszs/orange-mojito.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
                                                 <div className="card-name">
                                                     <h5 className="food-cat-name">Drinks</h5>
                                                 </div>
@@ -84,7 +84,7 @@ export default function Foodcard({getHomeCuisineName}){
                                         </div>
                                         <div className="fav-cat-item">
                                             <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("dessert")}} value="dessert">
-                                                <img src="https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
+                                                <img src="	https://img.perceptpixel.com/pykhlszs/mango-icecream.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
                                                 <div className="card-name">
                                                     <h5 className="food-cat-name">Dessert</h5>
                                                 </div>
@@ -92,7 +92,7 @@ export default function Foodcard({getHomeCuisineName}){
                                         </div>
                                         <div className="fav-cat-item">
                                             <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("snacks")}} value="snacks">
-                                                <img src="https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
+                                                <img src="https://img.perceptpixel.com/pykhlszs/diamond-fish-cutlet.webp" className="img-w-100 food-cat-card-img" alt="Food Category"/>
                                                 <div className="card-name">
                                                     <h5 className="food-cat-name">Snacks</h5>
                                                 </div>

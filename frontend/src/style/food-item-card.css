@@ -143,7 +143,9 @@
     font-weight: 600;
     color: white;
 }
-
+.cuisine-name-txt{
+    color: #fff29d;
+}
 .food-category-filter-section{
     display: flex;
     flex-wrap: nowrap;
@@ -221,6 +223,8 @@
     color: #058f00;
     font-weight: 500;
     border: 1px solid #d2d2d2;
+    padding-right: 2.1rem;
+    background-position: right .4rem center;
 }
 
 
@@ -252,6 +256,10 @@
     border-left: 0px;
     background-color: transparent;
     color: #acacac;
+    font-weight: 600;
+}
+.no-result-txt{
+    color: rgb(255, 89, 0);
     font-weight: 600;
 }
 

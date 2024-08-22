@@ -1,0 +1,1368 @@
+[{
+  "_id": {
+    "$oid": "66b39cf648ba14627b5ecb1a"
+  },
+  "name": "Chicken White Sauuce Pasta",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp",
+    "img_two": ""
+  },
+  "description": "Chiken white Sauce Pasta is simply cooked pasta mixed with a silky smooth & decadent white sauce made of milk, butter, flour, vegitables and Chiken.",
+  "cuisine": "italian",
+  "category": "non veg",
+  "quantity": "1",
+  "rating": "4.5",
+  "subtitle": "with extra Chesee",
+  "preptime": "20-30min",
+  "tags": "main course,non veg,italian,chicken white sauuce pasta",
+  "price": 150
+},
+{
+  "_id": {
+    "$oid": "66b39e4448ba14627b5ecb1c"
+  },
+  "name": "Chicken Biriyani",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/indian-cuisine.webp",
+    "img_two": ""
+  },
+  "description": "Consists of rice, Chicken cooked with slight gravy, caramelised onions, dry spices, curd, potatos, boiled eggs",
+  "quantity": "1",
+  "rating": "4.3",
+  "subtitle": "with 150gm Chiken",
+  "preptime": "30min",
+  "cuisine": "indian",
+  "category": "non veg",
+  "tags": "indian,non veg,main course,chicken biriyani",
+  "price": 150
+},
+{
+  "_id": {
+    "$oid": "66b39e6648ba14627b5ecb1d"
+  },
+  "name": "Mixed Fried Rice",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mixed-friedrice.webp",
+    "img_two": ""
+  },
+  "description": "A little bit of everything comes together so well in this mixed fried rice made with chicken, prawns, eggs and veggies.",
+  "quantity": "1",
+  "rating": "4.5",
+  "subtitle": "with Chicken, Prawn, Masroom",
+  "preptime": "30-40min",
+  "cuisine": "chinese",
+  "category": "non veg",
+  "tags": "chinese,main course,non veg,mixed fried rice",
+  "price": 120
+},
+{
+  "_id": {
+    "$oid": "66b39e9948ba14627b5ecb1e"
+  },
+  "name": "Paneer Manchurian",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/paneer-muchurian.webp",
+    "img_two": ""
+  },
+  "description": "Chilli Paneer is an Indo-Chinese appetizer where crisp batter fried paneer is tossed in slightly sweet, spicy, hot and tangy chilli sauce.",
+  "cuisine": "indian",
+  "category": "veg",
+  "quantity": "6pc",
+  "rating": "4.2",
+  "subtitle": "with 6 piece Paneer",
+  "preptime": "20-30min",
+  "tags": "indian,side dish,veg,paneer manchurian",
+  "price": 150
+},
+{
+  "_id": {
+    "$oid": "66b39ec948ba14627b5ecb1f"
+  },
+  "name": "Butter naan",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/butter-naan.webp",
+    "img_two": ""
+  },
+  "description": "Butter naan is traditional Indian Naan bread brushed with melted butter after cooking.",
+  "cuisine": "indian",
+  "category": "veg",
+  "quantity": "1pc",
+  "rating": "4.1",
+  "subtitle": "",
+  "preptime": "20-30min",
+  "tags": "main course,indian,veg, butter naan",
+  "price": 15
+},
+{
+  "_id": {
+    "$oid": "66b39ef648ba14627b5ecb20"
+  },
+  "name": "Egg Tadka",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/egg-tadka.webp",
+    "img_two": ""
+  },
+  "description": "Egg Tadka/ Egg Torka is a famous Kolkata Street Food. It is a lovely medley of green mung bean and split chickpeas (chana dal) with eggs.",
+  "cuisine": "indian",
+  "category": "non veg",
+  "quantity": "1 Plate",
+  "rating": "4.7",
+  "subtitle": "",
+  "preptime": "30min",
+  "tags": "side dish,indian,non veg,egg tadka",
+  "price": 70
+},
+{
+  "_id": {
+    "$oid": "66b39f1148ba14627b5ecb21"
+  },
+  "name": "Chicken Butter Masala",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chiken-butter-masala.webp",
+    "img_two": ""
+  },
+  "description": "Butter chicken also known as murgh makhani it is a delicious Indian dish. It is a flavourful curry made with chicken cooked in a spiced tomato and butter sauce known for its rich and creamy texture.",
+  "cuisine": "indian",
+  "category": "non veg",
+  "quantity": "6pc",
+  "rating": "4.6",
+  "subtitle": "with 6 piece Chicken",
+  "preptime": "30-40min",
+  "tags": "non veg,side dish,indian,chicken butter masala",
+  "price": 200
+},
+{
+  "_id": {
+    "$oid": "66b39fa248ba14627b5ecb22"
+  },
+  "name": "Mutton Curry",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mutton-kosa.webp",
+    "img_two": ""
+  },
+  "description": "Mutton curry (also referred to as kosha mangsho or goat curry) is a dish that is prepared from goat meat and vegetables.",
+  "cuisine": "indian",
+  "category": "non veg",
+  "quantity": "6pc",
+  "rating": "4.4",
+  "subtitle": "with 6 piece Mutton",
+  "preptime": "40-45min",
+  "tags": "indian,side dish,non veg,mutton curry",
+  "price": 300
+},
+{
+  "_id": {
+    "$oid": "66b4283b48ba14627b5ecb25"
+  },
+  "name": "Basanti Polao",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/polao-combo.webp",
+    "img_two": ""
+  },
+  "description": "Basanti polao or mishti polao is a sweet, ghee-laden rice dish made from fragrant gobindabhog or kalijeera rice, cashew nuts and raisins.",
+  "cuisine": "indian",
+  "category": "veg",
+  "quantity": "1 Plate",
+  "rating": "4.1",
+  "subtitle": "",
+  "preptime": "30-40min",
+  "tags": "veg,indian,main course,basanti polao",
+  "price": 120
+},
+{
+  "_id": {
+    "$oid": "66b4287748ba14627b5ecb26"
+  },
+  "name": "Paneer Sate",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/paneer-sate.webp",
+    "img_two": ""
+  },
+  "description": "Thai Paneer Satay , infused with dynamic flavors is an excellent recreation of the traditional Indian kebab.",
+  "cuisine": "indonesian",
+  "category": "veg",
+  "quantity": "5pc",
+  "rating": "3.9",
+  "subtitle": "with 5 piece Panner",
+  "preptime": "20-30min",
+  "tags": "veg,indonesian,starter,paneer sate",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66b428ae48ba14627b5ecb27"
+  },
+  "name": "Chili Fish",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chlii-fish.webp",
+    "img_two": ""
+  },
+  "description": "Chilli fish is a popular Indian-chinese appetizer made by tossing fish in spicy chilli sauce.",
+  "cuisine": "chinese",
+  "category": "non veg",
+  "quantity": "4pc",
+  "rating": "4.0",
+  "subtitle": "with 4 piece Vetki Fish",
+  "preptime": "30-40min",
+  "tags": "chinese,side dish,non veg,chili fish",
+  "price": 120
+},
+{
+  "_id": {
+    "$oid": "66b428dd48ba14627b5ecb28"
+  },
+  "name": "Fish Butter Fry",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/fish-butter-fry.webp",
+    "img_two": ""
+  },
+  "description": "Marinated fish is dipped in flour-egg batter and deep fried in oil. It is normally served with tomato ketchup and green salad ",
+  "cuisine": "indian",
+  "category": "non veg",
+  "quantity": "2pc",
+  "rating": "4.5",
+  "subtitle": "2 piece",
+  "preptime": "20-30min",
+  "tags": "indian,starter,non veg,fish butter fry",
+  "price": 100
+},
+{
+  "_id": {
+    "$oid": "66b4290b48ba14627b5ecb29"
+  },
+  "name": "Dragon Chicken",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/dragon-chiken.webp",
+    "img_two": ""
+  },
+  "description": "Dragon chicken made restaurant style in which chicken is fried till crispy and tossed in spicy sauce with dry red chillies and cashews.",
+  "cuisine": "chinese",
+  "category": "non veg",
+  "quantity": "8pc",
+  "rating": "4.8",
+  "subtitle": "with 8 piece Chicken",
+  "preptime": "20-30min",
+  "tags": "chinese,starter,non veg,dragon chicken,chiken",
+  "price": 150
+},
+{
+  "_id": {
+    "$oid": "66b4293748ba14627b5ecb2a"
+  },
+  "name": "Crispy Chicken",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/crispy-chiken.webp",
+    "img_two": ""
+  },
+  "description": "Crispy Chicken is a preparation that is juicy from the inside and crispy from the outside. A tasty combination of chicken and veggies.",
+  "cuisine": "chinese",
+  "category": "non veg",
+  "quantity": "15pc",
+  "rating": "4.5",
+  "subtitle": "with 15 piece Chiken",
+  "preptime": "25-30min",
+  "tags": "chinese,starter,non veg,crispy chicken",
+  "price": 150
+},
+{
+  "_id": {
+    "$oid": "66b9f8a7a906370ad0f7eec8"
+  },
+  "name": "Veg Fried Rice",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/vef-fried-rice.webp",
+    "img_two": ""
+  },
+  "description": "A little bit of everything comes together so well in this mixed fried rice made with lots of veggies.",
+  "quantity": "1",
+  "cuisine": "chinese",
+  "category": "veg",
+  "rating": "4.3",
+  "subtitle": "with lots of veggies",
+  "preptime": "20-25min",
+  "tags": "chinese,main course,veg,veg fried rice",
+  "price": 120
+},
+{
+  "_id": {
+    "$oid": "66c02e8cd37b3659f4fb5f29"
+  },
+  "name": "Kashmiri Alur Dum",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/kashmiri-alurdum.webp",
+    "img_two": ""
+  },
+  "description": "Baby potatoes are deep fried and then cooked in delicious gravy of curd and lots of spices like kashmiri red chillies, fennel powder, cardamom powder, cumin-coriander powder, ginger, garlic etc.",
+  "quantity": "6 piece",
+  "cuisine": "indian",
+  "category": "veg",
+  "rating": "4.5",
+  "subtitle": "",
+  "preptime": "20-25min",
+  "tags": "indian,side dish,veg,kashmiri alur dum",
+  "price": 80
+},
+{
+  "_id": {
+    "$oid": "66c02f74d37b3659f4fb5f2a"
+  },
+  "name": "Veg Hakka Noodles",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/veg-hakka-noodles.webp",
+    "img_two": ""
+  },
+  "description": "Boiled Noodles made from unleavened dough made with rice or wheat flour, fried with onion, cabbage, bell pepper and carrots etc. ",
+  "quantity": "6 piece",
+  "cuisine": "chinese",
+  "category": "veg",
+  "rating": "4.3",
+  "subtitle": "with lots of veggies",
+  "preptime": "20-25min",
+  "tags": "chinese,main course,veg,veg hakka noodles",
+  "price": 90
+},
+{
+  "_id": {
+    "$oid": "66c03a48d37b3659f4fb5f2b"
+  },
+  "name": "BBQ Chicken Pizza",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/BBQ-chicken-pizza-recipe-9.webp",
+    "img_two": ""
+  },
+  "description": "made with bbq sauce, mozzarella, chicken, red onions, bell peper and cilantro ",
+  "quantity": "1 medium",
+  "cuisine": "italian",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "a sweet, spicy, and savory barbecue sauce base",
+  "preptime": "30-35min",
+  "tags": "italian,main course,non veg,bbq chicken pizza",
+  "price": 150
+},
+{
+  "_id": {
+    "$oid": "66c03f6bd37b3659f4fb5f2c"
+  },
+  "name": "Veggie Lasangna",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/veggie-lasangna.webp",
+    "img_two": ""
+  },
+  "description": "This meatless lasagna recipe is packed with bell pepper, zucchini and carrots, sautéed until golden on the edges.",
+  "quantity": "1",
+  "cuisine": "italian",
+  "category": "veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "25-30min",
+  "tags": "italian,main course,veg,veggie lasangna",
+  "price": 140
+},
+{
+  "_id": {
+    "$oid": "66c04176d37b3659f4fb5f2d"
+  },
+  "name": "Veg Pizza",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/_veg-pizza.webp",
+    "img_two": ""
+  },
+  "description": "vegetarian pizza recipe features tomatoes, bell pepper, artichoke, spinach, corn, onion and more.",
+  "quantity": "1 medium",
+  "cuisine": "italian",
+  "category": "veg",
+  "rating": "4.1",
+  "subtitle": "a hot, cheesy pizza loaded with veggies ",
+  "preptime": "25-30min",
+  "tags": "italian,main course,veg,veg pizza",
+  "price": 120
+},
+{
+  "_id": {
+    "$oid": "66c04358d37b3659f4fb5f2e"
+  },
+  "name": "Veg Fried Pastaa",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/veg-fried-pastaa.webp",
+    "img_two": ""
+  },
+  "description": "A simple stir fry pasta with an Asian flavored sauce and crunchy vegetables - onion, bell peper, carrot etc",
+  "quantity": "1 plate",
+  "cuisine": "italian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "",
+  "preptime": "30-35min",
+  "tags": "italian,main course,veg,veg fried pastaa",
+  "price": 80
+},
+{
+  "_id": {
+    "$oid": "66c5df77d37b3659f4fb5f34"
+  },
+  "name": "Mutton Rezala",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mutton-rezela.webp",
+    "img_two": ""
+  },
+  "description": "Mutton Rezala is a famous Mughlai mutton delicacy where mutton is cooked with Yogurt, Cashew and Poppy seeds paste along with various spices.",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.3",
+  "subtitle": "with 5 medium piece of mutton",
+  "preptime": "30-35min",
+  "tags": "indian,side dish,non veg,mutton rezala",
+  "price": 200
+},
+{
+  "_id": {
+    "$oid": "66c5e159d37b3659f4fb5f35"
+  },
+  "name": "Rumali Roti",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/rumali-roti.webp",
+    "img_two": ""
+  },
+  "description": "Thin flatbread which is made of white flour shaped into super thin round roti, cooked over upside down “Kadai” and folded like handkerchief.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.1",
+  "subtitle": "",
+  "preptime": "25-30min",
+  "tags": "indian,main course,veg,rumali roti",
+  "price": 15
+},
+{
+  "_id": {
+    "$oid": "66c5e82fd37b3659f4fb5f36"
+  },
+  "name": "Oreo Milkshake",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/oreo-milk-shake.webp",
+    "img_two": ""
+  },
+  "description": "Oreo milkshake is thick, creamy and everyone's favourite desert made with milk, Oreo chunks, ice cream and drizzled with hot fudge.",
+  "quantity": "1 piece",
+  "cuisine": "American",
+  "category": "veg",
+  "rating": "4.6",
+  "subtitle": "with vanila ice cream",
+  "preptime": "15-20min",
+  "tags": "american,dessert,drinks,shake,veg,oreo milkshake",
+  "price": 90
+},
+{
+  "_id": {
+    "$oid": "66c5fb3bd37b3659f4fb5f37"
+  },
+  "name": "Grilled Chicken Sandwich",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-grilled-Sandwich.webp",
+    "img_two": ""
+  },
+  "description": "Grilled chicken sandwich is made with marinated chicken sandwiched between slices of crispy fried bread with lettuce, tomato, and mayo.",
+  "quantity": "1 piece",
+  "cuisine": "american",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "15-20min",
+  "tags": "american,snacks,non veg,grilled chicken sandwich",
+  "price": 30
+},
+{
+  "_id": {
+    "$oid": "66c5fcbdd37b3659f4fb5f38"
+  },
+  "name": "Chocolate Pastry",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chocolate-pastry.webp",
+    "img_two": ""
+  },
+  "description": "Boasts a rich and velvety chocolate filling that's sure to satisfy your sweet tooth.",
+  "quantity": "1 piece",
+  "cuisine": "American",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "10-15min",
+  "tags": "american,dessert,cakes,non veg,chocolate pastry",
+  "price": 20
+},
+{
+  "_id": {
+    "$oid": "66c5febbd37b3659f4fb5f39"
+  },
+  "name": "Mango Milkshake",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mango-milk-shake.webp",
+    "img_two": ""
+  },
+  "description": "Made with fresh ripe mangoes is absolutely the perfect summer drink! It's a refreshing, drink and dessert rolled into one!",
+  "quantity": "1 piece",
+  "cuisine": "american",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "with mango ice cream",
+  "preptime": "10-15min",
+  "tags": "american,drinks,shake,dessert,veg,mango milkshake",
+  "price": 70
+},
+{
+  "_id": {
+    "$oid": "66c5fff1d37b3659f4fb5f3a"
+  },
+  "name": "Black Forest Pastry",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/black-forest.webp",
+    "img_two": ""
+  },
+  "description": "Traditional Black Forest pastry made with cherries, vanilla and chocolate cream layered between soft chocolate sponge.",
+  "quantity": "1 piece",
+  "cuisine": "American",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "10-15min",
+  "tags": "american,dessert,cakes,non veg,black forest pastry",
+  "price": 40
+},
+{
+  "_id": {
+    "$oid": "66c60293d37b3659f4fb5f3b"
+  },
+  "name": "Butterscotch Pastry",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/butter-scotch-pastry.webp",
+    "img_two": ""
+  },
+  "description": "Crafted with the finest Belgian ingredients, a delightful blend of smooth butterscotch, layered pastry.",
+  "quantity": "1 piece",
+  "cuisine": "american",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "10-15min",
+  "tags": "american,dessert,cakes,non veg,butterscotch pastry",
+  "price": 30
+},
+{
+  "_id": {
+    "$oid": "66c603d5d37b3659f4fb5f3c"
+  },
+  "name": "Vanilla Ice Cream",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/vanilla-icecream.webp",
+    "img_two": ""
+  },
+  "description": "Creamy, soft and delicious made with vanilla extract, milk, heavy whipping cream, and sugar.",
+  "quantity": "3 scoop",
+  "cuisine": "American",
+  "category": "veg",
+  "rating": "4.3",
+  "subtitle": "",
+  "preptime": "05-10min",
+  "tags": "american,dessert,ice cream,veg,vanilla ice cream",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c60928d37b3659f4fb5f3d"
+  },
+  "name": "White Forest Pastry",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/white-forest-pastry.webp",
+    "img_two": ""
+  },
+  "description": "Multiple layers of eggless vanilla sponge, cherries, and whipped cream, covered with shreded white chocolate and cherries.",
+  "quantity": "1 piece",
+  "cuisine": "american",
+  "category": "veg",
+  "rating": "4.5",
+  "subtitle": "",
+  "preptime": "05-10min",
+  "tags": "american,cakes,dessert,veg,eggless,white forest pastry",
+  "price": 40
+},
+{
+  "_id": {
+    "$oid": "66c61d4fd37b3659f4fb5f3e"
+  },
+  "name": "Mango Pastry",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mango-pastry.webp",
+    "img_two": ""
+  },
+  "description": "Multiple layers of vanilla sponge, fresh mangoes, and mango whipped cream, covered with almond flakes and fresh mangoes.",
+  "quantity": "1 piece",
+  "cuisine": "american",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "",
+  "preptime": "05-10min",
+  "tags": "american,cakes,dessert,non veg,mango pastry",
+  "price": 40
+},
+{
+  "_id": {
+    "$oid": "66c61e1bd37b3659f4fb5f3f"
+  },
+  "name": "Virgin Mojito",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/virgin-mojito.webp",
+    "img_two": ""
+  },
+  "description": "A nonalcoholic refreshing drink, an excellent marriage of lime and mint.",
+  "quantity": "300 ml",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "300ml glass",
+  "preptime": "05-10min",
+  "tags": "indian,drinks,veg,virgin mojito",
+  "price": 30
+},
+{
+  "_id": {
+    "$oid": "66c61ecbd37b3659f4fb5f40"
+  },
+  "name": "Chocolate Ice Cream",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chocolate-ice-cream.webp",
+    "img_two": ""
+  },
+  "description": "Made with fresh cream, cocoa powder, milk, vanilla extract, and Nestle Milkmaid.",
+  "quantity": "3 scoop",
+  "cuisine": "Italian",
+  "category": "veg",
+  "rating": "4.0",
+  "subtitle": "",
+  "preptime": "05-10min",
+  "tags": "italian,dessert,veg,ice cream,chocolate ice cream",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c6213fd37b3659f4fb5f41"
+  },
+  "name": "Strawberry Milkshake",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/strawberry-shake.webp",
+    "img_two": ""
+  },
+  "description": "A decadent dessert drink made with plenty of fresh strawberries, creamy ice cream, rich milk and cream, and sweet strawberry jam.",
+  "quantity": "300 ml",
+  "cuisine": "american",
+  "category": "veg",
+  "rating": "4.0",
+  "subtitle": "",
+  "preptime": "10-15min",
+  "tags": "american,dessert,drinks,veg,shake,strawberry milkshake",
+  "price": 80
+},
+{
+  "_id": {
+    "$oid": "66c621e1d37b3659f4fb5f42"
+  },
+  "name": "Aam Panna",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/aam-panna.webp",
+    "img_two": ""
+  },
+  "description": "An Indian Summer drink made from unripe mangoes",
+  "quantity": "300 ml",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "10-15min",
+  "tags": "indian,drinks,veg,aap panna",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c622bcd37b3659f4fb5f43"
+  },
+  "name": "Vanilla Pastry",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/vanilla-pastry.webp",
+    "img_two": ""
+  },
+  "description": "Coated with a layer of your favorite vanilla.",
+  "quantity": "1 piece",
+  "cuisine": "american",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "5-10min",
+  "tags": "american,cakes,dessert,pastry,non veg,vanilla pastry",
+  "price": 30
+},
+{
+  "_id": {
+    "$oid": "66c6a6094173ba3e3432fd10"
+  },
+  "name": "Tandoori Roti",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/tandoori-roti.webp",
+    "img_two": ""
+  },
+  "description": "Flatbreads made with whole wheat flour and cooked in a tandoor.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "",
+  "preptime": "10-15min",
+  "tags": "indian,main course,roti,veg,tandoori roti",
+  "price": 15
+},
+{
+  "_id": {
+    "$oid": "66c6a82a4173ba3e3432fd12"
+  },
+  "name": "Aloo Paratha",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/aloo_paratha.webp",
+    "img_two": ""
+  },
+  "description": "A popular whole wheat Indian flatbread stuffed with spicy mashed potatoes.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "",
+  "preptime": "20-25min",
+  "tags": "indian,main course,roti,paratha,veg,aloo paratha",
+  "price": 20
+},
+{
+  "_id": {
+    "$oid": "66c6a97a4173ba3e3432fd13"
+  },
+  "name": "Lachha Paratha",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/lachha-paratha.webp",
+    "img_two": ""
+  },
+  "description": "A crispy, buttery, flaky layered flat bread prepared with wheat flour.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "15-20min",
+  "tags": "indian,main course,roti,paratha,veg,lachha paratha",
+  "price": 15
+},
+{
+  "_id": {
+    "$oid": "66c6aa7a4173ba3e3432fd14"
+  },
+  "name": "Roti",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/roti.webp",
+    "img_two": ""
+  },
+  "description": "Traditional Roti bread (also known as chapati) is made with just two ingredients, Atta flour and water.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "",
+  "preptime": "15-20min",
+  "tags": "indian,main course,roti,chapati,veg",
+  "price": 7
+},
+{
+  "_id": {
+    "$oid": "66c6a7414173ba3e3432fd11"
+  },
+  "name": "Veg Patties",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/veg-patties.webp",
+    "img_two": ""
+  },
+  "description": "A salty , crispy, flaky pastry , a delicious tea time snack baked with a filling of seasoned potatoes and veggies.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.3",
+  "subtitle": "",
+  "preptime": "10-15min",
+  "tags": "indian,snacks,patty,veg,veg patties",
+  "price": 15
+},
+{
+  "_id": {
+    "$oid": "66c6acf94173ba3e3432fd15"
+  },
+  "name": "Chicken Shawarma Wrap",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-shawarma.webp",
+    "img_two": ""
+  },
+  "description": "Filled with tender, flavorful chopped chicken, crispy potatoes, sauce and mediterranean spices.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.3",
+  "subtitle": "",
+  "preptime": "20-25min",
+  "tags": "indian,snacks,non veg,roll,chicken shawarma wrap",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c6ae504173ba3e3432fd16"
+  },
+  "name": "Egg Roll",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/egg-roll.webp",
+    "img_two": ""
+  },
+  "description": "Vegitables, Sauce, cheese are wrapped with cooked and fried laccha paratha which is lined with an egg mixture",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.5",
+  "subtitle": "",
+  "preptime": "15-20min",
+  "tags": "indian,snacks,non veg,egg roll",
+  "price": 25
+},
+{
+  "_id": {
+    "$oid": "66c6b01f4173ba3e3432fd17"
+  },
+  "name": "Veg Cutlet",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/veg-cutlet.webp",
+    "img_two": ""
+  },
+  "description": "A crisp outside and soft inside snack which is made with mashed potato and green vegetables, covered with breadcrumbs.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.5",
+  "subtitle": "",
+  "preptime": "10-15min",
+  "tags": "indian,starter,snacks,veg,veg cutlet",
+  "price": 10
+},
+{
+  "_id": {
+    "$oid": "66c6b31c4173ba3e3432fd18"
+  },
+  "name": "Chicken Kebab",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-kebab.webp",
+    "img_two": ""
+  },
+  "description": "Marinated with Yogurt, lemon, garlic and spices, then grilled until golden.",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "5 Medium Piece of chicken",
+  "preptime": "20-25min",
+  "tags": "indian,starter,snacks,non veg,chicken kebab",
+  "price": 120
+},
+{
+  "_id": {
+    "$oid": "66c6b4024173ba3e3432fd19"
+  },
+  "name": "Chicken Reshmi Kebab",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-reshmi-kebab.webp",
+    "img_two": ""
+  },
+  "description": "Made with boneless chicken breast that has been marinated in a juicy mixture of curd, cream, cashew nuts, and spices before being grilled in the oven.",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "5 Medium Piece of chicken",
+  "preptime": "20-25min",
+  "tags": "indian,starter,snacks,non veg,malai kebab,chicken reshmi kebab",
+  "price": 140
+},
+{
+  "_id": {
+    "$oid": "66c6b62b4173ba3e3432fd1a"
+  },
+  "name": "Paneer Tikka Sub",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/panner-tikka-sub.webp",
+    "img_two": ""
+  },
+  "description": "A delicious creamy and spicy sandwich that is made with paneer tossed in a Tandoori Mayo and chaat masala.",
+  "quantity": "1 piece",
+  "cuisine": "American",
+  "category": "veg",
+  "rating": "4.7",
+  "subtitle": "",
+  "preptime": "05-10min",
+  "tags": "american,snacks,veg,sandwich,burger,panner tikka sub",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c6b7a84173ba3e3432fd1b"
+  },
+  "name": "Chicken Cheese Sandwich",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-cheese-sandwich.webp",
+    "img_two": ""
+  },
+  "description": "A delicious soft and creamy sandwich that is stuffed with shredded chicken, garlic powder, pepper powder, mayonnaise, and sour cream.",
+  "quantity": "1 piece",
+  "cuisine": "American",
+  "category": "non veg",
+  "rating": "4.5",
+  "subtitle": "",
+  "preptime": "05-10min",
+  "tags": "american,snacks,non veg,sandwich,chicken cheese sandwich",
+  "price": 30
+},
+{
+  "_id": {
+    "$oid": "66c6b8f84173ba3e3432fd1c"
+  },
+  "name": "Chicken Strip",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-strip.webp",
+    "img_two": ""
+  },
+  "description": "Delicious crispy chicken tenders which has a coating of conflakes which makes it super crunchy.",
+  "quantity": "5 piece",
+  "cuisine": "American",
+  "category": "non veg",
+  "rating": "4.5",
+  "subtitle": "5 boneless medium piece",
+  "preptime": "15-20min",
+  "tags": "american,starter,snacks,non veg,chicken strip",
+  "price": 100
+},
+{
+  "_id": {
+    "$oid": "66c6bc1c4173ba3e3432fd1d"
+  },
+  "name": "Chicken Sub",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-sub.webp",
+    "img_two": ""
+  },
+  "description": "Made with Italian bread stuffed with chicken breast, varieties of fresh vegetables, cheese and BBQ sauce.",
+  "quantity": "1 piece",
+  "cuisine": "American",
+  "category": "non veg",
+  "rating": "4.3",
+  "subtitle": "",
+  "preptime": "05-10min",
+  "tags": "american,snacks,sandwich,non veg,chicken sub",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c6c2ac4173ba3e3432fd1e"
+  },
+  "name": "Paneer Butter Masala",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/paneer-butter-masala.webp",
+    "img_two": ""
+  },
+  "description": "A rich and creamy dish of paneer made with tomato, butter, cheese, fresh cream, masala and cashew sauce.",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.3",
+  "subtitle": "",
+  "preptime": "20-25min",
+  "tags": "indian,side dish,gravy,veg,paneer butter masala",
+  "price": 120
+},
+{
+  "_id": {
+    "$oid": "66c6c4914173ba3e3432fd1f"
+  },
+  "name": "Chicken Do Pyaza",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-do-payaza.webp",
+    "img_two": ""
+  },
+  "description": "A delightful, one-pot chicken curry bursting with the enticing flavor of onions, aromatic indian spices and creamy.",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "6 boneless medium piece",
+  "preptime": "25-30min",
+  "tags": "indian,side dish,gravy,non veg,chicken do pyaza",
+  "price": 140
+},
+{
+  "_id": {
+    "$oid": "66c6c5634173ba3e3432fd20"
+  },
+  "name": "Masala Chicken",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/masala-chicken.webp",
+    "img_two": ""
+  },
+  "description": "Made with onion, garlic paste and various masala curry powder, turmeric, kashmiri chili powder, cumin, kasoor methi and salt.",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "6 boneless medium piece",
+  "preptime": "25-30min",
+  "tags": "indian,side dish,gravy,non veg,masala chicken",
+  "price": 150
+},
+{
+  "_id": {
+    "$oid": "66c6c66b4173ba3e3432fd21"
+  },
+  "name": "Jeera Rice",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/jeera-rice.webp",
+    "img_two": ""
+  },
+  "description": "A delightful basmati rice dish mixed with fied spices in ghee",
+  "quantity": "1 bowl",
+  "cuisine": "indian",
+  "category": "veg",
+  "rating": "4.1",
+  "subtitle": "suitable for two people",
+  "preptime": "25-30min",
+  "tags": "indian,main course,veg,jeera rice",
+  "price": 100
+},
+{
+  "_id": {
+    "$oid": "66c6e97b4173ba3e3432fd22"
+  },
+  "name": "Dahi Lassi",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/dahi-lassi.webp",
+    "img_two": ""
+  },
+  "description": "A refreshing drink made with uses yogurt, milk, ice, black salt and vanila essence.",
+  "quantity": "300 ml",
+  "cuisine": "indian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "300 ml glass",
+  "preptime": "05-10min",
+  "tags": "indian,drinks,lassi,veg,dahi lassi",
+  "price": 30
+},
+{
+  "_id": {
+    "$oid": "66c6eb774173ba3e3432fd23"
+  },
+  "name": "Malai Kulfi",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/kulfi.webp",
+    "img_two": ""
+  },
+  "description": "A delightful treat for dessert made with milk, pistachios, cream and saffron",
+  "quantity": "1 piece",
+  "cuisine": "indian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "",
+  "preptime": "05-10min",
+  "tags": "indian,dessert,veg,malai kulfi,ice cream",
+  "price": 20
+},
+{
+  "_id": {
+    "$oid": "66c709674173ba3e3432fd24"
+  },
+  "name": "Mutton Biriyani",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mutton-biriyani.webp",
+    "img_two": ""
+  },
+  "description": "Juicy, tender, flavourful mutton, fragrant rice and layers of flavour!",
+  "quantity": "1 plate",
+  "cuisine": "indian",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "with 150g mutton and two aloo",
+  "preptime": "20-25min",
+  "tags": "indian,main course,non veg,rice,mutton biriyani",
+  "price": 160
+},
+{
+  "_id": {
+    "$oid": "66c70b1d4173ba3e3432fd25"
+  },
+  "name": "Paneer Roll",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/paneer-roll.webp",
+    "img_two": ""
+  },
+  "description": "Marinated and pan-fried paneer, cheese, plenty of veggies and green chutney wraped with laccha paratha.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "15-20min",
+  "tags": "indian,snacks,wrap,veg,paneer roll",
+  "price": 25
+},
+{
+  "_id": {
+    "$oid": "66c7183d4173ba3e3432fd26"
+  },
+  "name": "Chicken Momo Burger",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/momoburger-combo.webp",
+    "img_two": ""
+  },
+  "description": "Filled with two pieces of fried momo with Chicken patty, smoked cheese, iceberg lettuce, tomato, mayonnaise, schezwan and coriander sauce.",
+  "quantity": "1 piece",
+  "cuisine": "American",
+  "category": "non veg",
+  "rating": "4.6",
+  "subtitle": "",
+  "preptime": "20-25min",
+  "tags": "american,snacks,burger,non veg,chicken momo burger",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c7202c4173ba3e3432fd27"
+  },
+  "name": "Chana Dal Paneer",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chana-dal-paneer.webp",
+    "img_two": ""
+  },
+  "description": "Chana Dal fry with veggies, paneer and masala",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "",
+  "preptime": "15-20min",
+  "tags": "indian,side dish,veg,chana dal paneer",
+  "price": 60
+},
+{
+  "_id": {
+    "$oid": "66c726124173ba3e3432fd28"
+  },
+  "name": "Creamy Chicken Roll",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/creamy-chicken-roll.webp",
+    "img_two": ""
+  },
+  "description": "outside crispy and inside soft, made with chicken paste, Ginger garlic paste ,Coriander powder, garam masala",
+  "quantity": "2 piece",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.8",
+  "subtitle": "2 piece",
+  "preptime": "15-20min",
+  "tags": "indian,snacks,starter,non veg,creamy chicken roll",
+  "price": 60
+},
+{
+  "_id": {
+    "$oid": "66c727ed4173ba3e3432fd29"
+  },
+  "name": "Chicken Kosha",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-kosha.webp",
+    "img_two": ""
+  },
+  "description": "An authentic Bengali dish that is spicy, wholesome and simply delicious, where chicken is marinated with yogurt, onion, ginger, garlic paste and other spices before cook",
+  "quantity": "5 piece",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "5 piece",
+  "preptime": "20-25min",
+  "tags": "indian,side dish,non veg,chicken kosha",
+  "price": 100
+},
+{
+  "_id": {
+    "$oid": "66c745824173ba3e3432fd2a"
+  },
+  "name": "Veggie Shawarma Roll",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/veggie-shawarma-roll.webp",
+    "img_two": ""
+  },
+  "description": "Whole wheat pita bread that stuffed with green vegitables, paneer, cheese, mayonnaise and cream.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.2",
+  "subtitle": "",
+  "preptime": "20-25min",
+  "tags": "indian,snacks,wrap,veg,veggie shawarma roll",
+  "price": 40
+},
+{
+  "_id": {
+    "$oid": "66c747314173ba3e3432fd2b"
+  },
+  "name": "Egg Chicken Roll",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/egg-chicken-roll.webp",
+    "img_two": ""
+  },
+  "description": "Chicken kathi (skewered) kababs are wrapped with vegitables, cheese in sweet, flaky laccha porota.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "",
+  "preptime": "20-25min",
+  "tags": "indian,snacks,wrap,non veg,veggie shawarma roll",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c766494173ba3e3432fd2c"
+  },
+  "name": "Fish Cutlet",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/diamond-fish-cutlet.webp",
+    "img_two": ""
+  },
+  "description": "Breadcrumb coated fish is marinated with garlic, onion paste and spices is fried.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.5",
+  "subtitle": "made with pure vetki fish",
+  "preptime": "20-25min",
+  "tags": "indian,starter,snacks,non veg,fish cutlet",
+  "price": 60
+},
+{
+  "_id": {
+    "$oid": "66c76b614173ba3e3432fd2d"
+  },
+  "name": "Chicken Patties",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-patties.webp",
+    "img_two": ""
+  },
+  "description": "A salty , crispy, flaky pastry , a delicious tea time snack baked with a filling of seasoned potatoes and chicken paste.",
+  "quantity": "1 piece",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "3.9",
+  "subtitle": "",
+  "preptime": "20-25min",
+  "tags": "indian,snacks,non veg,chicken patties",
+  "price": 30
+},
+{
+  "_id": {
+    "$oid": "66c76c914173ba3e3432fd2e"
+  },
+  "name": "Mughlai Chicken",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mughlai-chicken.webp",
+    "img_two": ""
+  },
+  "description": "A creamy, thick gravy made with chicken, garlic, onion, pepper powder, egg, cream, butter and spices",
+  "quantity": "6 piece",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "6 piece boneless chicken",
+  "preptime": "25-30min",
+  "tags": "indian,side dish,non veg,mughlai chicken",
+  "price": 160
+},
+{
+  "_id": {
+    "$oid": "66c770604173ba3e3432fd2f"
+  },
+  "name": "Orange Mojito",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/orange-mojito.webp",
+    "img_two": ""
+  },
+  "description": "A perfect refreshing easy drink made with fresh mint, oranges, and sugar!",
+  "quantity": "1 glass",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "",
+  "preptime": "25-30min",
+  "tags": "indian,drinks,veg,orange mojito",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c771ff4173ba3e3432fd30"
+  },
+  "name": "Mango Ice Cream",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mango-icecream.webp",
+    "img_two": ""
+  },
+  "description": "Loved by everyone, made with milk, mango, cream and cornflour",
+  "quantity": "1 plate",
+  "cuisine": "indian",
+  "category": "veg",
+  "rating": "4.8",
+  "subtitle": "3 scoop",
+  "preptime": "05-10min",
+  "tags": "indian,dessert,icecream,veg,mango ice cream",
+  "price": 40
+},
+{
+  "_id": {
+    "$oid": "66c773cf4173ba3e3432fd31"
+  },
+  "name": "Butter Scotch Ice Cream",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/butter-scotch-ice-cream.webp",
+    "img_two": ""
+  },
+  "description": "Made with milk, butterscotch sauce, praline, cream and cornflour",
+  "quantity": "1 plate",
+  "cuisine": "indian",
+  "category": "veg",
+  "rating": "4.4",
+  "subtitle": "3 scoop",
+  "preptime": "05-10min",
+  "tags": "indian,dessert,icecream,veg,butter scotch ice cream",
+  "price": 50
+},
+{
+  "_id": {
+    "$oid": "66c7750a4173ba3e3432fd32"
+  },
+  "name": "Cheese Omelette",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/cheese-omelette.webp",
+    "img_two": ""
+  },
+  "description": "Fluffy, cheesy and delicious made with egg, butter, cheese, black pepper powder",
+  "quantity": "1 piece",
+  "cuisine": "American",
+  "category": "non veg",
+  "rating": "4.5",
+  "subtitle": "with double egg",
+  "preptime": "15-20min",
+  "tags": "american,starter,snacks,non veg,cheese omelette",
+  "price": 30
+}]
