@@ -31,8 +31,9 @@ export default function AppFunction(){
 
 
     // search functionality on input search bar
-    const [searchItem, setSearchItem]       =   useState('');
-    const [cuisineData, updateCuisineData]  =   useState('cuisines');
+    const [searchItem, setSearchItem]           =   useState('');
+    const [cuisineData, updateCuisineData]      =   useState('cuisines');
+    const [sortByFilter, updateSortByFilter]    =   useState('default')
 
     const getSearchInput = (event) => {
         let search_text = event.target.value;
@@ -111,10 +112,45 @@ export default function AppFunction(){
         }
     }
 
+    function getSortFilterInput(event){
+        let ele_val      = event.target.value;
+        updateSortByFilter(ele_val);
+    }
+
+    // This function helps to sort data on deferent condition
+    function getSortFilter(tempData){
+        let temp_array = [];
+        if(sortByFilter === 'cost-low-to-high'){
+            temp_array = tempData.sort(function(a, b){return a.price-b.price});
+            return(temp_array);
+        }else if(sortByFilter === 'cost-high-to-low'){
+            temp_array = tempData.sort(function(a, b){return b.price-a.price});
+            return (temp_array);
+        }else if(sortByFilter === 'rating'){
+            temp_array = tempData.sort(function(a, b){return b.rating-a.rating});
+            return(temp_array);
+        }else if(sortByFilter === 'delivery-time'){
+
+            temp_array = tempData.sort(function(a, b){return splitar(a.preptime)-splitar(b.preptime)});
+            return (temp_array);
+        }else{
+            return(tempData);
+        }
+    }
+
+    // return the first part of a string by split with "-"
+    function splitar(val){
+        const a = val.split("-");
+        return (parseInt(a[0]));
+    }
+
     // filtered data from all data by comparing input letters and stored in new array
-    const getFilteredItemList   = tempFoodlist.filter((item) =>
+    let getFilteredItemList   = tempFoodlist.filter((item) =>
         item.tags.toLowerCase().includes(searchItem)
     );
+
+    // check if any input of sort by is added or not, then rearrange the filtered data as per condition else store the filtered data only
+    getFilteredItemList = sortByFilter !== 'default' ? getSortFilter(getFilteredItemList) : getFilteredItemList;
 
     // filtered toppics data on depend on selected cuisine in dropdown and stored in new array
     const getTopPicsItemList   = foodlist.filter((item) =>
@@ -181,7 +217,7 @@ export default function AppFunction(){
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName}/>}/>
-                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
+                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getSortFilterInput={getSortFilterInput} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
                 <Route exact path="/special-combos" element={<CombosPage />} />
                 <Route exact path="/reviews" element={<ReviewPage/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
