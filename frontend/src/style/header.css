@@ -48,9 +48,6 @@ a.nav-link{
 [search-bar-hide="on"]{
     display: none !important;
 }
-.search-input-box, .item-filter-select{
-    background-color: #fffae3;
-}
 
 @media(max-width: 767.98px){
     .offcanvas{

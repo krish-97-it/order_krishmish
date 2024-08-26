@@ -5,7 +5,7 @@ import vegIcon from '../assets/veg-icon.webp';
 import nonVegIcon from '../assets/non-veg-icon.webp';
 
 
-export default function Cuisine({getItemList, getFilteredItemList, getInputCuisine, getCuisineName, getFoodName, getFoodNameByCategory, getTopPicsItemList, addToCartFunction, addedCartItem}){
+export default function Cuisine({getItemList, getFilteredItemList, getInputCuisine, getCuisineName, getFoodName, getFoodNameByCategory, getSortFilterInput, getTopPicsItemList, addToCartFunction, addedCartItem}){
 
     const location = useLocation();
     const currentPath = location.pathname;
@@ -53,18 +53,26 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
         let ele_val      = event.target.value;
         updateFoodCategory(ele_val);
     }
+
     return(
         <div className="app-body">
             <div className="main-content">
-                <h3 className="gradient-bg no-border-radius">What's on your mind?</h3>
-                <div className="select-cuisine-section" show-on-cuisine-page = {currentPath === '/cuisine' ? 'on' : 'off'}>
-                    <select id="cuisineselect" className="form-select item-filter-select" aria-label="Default select example" onChange={getInputCuisine}>
-                        <option defaultValue="all cuisines">All Cuisines</option>
-                        <option value="indian">Indian</option>
-                        <option value="chinese">Chinese</option>
-                        <option value="american">american</option>
-                        <option value="italian">Italian</option>
-                    </select>
+                <h3 className="gradient-bg no-border-radius mb-0">What's on your mind?</h3>
+                <div className="select-cuisine-bg">
+                    <div className="dark-opacity">
+                        <div className="select-cuisine-container container">
+                            <div className="select-cuisine-section cuisine-select-dropdown" show-on-cuisine-page = {currentPath === '/cuisine' ? 'on' : 'off'}>
+                                <p style={{border: "2px solid #8b8b8b", padding: "10px", color:"#fffcd9", background: "black", background: "rgb(0, 0, 0, 0.5)"}}>Choose a Specific CUISINE & Order your Favourite Dishes !!</p>
+                                <select id="cuisineselect" className="form-select item-filter-select" aria-label="Default select example" onChange={getInputCuisine}>
+                                    <option defaultValue="all cuisines">All Cuisines</option>
+                                    <option value="indian">Indian</option>
+                                    <option value="chinese">Chinese</option>
+                                    <option value="american">American</option>
+                                    <option value="italian">Italian</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="top-pics-container container-fluid mt-2">
                     <div>
@@ -114,23 +122,61 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                 <button className="chevron-right-button" onClick={() => catFilterScroll('right')}><i className="fa fa-lg fa-chevron-right"></i></button>
                             </div>
                         </div>
-                        <div className="filter-product-section">
-                            <div className="filter-txt">Filter:</div>                                
-                            <div className="veg-nonveg-option">
-                                <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="radio" name="radiobtn" id="radio-btn-1" onChange={getFoodCategory} value="All" defaultChecked/>
-                                    <label className="form-check-label" htmlFor="inlineRadio1">All</label>
+                        <div className="product-filter-container">
+                            <div className="filter-product-section">
+                                {/* <div className="filter-txt">Filter:</div> */}
+                                <div className="dropdown sort-by-btn-section">
+                                    <button className="btn btn-secondary dropdown-toggle sort-by-btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Sort By
+                                    </button>
+                                    <ul className="dropdown-menu dropdown-area-expand" aria-labelledby="dropdownMenuButton1" style={{padding : "10px", color: "#4b4b4b", fontweight: "500"}}>
+                                        <li>
+                                            <div className="form-check form-check-inline sort-by-form-check">
+                                                <label className="form-check-label" htmlFor="inlineRadio1">Default</label>
+                                                <input className="form-check-input-sort-by" type="radio" name="radiobtnsortby" id="radio-btn1" onChange={getSortFilterInput} value="Default" defaultChecked/>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="form-check form-check-inline sort-by-form-check">
+                                                <label className="form-check-label" htmlFor="inlineRadio2">Rating</label>
+                                                <input className="form-check-input-sort-by" type="radio" name="radiobtnsortby" id="radio-btn2" onChange={getSortFilterInput} value="rating"/>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="form-check form-check-inline sort-by-form-check">
+                                                <label className="form-check-label" htmlFor="inlineRadio3">Delivery Time</label>
+                                                <input className="form-check-input-sort-by" type="radio" name="radiobtnsortby" id="radio-btn3" onChange={getSortFilterInput} value="delivery-time"/>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="form-check form-check-inline sort-by-form-check">
+                                                <label className="form-check-label" htmlFor="inlineRadio4">Cost Low-to-High</label>
+                                                <input className="form-check-input-sort-by" type="radio" name="radiobtnsortby" id="radio-btn4" onChange={getSortFilterInput} value="cost-low-to-high"/>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="form-check form-check-inline sort-by-form-check">
+                                                <label className="form-check-label" htmlFor="inlineRadio5">Cost high-to-low</label>
+                                                <input className="form-check-input-sort-by" type="radio" name="radiobtnsortby" id="radio-btn5" onChange={getSortFilterInput} value="cost-high-to-low"/>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="radio" name="radiobtn" id="radio-btn-2" onChange={getFoodCategory} value="Veg"/>
-                                    <label className="form-check-label" htmlFor="inlineRadio2">Veg</label>
-                                </div>
-                                <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="radio" name="radiobtn" id="radio-btn-3" onChange={getFoodCategory} value="Non Veg"/>
-                                    <label className="form-check-label" htmlFor="inlineRadio3">Non-veg</label>
+                                <div className="veg-nonveg-option">
+                                    <div className="form-check form-check-inline">
+                                        <input className="form-check-input" type="radio" name="radiobtn" id="radio-btn-1" onChange={getFoodCategory} value="All" defaultChecked/>
+                                        <label className="form-check-label" htmlFor="inlineRadio1">All</label>
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <input className="form-check-input" type="radio" name="radiobtn" id="radio-btn-2" onChange={getFoodCategory} value="Veg"/>
+                                        <label className="form-check-label" htmlFor="inlineRadio2">Veg</label>
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <input className="form-check-input" type="radio" name="radiobtn" id="radio-btn-3" onChange={getFoodCategory} value="Non Veg"/>
+                                        <label className="form-check-label" htmlFor="inlineRadio3">Non-veg</label>
+                                    </div>
                                 </div>
                             </div>
-                            
                         </div>
                         <h5>{(getFilteredItemList.length > 0 && foodCategory !=='All') ? "Showing results for: "+foodCategory+" Dishes" : ''}</h5>
                         <div className="food-card-section all-product-show mt-3 mb-3">
