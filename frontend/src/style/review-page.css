@@ -1,0 +1,20 @@
+/* .slick-slider{
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+.slick-slider button{
+    position: relative !important;
+    transform: none !important;
+    width: 36px;
+    height: 36px;
+    font-size: 30px !important;
+} */
+.slick-prev{
+    /* left: 0 !important; */
+    /* background-color: rgb(251, 163, 31) !important; */
+}
+/* .slick-next{
+    right: 0 !important;
+} */

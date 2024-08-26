@@ -1,0 +1,73 @@
+.combo-banner-section{
+    background-color: #612430;
+    margin-top: 62px;
+}
+.combo-item-carousel-section{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.combo-page-item-section{
+    padding-left: 30px;
+    padding-right: 30px;
+    position: relative;
+}
+.combo-item-card{
+    margin: 0px 6px;
+}
+.react-multi-carousel-list{
+    position: static !important;
+}
+.combo-carousel-arrow {
+    position: absolute;
+    top: 42%;
+}
+.right {
+    right: -10px;
+}
+.left {
+    left: -10px;
+}
+.combo-card-img{
+    max-height: 240px !important;
+    object-fit: cover;
+}
+
+@media(min-width:992px){
+    .combo-item-card{
+        margin: 0px 8px;
+    }
+}
+@media(min-width:992px) and (max-width:1199.98px){
+    .combo-card-img{
+        max-height: 190px !important;
+    }
+}
+@media(min-width:650px) and (max-width:991.98px){
+    .combo-item-card{
+        margin: 0px 6px;
+    }
+    .combo-card-img{
+        max-height: 230px !important;
+    }
+}
+@media(min-width:424px) and (max-width:649.98px){
+    .combo-item-card{
+        margin: 0px 3px;
+    }
+    .combo-card-img{
+        max-height: 220px !important;
+    }
+}
+@media(min-width:320px) and (max-width:423.98px){
+    .combo-item-card{
+        margin: 0px 6px;
+    }
+    .combo-card-img{
+        max-height: 190px !important;
+        object-fit: cover;
+    }
+}
+
+.accordion-button:focus{
+    box-shadow: none !important;
+}

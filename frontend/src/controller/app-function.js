@@ -103,7 +103,8 @@ export default function AppFunction(){
     }
 
     const getHomeCuisineName = (cuisine) =>{
-        setSearchItem(cuisine);
+        let search_item = cuisine.toLowerCase();
+        setSearchItem(search_item);
         if(cuisineData !== 'cuisines'){
             const abc = foodlist.filter((item) =>
                 item.cuisine.toLowerCase().includes(cuisineData)
@@ -156,6 +157,11 @@ export default function AppFunction(){
     const getTopPicsItemList   = foodlist.filter((item) =>
         item.cuisine.toLowerCase().includes(cuisineData)
     );
+
+    // Data Filtered for combo page to fetch combo data only
+    const comboItemList     =   foodlist.filter((item) =>
+        item.tags.toLowerCase().includes('combos')
+    )
 
     // Add to cart Functionality
     const [cartItem, setCartItem]       =   useState([]);
@@ -218,8 +224,8 @@ export default function AppFunction(){
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName}/>}/>
                 <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getSortFilterInput={getSortFilterInput} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
-                <Route exact path="/special-combos" element={<CombosPage />} />
-                <Route exact path="/reviews" element={<ReviewPage/>} />
+                <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
+                <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
                 {/* <Route exact path="*" element={<NoPage />} /> */}
             </Routes>
