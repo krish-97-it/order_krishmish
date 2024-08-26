@@ -1,10 +1,44 @@
 import React from "react";
 
-export default function combosPage(){
+import Slider from "react-slick";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ComboItemCarousel from "../components/combo-page-carousel";
+import OffersInfo from "../components/offers-info";
+
+export default function CombosPage({comboItemList, getHomeCuisineName, addToCartFunction, addedCartItem}){
+      
     return(
         <div className="app-body">
             <div className="main-content">
-                Welcome to Special combos page.
+                <div className="combo-banner-section">
+                    <div className="container">
+                        <picture>
+                            <source media="(min-width:768px)" srcSet="https://img.perceptpixel.com/pykhlszs/combo-banner.webp"/>
+                            <source media="(max-width:767.98px)" srcSet="https://img.perceptpixel.com/pykhlszs/combo-mob-banner.webp"/>
+                            <img src="https://img.perceptpixel.com/pykhlszs/combo-mob-banner.webp" alt="combo banners" style={{width:"100%", height:"auto"}}/>
+                        </picture>
+                    </div>
+                </div>
+                <div className="container-fluid">
+                    <div className="combos-item-section">
+                        <div className="food-card-container mt-5">
+                            <h3 className="gradient-bg">Special Combos</h3>
+                            <ComboItemCarousel comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addToCartFunction} addedCartItem = {addedCartItem}/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="offers-info-section">
+                    <div className="container-fluid food-card-container mt-5">
+                        <h3 className="gradient-bg">Exclusive Offers</h3>
+                    </div>
+                    <div className="container">
+                        <OffersInfo getHomeCuisineName={getHomeCuisineName}/>
+                    </div>
+                </div>
+
             </div>
         </div>
     )

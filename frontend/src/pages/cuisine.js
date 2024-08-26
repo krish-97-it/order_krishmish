@@ -101,7 +101,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                     </div>
                 </div>
                 <div className="show-all-products">
-                    <h3 className="gradient-bg">
+                    <h3 className="gradient-bg no-border-radius">
                         Food under <span className="cuisine-name-txt">{getCuisineName !== 'cuisines' ? getCuisineName.toUpperCase():'ALL'}</span> cuisine
                     </h3>
                     
@@ -117,6 +117,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                 <button type="button" className="btn text-nowrap btn-drinks font-color-w" onClick={getFoodNameByCategory} value="drinks">Drinks</button>
                                 <button type="button" className="btn text-nowrap btn-snacks" onClick={getFoodNameByCategory} value="snacks">Snacks</button>
                                 <button type="button" className="btn text-nowrap btn-desert" onClick={getFoodNameByCategory} value="dessert">Dessert</button>
+                                <button type="button" className="btn text-nowrap btn-combos font-color-w" onClick={getFoodNameByCategory} value="combos">Combos</button>
                             </div>
                             <div className="btn-for-scroll">
                                 <button className="chevron-right-button" onClick={() => catFilterScroll('right')}><i className="fa fa-lg fa-chevron-right"></i></button>

@@ -57,3 +57,10 @@ body{
   border: 2px solid rgb(219, 219, 219);
   color: rgb(255, 255, 255);
 }
+
+[dark-theme="on"] .combo-carousel-arrow{
+  color: #ffffff !important;
+}
+[dark-theme="on"] .sort-by-btn{
+  color: rgb(231, 157, 255) !important;
+}

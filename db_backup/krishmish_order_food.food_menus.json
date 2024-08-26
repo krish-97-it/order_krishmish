@@ -1365,4 +1365,213 @@
   "preptime": "15-20min",
   "tags": "american,starter,snacks,non veg,cheese omelette",
   "price": 30
+},
+{
+  "_id": {
+    "$oid": "66cc984ec7db91044a8b3d6c"
+  },
+  "name": "Basanti Polao Combo",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/polao-chicken-kosa.webp",
+    "img_two": ""
+  },
+  "description": "Traditional Basanti Polao with spicy Chicken Kosha with salad",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.5",
+  "subtitle": "with 2 medium piece Chicken Kosha",
+  "preptime": "20-25min",
+  "tags": "combos,meal,non veg,indian,basanti polao,chicken kosha",
+  "price": 90
+},
+{
+  "_id": {
+    "$oid": "66cc9a11c7db91044a8b3d6d"
+  },
+  "name": "Indian Veg Meal Combo",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/veg-meal-combo.webp",
+    "img_two": ""
+  },
+  "description": "Offers 2 piece roti, jira rice, mugh dal, paneer curry, potato fry, gobi pakoda, papad",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.3",
+  "subtitle": "with 7 veg items",
+  "preptime": "25-30min",
+  "tags": "combos,meal,veg,indian,rice,roti,paneer",
+  "price": 80
+},
+{
+  "_id": {
+    "$oid": "66cc9ac2c7db91044a8b3d6e"
+  },
+  "name": "Fried Rice Combo",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/fried-rice-chili-chicken.webp",
+    "img_two": ""
+  },
+  "description": "mix veg fried rice with authentic chinese chili chicken",
+  "quantity": "1 plate",
+  "cuisine": "Chinese",
+  "category": "non veg",
+  "rating": "4.8",
+  "subtitle": "with 4 piece Chili Chicken",
+  "preptime": "25-30min",
+  "tags": "combos,meal,non veg,chinese,fried rice,chili chicken",
+  "price": 100
+},
+{
+  "_id": {
+    "$oid": "66cc9b78c7db91044a8b3d6f"
+  },
+  "name": "Chicken Biriyani Combo",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chicken-biriyani-chicken-chap.webp",
+    "img_two": ""
+  },
+  "description": "special chicken dum biriyani with chicken chap, salad and raita,",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.4",
+  "subtitle": "with 2 medium piece Chicken Chap",
+  "preptime": "20-35min",
+  "tags": "combos,meal,non veg,indian,chicken biriyani,chicken chap",
+  "price": 180
+},
+{
+  "_id": {
+    "$oid": "66cc9c17c7db91044a8b3d70"
+  },
+  "name": "Butter Chicken Combo",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/butter-chicken-naan.webp",
+    "img_two": ""
+  },
+  "description": "Offers 4 piece Chicken Butter Masala, 2piece butter naan and salad.",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.6",
+  "subtitle": "with Butter Naan",
+  "preptime": "30-35min",
+  "tags": "combos,meal,non veg,indian,butter chicken,naan",
+  "price": 160
+},
+{
+  "_id": {
+    "$oid": "66cc9cf9c7db91044a8b3d71"
+  },
+  "name": "Chinese Veg Meal",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mix-veg-chinese-combo.webp",
+    "img_two": ""
+  },
+  "description": "Offers hakka noodles, rice, soya chap, dry chili paneer, salad, veg spring roll",
+  "quantity": "1 plate",
+  "cuisine": "Chinese",
+  "category": "veg",
+  "rating": "4.5",
+  "subtitle": "with rice-noodles combo",
+  "preptime": "30-35min",
+  "tags": "combos,meal,veg,chinese,noodles,rice,paneer",
+  "price": 120
+},
+{
+  "_id": {
+    "$oid": "66cc9dcfc7db91044a8b3d72"
+  },
+  "name": "Hakka Noodles Combo",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/mix-noodles-chicken-munchurian.webp",
+    "img_two": ""
+  },
+  "description": "spicy mix hakka noodles with chicken muchurian and salad",
+  "quantity": "1 plate",
+  "cuisine": "Chinese",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "with 4 piece chicken munchurian",
+  "preptime": "20-25min",
+  "tags": "combos,meal,non veg,chinese,hakka noodles,chicken munchurian",
+  "price": 120
+},
+{
+  "_id": {
+    "$oid": "66cc9ea5c7db91044a8b3d73"
+  },
+  "name": "Chicken Kebab Combo",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/kebab-combo.webp",
+    "img_two": ""
+  },
+  "description": "offers three types of chicken kebab - with 4 piece of chicken on each and salad",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "with hariali, reshmi, tandoori kebab",
+  "preptime": "20-25min",
+  "tags": "combos,meal,non veg,indian,chicken kebab,hariali kebab,reshmi kebab",
+  "price": 150
+},
+{
+  "_id": {
+    "$oid": "66cc9f76c7db91044a8b3d74"
+  },
+  "name": "Chicken Momo Mania",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/momo-combo.webp",
+    "img_two": ""
+  },
+  "description": "offers three types of chicken momo - with 4 piece on each, sause, soup.",
+  "quantity": "1 plate",
+  "cuisine": "Chinese",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "with fried, pan fried, chicken chese momo",
+  "preptime": "20-25min",
+  "tags": "combos,meal,non veg,chinese,momo,chicken momo,fried momo",
+  "price": 140
+},
+{
+  "_id": {
+    "$oid": "66cca07cc7db91044a8b3d75"
+  },
+  "name": "Chicken Burger Combo",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/brger-combo-coke.webp",
+    "img_two": ""
+  },
+  "description": "Inhouse Chicken Burger with cold driks, french fries and sauce.",
+  "quantity": "1 plate",
+  "cuisine": "American",
+  "category": "non veg",
+  "rating": "4.2",
+  "subtitle": "with 300ml Coke",
+  "preptime": "15-20min",
+  "tags": "combos,meal,non veg,american,chicken burger",
+  "price": 90
+},
+{
+  "_id": {
+    "$oid": "66cca116c7db91044a8b3d76"
+  },
+  "name": "Gulab Jamun",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/gulab-jamun-ice-cream.webp",
+    "img_two": ""
+  },
+  "description": "2 piece Gulab Jamun and 2 scoop Vanila Ice cream",
+  "quantity": "1 plate",
+  "cuisine": "Indian",
+  "category": "veg",
+  "rating": "4.2",
+  "subtitle": "with Ice cream",
+  "preptime": "15-20min",
+  "tags": "combos,sweet,dessert,veg,indian,gulab jamun,ice cream",
+  "price": 50
 }]

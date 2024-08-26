@@ -4,6 +4,7 @@ import './style/header.css';
 import './style/home.css';
 import './style/food-item-card.css';
 import './style/my-cart.css';
+import './style/combo-page.css';
 import AppFunction from './controller/app-function';
 
 function App() {
