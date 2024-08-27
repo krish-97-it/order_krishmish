@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import GoToTop from "../components/go-to-top";
 
 export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCost, increaseItemQuantity, decreaseItemQuantity}){
     return(
@@ -76,6 +77,7 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                     </h3>
                 </div>
             </div>
+            <GoToTop/>
         </div>
     )
 }

@@ -91,6 +91,49 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Open Sans', s
     transition: color 0.2s linear 0s, background 0.2s linear 0s;
     font-size: 15px;
 }
+
+/* Bottom toast section */
+.checkout-cart-container{
+    height: 66px;
+    position: sticky;
+    z-index: 1000;
+    bottom: 0px;
+}
+.checkout-cart-toast{
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #000000;
+    background: #ff6363;
+    color: white;
+    font-weight: 600;
+    padding: 9px 10px 8px !important;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05); 
+}
+.toast-header-section{
+    display: flex;
+    justify-content: end;
+}
+.toast-header-section button{
+    position: absolute;
+    top: -12px;
+    right: 6px;
+    background-color: black;
+    border-radius: 50%;
+    font-weight: 700;
+    opacity: 2;
+    padding: 0px;
+    font-size: 10px;
+    font-weight: 700;
+    color: white !important;
+    width: 20px;
+    height: 20px;
+    border: none;
+}
+.toast-body-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 @media(min-width:768px){
     .logo-contact-info{
         padding-right: 25px

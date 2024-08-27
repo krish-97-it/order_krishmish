@@ -3,9 +3,11 @@ import { useLocation } from 'react-router-dom';
 import ratingSvg from '../assets/rating-star.svg';
 import vegIcon from '../assets/veg-icon.webp';
 import nonVegIcon from '../assets/non-veg-icon.webp';
+import BottomToast from "../components/bottom-toast";
+import GoToTop from "../components/go-to-top";
 
 
-export default function Cuisine({getItemList, getFilteredItemList, getInputCuisine, getCuisineName, getFoodName, getFoodNameByCategory, getSortFilterInput, getTopPicsItemList, addToCartFunction, addedCartItem}){
+export default function Cuisine({getItemList, getFilteredItemList, getInputCuisine, getCuisineName, getFoodName, getFoodNameByCategory, getSortFilterInput, getTopPicsItemList, addToCartFunction, addedCartItem, totalCartItem}){
 
     const location = useLocation();
     const currentPath = location.pathname;
@@ -56,7 +58,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
 
     return(
         <div className="app-body">
-            <div className="main-content">
+            <div className="main-content" style={{position:"relative"}}>
                 <h3 className="gradient-bg no-border-radius mb-0">What's on your mind?</h3>
                 <div className="select-cuisine-bg">
                     <div className="dark-opacity">
@@ -288,7 +290,13 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                         </div>
                     </div>
                 </div>
-                
+                {
+                    (totalCartItem > 0)?
+                    <BottomToast/>
+                    :
+                    <></>
+                }
+                <GoToTop/>
             </div>
         </div>
     )

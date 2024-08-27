@@ -1,13 +1,10 @@
 import React from "react";
-
-import Slider from "react-slick";
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import ComboItemCarousel from "../components/combo-page-carousel";
 import OffersInfo from "../components/offers-info";
+import BottomToast from "../components/bottom-toast";
+import GoToTop from "../components/go-to-top";
 
-export default function CombosPage({comboItemList, getHomeCuisineName, addToCartFunction, addedCartItem}){
+export default function CombosPage({comboItemList, getHomeCuisineName, addToCartFunction, addedCartItem, totalCartItem}){
       
     return(
         <div className="app-body">
@@ -39,6 +36,13 @@ export default function CombosPage({comboItemList, getHomeCuisineName, addToCart
                     </div>
                 </div>
 
+                {
+                    (totalCartItem > 0)?
+                    <BottomToast/>
+                    :
+                    <></>
+                }
+                <GoToTop/>
             </div>
         </div>
     )

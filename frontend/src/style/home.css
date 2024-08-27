@@ -6,6 +6,7 @@
 }
 .carousel-item-img{
     min-height: 180px;
+    max-height: 420px;
     object-fit: cover;
 }
 .carousel-indicators{
@@ -142,10 +143,15 @@
 
 .fav-cat-banner-section{
     /* background: linear-gradient(271deg, #ff5a5a, #ee6d2f, #570df6); */
-    background: linear-gradient(271deg, #9eb7ff, #c26575);
+    /* background: linear-gradient(271deg, #9eb7ff, #c26575); */
+    background-image: url(https://img.perceptpixel.com/pykhlszs/banner-one.jpg);
+    margin-top: 0px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 2px solid black;
     min-height: 131px;
     color: #ffffff;
-    padding: 20px;
+    /* padding: 20px; */
     border-radius: 10px 10px 80px 80px;
     font-weight: 600;
     width: 100%;
@@ -153,15 +159,27 @@
     align-items: center;
     justify-content: space-evenly;
 }
+.fav-cat-bg-opacity{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    background-color:rgb(0,0,0); 
+    background-color:rgba(0,0,0, 0.4); 
+    width:100%;
+    border-radius: 10px 10px 80px 80px;
+    padding: 20px;
+}
 .carousel-control-btn-stye{
     position: relative;
     width: auto;
+    opacity: 1.5;
+    font-weight: 600;
 }
 .carousel-control-btn-stye .carousel-control-prev-icon{
-    border-right: 2px solid;
+    border-right: 2px solid red;
 }
 .carousel-control-btn-stye .carousel-control-next-icon{
-    border-left: 2px solid;
+    border-left: 2px solid red;
 }
 .fav-cat-item-list{
     display: flex;
