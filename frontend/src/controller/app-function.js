@@ -163,6 +163,19 @@ export default function AppFunction(){
         item.tags.toLowerCase().includes('combos')
     )
 
+    // Combo Items sort randomly For Home Page
+    let randomComboItemList  = comboItemList.sort(function (a, b) {
+        return Math.random() - 0.5;
+    })
+    // function randomSort(arr) {
+    //     console.log(arr)
+    //     return arr.map((val) => ({ val, sort: Math.random() }))
+    //     .sort((a, b) => a.sort - b.sort)
+    //     .map(({ val }) => val);
+    // }
+    // let randomComboItemList   = randomSort(comboItemList);
+    
+
     // Add to cart Functionality
     const [cartItem, setCartItem]       =   useState([]);
     const addItemToCart = (Itemdata) => {
@@ -219,12 +232,12 @@ export default function AppFunction(){
 
     return (
         <Router>
-            <Navbar searchbar="false" />
+            <Navbar searchbar="false" totalCartItem={cartItem.length} />
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
-                <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName}/>}/>
-                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getSortFilterInput={getSortFilterInput} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
-                <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem}/>} />
+                <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName} randomComboItemList={randomComboItemList}/>}/>
+                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getSortFilterInput={getSortFilterInput} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
+                <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
                 {/* <Route exact path="*" element={<NoPage />} /> */}

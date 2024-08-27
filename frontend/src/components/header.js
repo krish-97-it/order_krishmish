@@ -72,7 +72,18 @@ const Navbar = (props) => {
                                     <NavLink className="nav-link" to="/reviews">Reviews</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link" to="/mycart">My Cart</NavLink>
+                                    <NavLink className="nav-link position-relative" to="/mycart">
+                                        My Cart
+                                        {
+                                            (props.totalCartItem > 0)?
+                                            <span className="position-absolute top-0 badge rounded-pill bg-success">
+                                                <span>{props.totalCartItem}</span>
+                                                <span className="visually-hidden">Total Cart Item</span>
+                                            </span>
+                                            :
+                                            <></>
+                                        }
+                                    </NavLink>
                                 </li>
                             </ul>
                             <>
