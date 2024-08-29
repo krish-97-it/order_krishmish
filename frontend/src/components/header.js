@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Brandlogo from '../assets/shop-logo-one-1.jpg';
+import HamburgerIcon from '../assets/hamburger.svg';
 import { Link } from "react-router-dom";
 import lightDarkIcon from '../assets/day-light-mode-icon.svg';
+import LoginModal from './login-modal';
 
 const Navbar = (props) => {
+    function closeOffCanvas() {
+        if(window.outerWidth < 768){
+            document.querySelector("button.navbar-toggler").click();
+        }
+    }
 
     const [currentTheme, setDarkTheme] = useState('dark-mode-off');
     
@@ -20,8 +27,8 @@ const Navbar = (props) => {
 
     function toggleTheme(event){
         let val = event.currentTarget.value;
-        console.log(val);
         val === 'dark-mode-on' ? offDarkTheme() : onDarkTheme();
+        closeOffCanvas();
     }
 
     return(
@@ -29,8 +36,9 @@ const Navbar = (props) => {
             <nav className="navbar navbar-expand-md navbar-custom-style bg-dark navbar-dark fixed-top">
                 <div className="container-fluid navbar-container-style">
                     <Link className="navbar-brand" to="/"><img src={Brandlogo} alt="Brand" height="50px" width="54px"/></Link>
-                    <button className="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                        {/* <span className="navbar-toggler-icon"></span> */}
+                        <img src={HamburgerIcon} alt="toggle" style={{width:"36px"}}/>
                     </button>
                     <div className="offcanvas offcanvas-end bg-dark navbar-dark" data-bs-scroll="true" data-bs-backdrop="static" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div className="offcanvas-header">
@@ -39,41 +47,23 @@ const Navbar = (props) => {
                             <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div className="offcanvas-body">
-                            <ul className="navbar-nav justify-content-start flex-grow-1 pe-3 navbar-nav-collapse">
+                            <ul className="navbar-nav justify-content-start flex-grow-1 pe-3 navbar-nav-collapse align-items-baseline">
                                 <li className="nav-item">
-                                    <NavLink className="nav-link" to="/">Home</NavLink>
-                                </li>
-                                {/* <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cuisine</a>
-                                    <ul className="dropdown-menu">
-                                        <li>
-                                            <NavLink className="dropdown-item" to="/indian-cuisine" value="indian">Inidian</NavLink>
-                                        </li>
-                                        <li><hr className="dropdown-divider"/></li>
-                                        <li>
-                                            <NavLink className="dropdown-item" to="/chinese-cuisine" value="chinese">Chineese</NavLink>
-                                        </li>
-                                        <li><hr className="dropdown-divider"/></li>
-                                        <li>
-                                            <NavLink className="dropdown-item" to="/italian-cuisine" value="italian">Italian</NavLink>
-                                        </li>
-                                    </ul>
-                                </li> */}
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/cuisine">Cuisine</NavLink>
+                                    <NavLink className="nav-link" to="/" onClick={closeOffCanvas}>Home</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link" to="/special-combos">Combos & Offers</NavLink>
+                                    <NavLink className="nav-link" to="/cuisine" onClick={closeOffCanvas}>Cuisine</NavLink>
                                 </li>
-                                {/* <li className="nav-item">
-                                    <NavLink className="nav-link" to="/most-loved-dishes">Most Loved</NavLink>
-                                </li> */}
-                                <li className="nav-item">
-                                    <NavLink className="nav-link" to="/reviews">Reviews</NavLink>
+                                <li className="nav-item"> 
+                                    <NavLink className="nav-link" to="/special-combos" onClick={closeOffCanvas}>Combos & Offers</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink className="nav-link position-relative" to="/mycart">
-                                        My Cart
+                                    <NavLink className="nav-link" to="/reviews" onClick={closeOffCanvas}>Reviews</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink className="nav-link position-relative" to="/mycart" onClick={closeOffCanvas}>
+                                        <i className="fa fa-shopping-cart" style={{fontSize:"24px"}}></i>
+                                        <span>&nbsp;Cart</span>
                                         {
                                             (props.totalCartItem > 0)?
                                             <span className="position-absolute top-0 badge rounded-pill bg-success">
@@ -96,18 +86,48 @@ const Navbar = (props) => {
                                 }
                             </>
 
-                            <button className="dark-mode" onClick={toggleTheme} value={currentTheme}>
-                                <img src={lightDarkIcon} alt="icon"/>
-                                <span>
-                                    {
-                                        currentTheme === 'dark-mode-on' ?  'On' : 'Off'
-                                    }
-                                </span>
-                            </button>
+                            <div className='right-align-nav-elements'>
+                                {
+                                    (props.isUserLoggedIn === 'true')?
+                                        <div className="dropdown" style={{textAlign:"left"}}>
+                                            <button className="btn btn-secondary dropdown-toggle profile-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{paddingLeft:"0px", display:"flex", alignItems:"end"}}>
+                                                <i className="fa fa-user" style={{fontSize:"28px"}}></i>
+                                                <span style={{paddingLeft:"10px"}}>Log in</span>
+                                            </button>
+                                            <ul className="dropdown-menu dropdown-menu-end dropdown-menu-start custom-dropdown-menu-style">
+                                                <li><button className="dropdown-item" type="button" onClick={props.openUserProfile}>Profile</button></li>
+                                                <li><button className="dropdown-item" type="button">Favourites</button></li>
+                                                <li><button className="dropdown-item" type="button">Order History</button></li>
+                                                <li><button className="dropdown-item" type="button">Sign Out</button></li>
+                                                <li style={{display:"flex", paddingLeft:"15px", paddingTop:"5px"}}>
+                                                    <span>Dark Mode: &nbsp;</span>
+                                                    <button className="dark-mode" onClick={toggleTheme} value={currentTheme}>
+                                                        <img src={lightDarkIcon} alt="icon"/>
+                                                        <span>
+                                                            {
+                                                                currentTheme === 'dark-mode-on' ?  'On' : 'Off'
+                                                            }
+                                                        </span>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    :
+                                    <button className="btn btn-secondary profile-dropdown" type="button" style={{paddingLeft:"0px", display:"flex", alignItems:"end"}} onClick={props.openLoginModal}>
+                                        <i className="fa fa-user" style={{fontSize:"28px"}}></i>
+                                        <span style={{paddingLeft:"10px"}}>Log in</span>
+                                    </button>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </nav>
+            <>
+            {
+                (props.loginModal) === "show" ? <LoginModal show=" show" loginModal={props.loginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide}/> : <LoginModal show="" loginModal={props.loginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide}/>
+            }
+            </>
         </header>
     )
 }

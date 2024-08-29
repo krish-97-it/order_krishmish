@@ -12,6 +12,30 @@
 .offcanvas-body-style{
     align-items: center;
 }
+.navbar-toggler{
+   border: none;
+   padding: 0px;
+}
+.navbar-toggler:focus{
+    box-shadow: none !important;
+}
+.profile-dropdown::after{
+    content: none;
+}
+.profile-dropdown{
+    background-color: transparent;
+    border: none;
+}
+.profile-dropdown.show, .profile-dropdown:hover{
+    background-color: transparent !important;
+    border: none;
+}
+.profile-dropdown:active{
+    opacity: .5;
+}
+.custom-dropdown-menu-style{
+    width: 200px;
+}
 
 .offcanvas-header{
     padding-bottom: 5px;
@@ -30,7 +54,25 @@ a.nav-link{
 .navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
     color: orange !important;
 }
-
+.dark-mode{
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: transparent;
+    border-radius: 24px;
+    padding: 0px 7px;
+    border: 2px solid rgb(0, 0, 0);
+}
+.dark-mode[value="dark-mode-off"] {
+    background-image: linear-gradient(271deg, black, #3a2b17, #a87230);
+}
+.dark-mode[value="dark-mode-on"] {
+    background-image: linear-gradient(87deg, black, #3a2b17, #a87230);
+}
+.dark-mode span{
+    padding-left: 7px;
+    color: wheat;
+}
 .search-form-container{
     margin-top: 60px;
     display: flex;
@@ -49,9 +91,154 @@ a.nav-link{
     display: none !important;
 }
 
+
+/* login modal styles */
+/* The Modal (background) */
+.login-modal{
+    display: none; 
+    position: fixed;
+    z-index: 1031;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.6);
+}
+.modal-dialog{
+    padding-top: 100px; /* Location of the box */
+    padding: 100px 15px;
+}
+  
+  /* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: none;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    border-radius: 16px 16px 5px 5px;
+}
+  
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+  
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+  
+  /* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+  
+.modal-header {
+    padding: 10px 12px;
+    background-color: #5cb85c;
+    color: white;
+    border-radius: 16px 16px 0px 0px;
+    background-image: linear-gradient(to right, #753A0D 0%, #000000 50%, #005842 100%);
+    background-size: cover;
+    background-position: center;
+    font-size: 26px;
+    display: flex;
+    justify-content: space-between;
+}
+.modal-header button{
+    color: white !important;
+    font-weight: 600;
+    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+  
+.modal-body {padding: 15px 12px 30px 12px}
+  
+.modal-footer {
+    padding: 10px 16px;
+    background-image: linear-gradient(to right, #753A0D 0%, #000000 50%, #005842 100%);
+    color: white;
+    border-radius: 0px 0px 5px 5px;
+}
+.login-modal[show-modal="show"]{
+    display: block;
+}
+.login-modal[show-modal="hide"]{
+    display: none;
+}
+
+.old-user-form{
+    width: 100%;
+    padding: 40px;
+}
+.new-user-form .form-label{
+    float: left;
+}
+.agree-check-form{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+.new-user-reg-btn, .old-user-login-btn{
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+}
+[slide-display="show"]{
+    display: block;
+}
+
+[slide-display="hide"]{
+    display: none;
+}
+
+@media(max-width:991.98px){
+    .modal-content{
+        width:90%;
+    }
+}
 @media(max-width: 767.98px){
     .offcanvas{
         width: 50% !important;
+    }
+    .custom-dropdown-menu-style[data-bs-popper] {
+        right: auto;
+        left: 0;
+    }    
+    .modal-content{
+        width:95%;
+    }
+    .old-user-form{
+        width: 100%;
+        padding:15px 0px 10px 0px;
+    }
+}
+@media(max-width:649.98px){
+    .modal-content{
+        width:100%;
     }
 }
 @media(max-width: 483.98px){
