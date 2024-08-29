@@ -13,9 +13,11 @@ import SearchBar from "../components/searchbar";
 export default function AppFunction(){
 
     // api call to get food menus from backend db. Api written in backend project
-    const [foodlist, updateFoodList]    =   useState([]);
+    const [foodlist, updateFoodList]            =   useState([]);
     const [tempFoodlist, updateTempFoodList]    =   useState([]);
-    const apiURL                        =   'http://localhost:4000/getFoodMenu';
+    const apiURL                                =   'http://localhost:4000/getFoodMenu';
+    const [userLoggedIn, setUserLoggedIn]       =   useState('false');
+    const [loginModal, showLoginModal]          =   useState('hide');
 
     function loadCuisineData(){
         axios.get(apiURL).then((res) => {
@@ -25,10 +27,55 @@ export default function AppFunction(){
             console.log(error)
         });
     }
+
+    function checkUserLogedIn(){
+        // store cartItems to local storage, so that on page load Ites in cart are not deleted
+        let userId  =   localStorage.getItem("krishMishUserId");
+        if(userId){
+            console.log("user found in local storage");
+            loadUserProfileData(userId);
+            setUserLoggedIn('true')
+        }else{
+            showLoginModal("show");
+        }
+    }
+
+    function closeLoginModal(){
+        showLoginModal("hide");
+        
+    }
+
+    function openLoginModal(){
+        if(window.outerWidth < 768){
+            document.querySelector("button.navbar-toggler").click();
+        }
+        showLoginModal('show');
+        setDisplayFirstSlide('show');
+        setDisplaySecondSlide('hide');
+    }
+
+    const [displayFirstSlide, setDisplayFirstSlide]     = useState('show');
+    const [displaySecondSlide, setDisplaySecondSlide]   = useState('hide');
+    function formNextSlide(){
+        setDisplayFirstSlide('hide');
+        setDisplaySecondSlide('show');
+    }
+
+    function formPrevSlide(){
+        setDisplayFirstSlide('show');
+        setDisplaySecondSlide('hide');
+    }
+
     useEffect(() => {
         loadCuisineData();
+        checkUserLogedIn();
     }, []);
 
+
+    const [userData, updateUserData] = useState([]);
+    function loadUserProfileData(u_id){
+        console.log(u_id);
+    }
 
     // search functionality on input search bar
     const [searchItem, setSearchItem]           =   useState('');
@@ -63,7 +110,7 @@ export default function AppFunction(){
         
     }
 
-    // update filtered data on depend on cuisine
+    // update filtered data on depend on input cuisine
     const getInputCuisine = (event) => {
         let ele_val       = ((event.target.value));
 
@@ -85,11 +132,13 @@ export default function AppFunction(){
         }
     }
 
+    // search a particular food on click from top pics section
     const getFoodName = (event) =>{
         let ele_val= event.currentTarget.value;
         setSearchItem(ele_val.toLowerCase());
     }   
 
+    //search foods of a particular category once click on food category filter - main course, starter, snacks...
     const getFoodNameByCategory = (event) =>{
         let ele_val= event.currentTarget.value;
         setSearchItem(ele_val.toLowerCase());
@@ -102,6 +151,7 @@ export default function AppFunction(){
         }
     }
 
+    // search a food,cuisine etc under current cuisine
     const getHomeCuisineName = (cuisine) =>{
         let search_item = cuisine.toLowerCase();
         setSearchItem(search_item);
@@ -113,12 +163,13 @@ export default function AppFunction(){
         }
     }
 
+    // help to get sort by filter input data
     function getSortFilterInput(event){
         let ele_val      = event.target.value;
         updateSortByFilter(ele_val);
     }
 
-    // This function helps to sort data on deferent condition
+    // This function helps to sort data depends on sort by filter input data
     function getSortFilter(tempData){
         let temp_array = [];
         if(sortByFilter === 'cost-low-to-high'){
@@ -164,7 +215,8 @@ export default function AppFunction(){
     )
 
     // Combo Items sort randomly For Home Page
-    let randomComboItemList  = comboItemList.sort(function (a, b) {
+    const tempComboItemList  = [...comboItemList];
+    let randomComboItemList  = tempComboItemList.sort(function (a, b) {
         return Math.random() - 0.5;
     })
     // function randomSort(arr) {
@@ -177,7 +229,7 @@ export default function AppFunction(){
     
 
     // Add to cart Functionality
-    const [cartItem, setCartItem]       =   useState([]);
+    const [cartItem, setCartItem]       =   useState(fetchCartItemDataFromLocalStorage());
     const addItemToCart = (Itemdata) => {
         const findProduct = cartItem.find(item => item.product._id === Itemdata._id);
         if (findProduct) {
@@ -229,10 +281,24 @@ export default function AppFunction(){
         setCartItem(updatedCart);
     }
 
+    // store cartItems to local storage, so that on page load Ites in cart are not deleted
+    let convertCartDataToStringData = JSON.stringify(cartItem);
+    localStorage.setItem("cartData", convertCartDataToStringData);
+
+    // This function fetch cartItem data from localstorage.
+    function fetchCartItemDataFromLocalStorage(){
+        let retCartDataStringFromLocalStorage   = localStorage.getItem("cartData")
+        let retCartDataFromLocalStorage         = JSON.parse(retCartDataStringFromLocalStorage);
+        return retCartDataFromLocalStorage;
+    }
+
+    function openUserProfile(){
+        console.log("todo");
+    }
 
     return (
         <Router>
-            <Navbar searchbar="false" totalCartItem={cartItem.length} />
+            <Navbar searchbar="false" totalCartItem={cartItem.length} loginModal={loginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} openUserProfile={openUserProfile} />
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName} randomComboItemList={randomComboItemList}/>}/>

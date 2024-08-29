@@ -20,15 +20,15 @@ export default function CombosPage({comboItemList, getHomeCuisineName, addToCart
                 </div>
                 <div className="container-fluid">
                     <div className="combos-item-section">
-                        <div className="food-card-container mt-5">
+                        <div className="food-card-container mt-3 mb-4">
                             <h3 className="gradient-bg">Special Combos</h3>
                             <ComboItemCarousel comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addToCartFunction} addedCartItem = {addedCartItem}/>
                         </div>
                     </div>
                 </div>
 
-                <div className="offers-info-section">
-                    <div className="container-fluid food-card-container mt-5">
+                <div className="offers-info-section mb-4">
+                    <div className="container-fluid food-card-container mt-3">
                         <h3 className="gradient-bg">Exclusive Offers</h3>
                     </div>
                     <div className="container">

@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Foodcard({getHomeCuisineName, randomComboItemList}){
+    const listItems = randomComboItemList.map((item,index) =>
+        (index < 4)?
+            <div className="card custom-card-width custom-card-width-home" key={item._id}>
+                <img className="card-img-top img-w-100" src={item.image.img_one} alt="Food Card"/>
+                <div className="card-body card-body-style">
+                    <h5 className="card-title">{item.name}<p>{item.subtitle}</p></h5>
+                    <div className="pos-bottom">
+                        <div className="price-order">
+                            <p>AT {item.price}</p>
+                            <p>{item.preptime}</p>
+                            {/* <a href="/" className="btn btn-primary">Add</a> */}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        :
+        <></>
+    );
     return(
         <div className="container-fluid mt-3 mb-3">
             <div className="food-category-container mt-5">
@@ -117,31 +135,8 @@ export default function Foodcard({getHomeCuisineName, randomComboItemList}){
 
             <div className="food-card-container mt-5">
                 <h3 className="gradient-bg">Special Combos with Offers</h3>
-                <div className="food-card-section mt-3">
-                    {
-                        randomComboItemList.map((item,index)=> {
-                            return(
-                                (index < 4)?
-                                <div className="card custom-card-width" key={index}>
-                                    {/* <a href="/" className="a-tag-style"> */}
-                                        <img className="card-img-top img-w-100" src={item.image.img_one} alt="Food Card" style={{maxHeight:"250px", objectFit:"cover"}}/>
-                                        <div className="card-body card-body-style">
-                                            <h5 className="card-title">{item.name}<p>{item.subtitle}</p></h5>
-                                            <div className="pos-bottom">
-                                                <div className="price-order">
-                                                    <p>AT {item.price}</p>
-                                                    <p>{item.preptime}</p>
-                                                    {/* <a href="/" className="btn btn-primary">Add</a> */}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {/* </a> */}
-                                </div>
-                                :
-                                <></>
-                            )
-                        })
-                    }
+                <div className="container food-card-section food-card-section-home mt-3">
+                    {listItems}
                 </div>
                 <div className="see-more-section">
                     <Link to="/special-combos" className="btn btn-primary">See More</Link>

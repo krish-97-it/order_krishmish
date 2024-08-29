@@ -191,7 +191,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                         getFilteredItemList.map((item,index)=>{
                                             return (
                                                 (((foodCategory.toLowerCase()) === item.category)) ?
-                                                <div className="card custom-card-width all-item-card" key={item.category+"-"+index}>
+                                                <div className="card custom-card-width all-item-card" key={item._id}>
                                                     
                                                     {/* <a href="/" className="a-tag-style"> */}
                                                         <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
@@ -202,7 +202,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                             <p className="item-description" id={"item-"+index}>{(item.description).substring(0, 50)}<span onClick={()=> showFlullContent(index, item.description)}>...read more</span></p>
                                                             <div className="pos-bottom">
                                                                 <div className="price-order">
-                                                                    <p key={"item-"+index}>₹{item.price}  • {item.preptime}</p>
+                                                                    <p key={item._id}>₹{item.price}  • {item.preptime}</p>
                                                                     <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
                                                                         Add
                                                                         {
@@ -220,7 +220,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                         }) :
                                         getFilteredItemList.map((item,index)=>{
                                             return (
-                                                <div className="card custom-card-width all-item-card" key={index}>
+                                                <div className="card custom-card-width all-item-card" key={item._id}>
                                                     {/* <a href="/" className="a-tag-style"> */}
                                                         <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
                                                         <p className="item-category-symbol"><img src={((item.category) === 'veg') ? vegIcon : nonVegIcon} alt="Food Category"/></p>
@@ -257,7 +257,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                             getItemList.map((item,index)=>{
                                                 return (
                                                     ((foodCategory.toLowerCase !== item.category)) ?
-                                                    <div className="card custom-card-width all-item-card" key={index}>
+                                                    <div className="card custom-card-width all-item-card" key={item._id}>
                                                         {/* <a href="/" className="a-tag-style"> */}
                                                             <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
                                                             <p className="item-category-symbol"><img src={((item.category) === 'veg') ? vegIcon : nonVegIcon} alt="Food Category"/></p>

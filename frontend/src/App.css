@@ -22,11 +22,13 @@ body{
 
 [dark-theme="on"] {
   background-color: black;
+  transition: background-color 2s;
   color: white !important;
 }
 
 [dark-theme="off"] {
   background-color: rgb(255, 255, 255);
+  transition: background-color 2s;
   color: rgb(0, 0, 0);
 }
 
@@ -38,16 +40,13 @@ body{
   color: black !important;
 }
 
-[dark-theme="on"] {
-  background-color: black;
-  color: white !important;
-}
-
 [dark-theme="off"] .billing-details-secton{
   background-color: #f7f7f7;
+  transition: background-color 2s;
 }
 [dark-theme="on"] .billing-details-secton{
   background-color: #2e2e2e;
+  transition: background-color 2s;
 }
 [dark-theme="on"] .food-cat-name{
   color: black;
