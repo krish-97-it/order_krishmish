@@ -215,6 +215,30 @@ a.nav-link{
     display: none;
 }
 
+.new-form-field{
+    margin-bottom: 10px;
+}
+[form-valid="invalid"]{
+    border: 1px solid #ff3c07;
+}
+[form-valid="valid"]{
+    border: 1px solid green;
+}
+[form-valid="optional"]{
+    border: var(--bs-border-width) solid var(--bs-border-color);
+}
+.invalid-feedback{
+    display: block;
+    text-align: left;
+    margin-top: 0px;
+}
+[select-color="novalue"]{
+    color: rgb(96 98 101);
+}
+[select-color="withvalue"]{
+    color: var(--bs-body-color);
+}
+
 @media(max-width:991.98px){
     .modal-content{
         width:90%;
