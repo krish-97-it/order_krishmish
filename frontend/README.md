@@ -68,3 +68,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+#### reference link call Apis #####
+https://jasonwatmore.com/post/2020/07/17/react-axios-http-post-request-examples
+https://jasonwatmore.com/post/2020/02/01/react-fetch-http-post-request-examples
+
+
+#### reference link to create shopping cart ####
+https://www.geeksforgeeks.org/shopping-cart-app-using-react/
+
+
+#### Form validation reference links ####
+https://www.geeksforgeeks.org/how-to-perform-form-validation-in-react/
+https://leanylabs.com/blog/form-validation-in-react/
+https://codewithpawan.medium.com/form-validation-in-react-a-comprehensive-guide-with-examples-c12e1c8671f2

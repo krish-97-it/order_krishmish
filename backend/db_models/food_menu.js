@@ -1,11 +1,18 @@
-const mongoose = require('mongoose');
-const app      = require('../app');
+// This is db model for food_menus collection, A model defines a collection schema inside a MongoDB database.
 
-const fetchFoodMenu = () =>{
+// import Schema and model function from mongoose module
+const {Schema, model}   = require('mongoose');
+// const app               = require('../app');
 
-    const foodSchema = new mongoose.Schema(
+
+    // This function executes mongoose schema method to set the scheema that will be run to mongoDB
+    const foodSchema = new Schema(
         {
-            name : String,
+            name : {
+                type: String,
+                required: true,
+                maxlength: 50
+            },
             image: Object,
             description: String,
             cuisine: String,
@@ -16,28 +23,14 @@ const fetchFoodMenu = () =>{
             subtitle:String,
             tags: String,
             price: Number,
+            // createdAt: {
+            //     type: Date,
+            //     default: Date.now,
+            // },
         }
     )
     
-    const foodModel = mongoose.model("food_menus", foodSchema);
-    
-    // app.get('/getFoodMenu', async(req,res) => {
-    //     try{
-    //         const food_menu = await foodModel.find({})
-    //         res.json([{message: "success"},{"data":food_menu}]);
-    //     } catch(error) {
-    //         res.json({message:error.message});
-    //     }
-    // });
+    // Initalise a model for food_menus collection using created schema
+    const foodModel = model("food_menus", foodSchema);
 
-    app.get('/getFoodMenu', async(req,res) => {
-        await foodModel.find({}).then(
-            (food) =>{
-                res.json([{message: "success"},{"data":food}]);
-            }
-        ).catch((error) =>{
-            res.json({message:error.message});
-        });
-    });
-}
-module.exports = fetchFoodMenu;
+module.exports = foodModel;
