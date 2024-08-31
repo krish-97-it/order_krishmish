@@ -1,4 +1,4 @@
-import React,{useState, useRef} from "react";
+import React,{useState} from "react";
 import axios from "axios";
 
 export default function LoginModal({loginModal, closeModal, formNextSlide, formPrevSlide, displayFirstSlide, displaySecondSlide}){
@@ -43,32 +43,33 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
 
     const [phoneNumber, setPhoneNumber] = useState('');
     function handlePhoneNumberChange(e){
-        setPhoneNumber(e.target.value)
+        setPhoneNumber(e.target.value);
     }
-    const formData = {
-        phone: phoneNumber
-    };
+    
     const checkPhoneNumber = async(e) => {
         e.preventDefault();
-        console.log(JSON.stringify(formData));
-        // try {
-        //     const response = await fetch('/api/submit-data', {
-        //       method: 'POST',
-        //       body: JSON.stringify(formData),
-        //       headers: { 'Content-Type': 'application/json' },
-        //     });
-        
-        //     if (response.ok) {
-        //       // Handle success
-        //     } else {
-        //       // Handle error
-        //     }
-        // } catch (error) {
-        //     // Handle error
-        // }
+
+        const formData = {
+            phone: phoneNumber
+        };
+
+        const config = {
+            headers: { 
+                'Authorization': 'Bearer my-token',
+                'customHeader': 'foobar',
+                // 'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
+            }
+        }
+        await axios.post('http://localhost:4000/findUser', formData, {config})
+        .then(
+            (response) => {
+                console.log(response.data.data.phone);
+            }
+        ).catch(error => {
+            console.log(error);
+        });
     }
-
-
 
     const [newUserData, setNewUserData] = useState({
         firstName: '',
@@ -99,91 +100,91 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
         let ele_val     =   e.target.value;
         setNewUserData({...newUserData, [ele]:[ele_val]});
 
-        if(ele == 'firstName'){
+        if(ele === 'firstName'){
             let isfirstNameValid = nameValidation(ele,ele_val);
 
-            if(isfirstNameValid != 'valid'){
+            if(isfirstNameValid !== 'valid'){
                 updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "invalid"})
             }else{
                 updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "valid"})
 
             }
-        }else if(ele == 'lastName'){
+        }else if(ele === 'lastName'){
             let isLastNameValid = nameValidation(ele,ele_val);
 
-            if(isLastNameValid != 'valid'){
+            if(isLastNameValid !== 'valid'){
                 updateLastNameErr({...lastNameErr, err_mssg: isLastNameValid, isValid: "invalid"})
             }else{
                 updateLastNameErr({...lastNameErr, err_mssg: isLastNameValid, isValid: "valid"})
 
             }
-        }else if(ele == 'nickName'){
+        }else if(ele === 'nickName'){
             let isNickNameValid = nameValidation(ele,ele_val);
 
-            if(isNickNameValid != 'valid'){
+            if(isNickNameValid !== 'valid'){
                 updateNickNameErr({...nickNameErr, err_mssg: isNickNameValid, isValid: "invalid"})
             }else{
                 updateNickNameErr({...nickNameErr, err_mssg: isNickNameValid, isValid: "valid"})
 
             }
-        }else if(ele == 'gender'){
+        }else if(ele === 'gender'){
             let isGenderValid = requiredValidation(ele,ele_val);
 
-            if(isGenderValid != 'valid'){
+            if(isGenderValid !== 'valid'){
                 updateGenderErr({...genderErr, err_mssg: isGenderValid, isValid: "invalid"})
             }else{
                 updateGenderErr({...genderErr, err_mssg: isGenderValid, isValid: "valid"})
 
             }
-        }else if(ele == 'dob'){
+        }else if(ele === 'dob'){
             let isDobValid = dobValidation("Date Of Birth",ele_val);
 
-            if(isDobValid != 'valid'){
+            if(isDobValid !== 'valid'){
                 updateDobErr({...dobErr, err_mssg: isDobValid, isValid: "invalid"})
             }else{
                 updateDobErr({...dobErr, err_mssg: isDobValid, isValid: "valid"})
 
             }
-        }else if(ele == 'emailId'){
+        }else if(ele === 'emailId'){
             let isEmailValid = emailValidation(ele,ele_val);
 
-            if(isEmailValid != 'valid'){
+            if(isEmailValid !== 'valid'){
                 updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "invalid"})
             }else{
                 updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "valid"})
 
             }
-        }else if(ele == 'phoneNum'){
+        }else if(ele === 'phoneNum'){
             let isPhoneNumValid = phoneValidation(ele,ele_val);
 
-            if(isPhoneNumValid != 'valid'){
+            if(isPhoneNumValid !== 'valid'){
                 updatePhoneNumErr({...phoneNumErr, err_mssg: isPhoneNumValid, isValid: "invalid"})
             }else{
                 updatePhoneNumErr({...phoneNumErr, err_mssg: isPhoneNumValid, isValid: "valid"})
 
             }
-        }else if(ele == 'state'){
+        }else if(ele === 'state'){
             let isStateValid = requiredValidation("State",ele_val);
 
-            if(isStateValid != 'valid'){
+            if(isStateValid !== 'valid'){
                 updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "invalid"})
             }else{
                 updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "valid"})
 
             }
-        }else if(ele == 'city'){
+        }else if(ele === 'city'){
             let isCityValid = cityValidation(ele,ele_val);
 
-            if(isCityValid != 'valid'){
+            if(isCityValid !== 'valid'){
                 updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "invalid"})
             }else{
                 updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "optional"})
 
             }
-        }else if(ele == 'pinCode'){
+        }else if(ele === 'pinCode'){
             let isPinCodeValid = pinCodeValidation(ele,ele_val);
 
-            if(isPinCodeValid != 'valid'){
+            if(isPinCodeValid !== 'valid'){
                 updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "invalid"})
             }else{
                 updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "optional"})
@@ -195,28 +196,28 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
 
     const onSubmitValidation = (data) => {
         let isfirstNameValid = nameValidation("firstName",data.firstName[0]);
-        if(isfirstNameValid != 'valid'){
+        if(isfirstNameValid !== 'valid'){
             updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "invalid"})
         }else{
             updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "valid"})
         }
 
         let isLastNameValid  = nameValidation("lastName",data.lastName[0]);
-        if(isLastNameValid != 'valid'){
+        if(isLastNameValid !== 'valid'){
             updateLastNameErr({...lastNameErr, err_mssg: isLastNameValid, isValid: "invalid"})
         }else{
             updateLastNameErr({...lastNameErr, err_mssg: isLastNameValid, isValid: "valid"})
         }
 
         let isNickNameValid = nameValidation("nickName",data.nickName[0]);
-        if(isNickNameValid != 'valid'){
+        if(isNickNameValid !== 'valid'){
             updateNickNameErr({...nickNameErr, err_mssg: isNickNameValid, isValid: "invalid"})
         }else{
             updateNickNameErr({...nickNameErr, err_mssg: isNickNameValid, isValid: "valid"})
         }
 
         let isGenderValid = requiredValidation("Gender",data.gender[0]);
-        if(isGenderValid != 'valid'){
+        if(isGenderValid !== 'valid'){
             updateGenderErr({...genderErr, err_mssg: isGenderValid, isValid: "invalid"})
         }else{
             updateGenderErr({...genderErr, err_mssg: isGenderValid, isValid: "valid"})
@@ -224,7 +225,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
         }
 
         let isDobValid = dobValidation("Date Of Birth",data.dob[0]);
-        if(isDobValid != 'valid'){
+        if(isDobValid !== 'valid'){
             updateDobErr({...dobErr, err_mssg: isDobValid, isValid: "invalid"})
         }else{
             updateDobErr({...dobErr, err_mssg: isDobValid, isValid: "valid"})
@@ -232,77 +233,104 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
         }
         
         let isEmailValid = emailValidation("emailId",data.emailId[0]);
-        if(isEmailValid != 'valid'){
+        if(isEmailValid !== 'valid'){
             updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "invalid"})
         }else{
             updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "valid"})
         }
 
         let isPhoneNumValid = phoneValidation("phoneNum",data.phoneNum[0]);
-        if(isPhoneNumValid != 'valid'){
+        if(isPhoneNumValid !== 'valid'){
             updatePhoneNumErr({...phoneNumErr, err_mssg: isPhoneNumValid, isValid: "invalid"})
         }else{
             updatePhoneNumErr({...phoneNumErr, err_mssg: isPhoneNumValid, isValid: "valid"})
         }
 
         let isStateValid = requiredValidation("State",data.state[0]);
-        if(isStateValid != 'valid'){
+        if(isStateValid !== 'valid'){
             updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "invalid"})
         }else{
             updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "valid"})
         }
 
         let isCityValid = cityValidation("city",data.city[0]);
-        if(isCityValid != 'valid'){
+        if(isCityValid !== 'valid'){
             updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "invalid"})
         }else{
             updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "optional"})
         }
 
         let isPinCodeValid = pinCodeValidation("pinCode",data.pinCode[0]);
-        if(isPinCodeValid != 'valid'){
+        if(isPinCodeValid !== 'valid'){
             updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "invalid"})
         }else{
             updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "optional"})
         }
 
 
-        if(isfirstNameValid == 'valid' && isLastNameValid == 'valid' && isNickNameValid == 'valid' && isGenderValid == 'valid' && isDobValid == 'valid' && isEmailValid == 'valid' && isPhoneNumValid == 'valid' && isStateValid == 'valid' && isCityValid == 'valid' && isPinCodeValid == 'valid'){
+        if(isfirstNameValid === 'valid' && isLastNameValid === 'valid' && isNickNameValid === 'valid' && isGenderValid === 'valid' && isDobValid === 'valid' && isEmailValid === 'valid' && isPhoneNumValid === 'valid' && isStateValid === 'valid' && isCityValid === 'valid' && isPinCodeValid === 'valid'){
             return true
         }else{
             return false
         }
     }
-    // const config = {     
-    //     headers: { 'content-type': 'multipart/form-data' }
-    // }
-    const newUserFormSubmit = (e) => {
+
+    const newUserFormSubmit = async(e) => {
         e.preventDefault();
         let validationFlag = onSubmitValidation(newUserData);
-        // console.log(firstNameErr);
-        // console.log(emailIdErr);
+
         if(validationFlag){
-            console.log(JSON.stringify(newUserData));
+            const formData = {
+                firstname: newUserData.firstName[0],
+                lastname: newUserData.lastName[0],
+                nickname: newUserData.nickName[0],
+                gender: newUserData.gender[0],
+                dob: newUserData.dob[0],
+                email: newUserData.emailId[0],
+                phone: parseInt(newUserData.phoneNum[0]),
+                state: newUserData.state[0],
+                city: newUserData.city[0],
+                pincode: newUserData.pinCode[0], 
+            };
+            const formDataJsonString    =   JSON.stringify(formData);
+
+           
+
+            try {
+                const response = await fetch('http://localhost:4000/addNewUser', {
+                    method: 'POST',
+                    body: formDataJsonString,
+                    datatype: "JSON",
+                    headers: { 'Content-Type': 'application/json' },
+                })
+
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const responseData = isJson && await response.json();
+
+                if(response.ok == true){
+                    console.log(responseData.data);
+                }else{
+                    const error = (responseData && responseData.message) || response.status;
+                    return Promise.reject(error);
+                }
+
+            }
+            catch(error){
+                console.log("Something went wrong!! please try again later");
+            }
+
         }else{
-            console.log("form error");
+            console.log("Invalid Form Fields");
         }
 
-        // console.log(newUser);
-        // axios.post(url, newUserFormData, config)
-        // .then(response => {
-        //     console.log(response);
-        // })
-        // .catch(error => {
-        //     console.log(error);
-        // });
     }
 
     function nameValidation(ele,val){
-        let ele_name = (ele == 'firstName') ? "First name" : "Last Name";
-        ele_name     = (ele == 'nickName') ? "Nick Name": ele_name;
+        let ele_name = (ele === 'firstName') ? "First name" : "Last Name";
+        ele_name     = (ele === 'nickName') ? "Nick Name": ele_name;
         let reg_exp  = /^[a-zA-Z][a-zA-Z\-\ \.]{2,}$/i;
 
-        if(!val || val == '' || val === null || val == 'undefined'){
+        if(!val || val === '' || val === null || val === 'undefined'){
             let err_mssg    =   ele_name+" is required";
             return err_mssg;
         }else if(val.length <= 2){
@@ -319,7 +347,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
 
     function emailValidation(ele,val){
         var reg_exp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,13}))$/;
-        if(!val || val == '' || val === null || val == 'undefined'){
+        if(!val || val === '' || val === null || val === 'undefined'){
             let err_mssg    =   "Email-Id is required";
             return err_mssg;
         }else if(!reg_exp.test(val)){
@@ -333,7 +361,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
     function phoneValidation(ele,val){
         let reg_exp  = /^\d{10}$/;
 
-        if(!val || val == '' || val === null || val == 'undefined'){
+        if(!val || val === '' || val === null || val === 'undefined'){
             let err_mssg    =   "Mobile No is required";
             return err_mssg;
         }else if(!reg_exp.test(val)){
@@ -350,7 +378,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
         let birthDate   =  new Date(val);
         let birthYear   =  birthDate.getFullYear();
 
-        if(!val || val == '' || val == null || val == 'undefined'){
+        if(!val || val === '' || val === null || val === 'undefined'){
             let err_mssg    =   ele+" is required";
             return err_mssg;
         }else if(birthYear > currentYear) {
@@ -363,7 +391,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
     }
 
     function requiredValidation(ele,val){
-        if(!val || val == '' || val == null || val == 'undefined'){
+        if(!val || val === '' || val === null || val === 'undefined'){
             let err_mssg = ele+" is required";
             return err_mssg;
         }else{
@@ -375,7 +403,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
     function cityValidation(ele,val){
         let reg_exp  = /^[a-zA-Z][a-zA-Z\-\ \.]{0,}$/i;
 
-        if(!val || val == '' || val == null || val == 'undefined'){
+        if(!val || val === '' || val === null || val === 'undefined'){
             let err_mssg = 'valid';
             return err_mssg;
         }else if(!reg_exp.test(val)){
@@ -389,7 +417,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
     function pinCodeValidation(ele,val){
         let reg_exp  = /^\d{0,}$/;
 
-        if(!val || val == '' || val == null || val == 'undefined'){
+        if(!val || val === '' || val === null || val === 'undefined'){
             let err_mssg = 'valid';
             return err_mssg;
         }else if(!reg_exp.test(val)){
@@ -435,7 +463,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
                         </div>
                         <div className="modal-body">
                             <form className="row g-3 needs-validation new-user-form" id="newUserForm" onSubmit={newUserFormSubmit}>
-                                <div className="col-md-6 col-sm-12 new-form-field">
+                                <div className="col-md-12 col-sm-12 new-form-field">
                                     <label htmlFor="firstName" className="form-label">First name</label>
                                     <input type="text" className="form-control" id="firstName" name="firstName" placeholder="Enter your first name" value={newUserData.firstName} onChange={(e)=>handlenewUserInput(e)} form-valid={firstNameErr.isValid}/>
                                     {
@@ -464,20 +492,6 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
                                     }
                                 </div>
                                 <div className="col-md-6 col-sm-12 new-form-field">
-                                    <label htmlFor="dob" className="form-label">Date Of Birth</label>
-                                    <input type="date" className="form-control" id="dob" name="dob" onChange={(e)=>handlenewUserInput(e)} form-valid={dobErr.isValid} select-color={newUserData.dob === ''?'novalue':'withvalue'}maxLength={10}/>
-                                    {
-                                        (dobErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {dobErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {dobErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-6 col-sm-12 new-form-field">
                                     <label htmlFor="nickName" className="form-label">Nick Name</label>
                                     <input type="text" className="form-control" id="nickName" name="nickName" placeholder="Enter your nick name" value={newUserData.nickName} onChange={(e)=>handlenewUserInput(e)} form-valid={nickNameErr.isValid}/>
                                     {
@@ -488,6 +502,20 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
                                         :
                                         <div className="valid-feedback">
                                             {nickNameErr.err_mssg}
+                                        </div>
+                                    }
+                                </div>
+                                <div className="col-md-6 col-sm-12 new-form-field">
+                                    <label htmlFor="dob" className="form-label">Date Of Birth</label>
+                                    <input type="date" className="form-control" id="dob" name="dob" onChange={(e)=>handlenewUserInput(e)} form-valid={dobErr.isValid} select-color={newUserData.dob === ''?'novalue':'withvalue'}maxLength={10}/>
+                                    {
+                                        (dobErr.err_mssg !== 'valid')?
+                                        <div className="invalid-feedback">
+                                            {dobErr.err_mssg}
+                                        </div>
+                                        :
+                                        <div className="valid-feedback">
+                                            {dobErr.err_mssg}
                                         </div>
                                     }
                                 </div>
@@ -538,7 +566,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
                                         </div>
                                     }
                                 </div>
-                                <div className="col-md-6 col-sm-12 new-form-field">
+                                <div className="col-md-12 col-sm-12 new-form-field">
                                     <label htmlFor="state" className="form-label">State</label>
                                     <select className="form-select" id="state" name="state" value={newUserData.state} onChange={(e)=>handlenewUserInput(e)} form-valid={stateErr.isValid} select-color={newUserData.state === ''?'novalue':'withvalue'}>
                                         <option value="" disabled>Choose your state</option>

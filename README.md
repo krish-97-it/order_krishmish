@@ -43,7 +43,7 @@ Online food order service
       http://localhost:3000 
 
 3. Creating / initializing backend app
-   a. initalize app -
+   a. initalize app inside backend folder-
       npm init [ref: https://expressjs.com/en/starter/installing.html ]
 
    b. install dependencies / packages by running the following commands -
