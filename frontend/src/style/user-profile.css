@@ -1,0 +1,21 @@
+.profile-heading-section{
+    background-image: url(https://img.perceptpixel.com/pykhlszs/banner-one.jpg);
+    width: 100%;
+    margin-top: 0px;
+    display: flex;
+    justify-content: center;
+    /* min-height: 60px; */
+    align-items: center;
+    /* filter: blur(8px); */
+    /* -webkit-filter: blur(px); */
+    /* background-position: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-bottom: 2px solid black;
+}
+.dark-opacity{
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    width: 100%;
+    padding: 12px 12px 15px 12px;
+}

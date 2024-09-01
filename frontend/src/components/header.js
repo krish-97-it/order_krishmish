@@ -92,13 +92,14 @@ const Navbar = (props) => {
                                         <div className="dropdown" style={{textAlign:"left"}}>
                                             <button className="btn btn-secondary dropdown-toggle profile-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{paddingLeft:"0px", display:"flex", alignItems:"end"}}>
                                                 <i className="fa fa-user" style={{fontSize:"28px"}}></i>
-                                                <span style={{paddingLeft:"10px"}}>Log in</span>
+                                                <span style={{paddingLeft:"10px"}}>{props.loadUserData.nickname}</span>
                                             </button>
                                             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-start custom-dropdown-menu-style">
-                                                <li><button className="dropdown-item" type="button" onClick={props.openUserProfile}>Profile</button></li>
-                                                <li><button className="dropdown-item" type="button">Favourites</button></li>
-                                                <li><button className="dropdown-item" type="button">Order History</button></li>
-                                                <li><button className="dropdown-item" type="button">Sign Out</button></li>
+                                                {/* <li><button className="dropdown-item" type="button" onClick={props.openUserProfile}>Profile</button></li> */}
+                                                <li><NavLink className="dropdown-item" to="/myprofile" onClick={closeOffCanvas}>Profile</NavLink></li>
+                                                <li><NavLink className="dropdown-item" to="/myprofile/#mywishlist" onClick={closeOffCanvas}>Favourites</NavLink></li>
+                                                <li><NavLink className="dropdown-item" to="/myprofile/#orderhistory" onClick={closeOffCanvas}>Order Hitory</NavLink></li>   
+                                                <li><button className="dropdown-item" type="button" onClick={props.signOutUser}>Sign Out</button></li>
                                                 <li style={{display:"flex", paddingLeft:"15px", paddingTop:"5px"}}>
                                                     <span>Dark Mode: &nbsp;</span>
                                                     <button className="dark-mode" onClick={toggleTheme} value={currentTheme}>
@@ -125,7 +126,10 @@ const Navbar = (props) => {
             </nav>
             <>
             {
-                (props.loginModal) === "show" ? <LoginModal show=" show" loginModal={props.loginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide}/> : <LoginModal show="" loginModal={props.loginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide}/>
+                (props.showLoginModal) === "show" ? 
+                <LoginModal show=" show" showLoginModal={props.showLoginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide} loadUserDataFunction={props.loadUserDataFunction} loadUserData={props.loadUserData} />
+                : 
+                <LoginModal show="" showLoginModal={props.showLoginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide} loadUserDataFunction={props.loadUserDataFunction} loadUserData={props.loadUserData} />
             }
             </>
         </header>

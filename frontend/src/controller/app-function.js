@@ -9,18 +9,24 @@ import CombosPage from "../pages/combos";
 import ReviewPage from "../pages/reviews";
 import ShowCartPage from "../pages/show-cart";
 import SearchBar from "../components/searchbar";
+import MyProfile from "../pages/user-profile";
 
 export default function AppFunction(){
 
     // api call to get food menus from backend db. Api written in backend project
-    const [foodlist, updateFoodList]            =   useState([]);
-    const [tempFoodlist, updateTempFoodList]    =   useState([]);
-    const apiURL                                =   'http://localhost:4000/getFoodMenu';
-    const [userLoggedIn, setUserLoggedIn]       =   useState('false');
-    const [loginModal, showLoginModal]          =   useState('hide');
+    const [foodlist, updateFoodList]                =   useState([]);
+    const [tempFoodlist, updateTempFoodList]        =   useState([]);
+    const [userLoggedIn, setUserLoggedIn]           =   useState('false');
+    const [showLoginModal, updateShowLoginModal]    =   useState('hide');
+    const [loadUserData, setUserData]               =   useState([]);
 
-    function loadCuisineData(){
-        axios.get(apiURL).then((res) => {
+    const APIUrls                                   =   {
+        "fetchFoodMenuAPIUrl" : 'http://localhost:4000/getFoodMenu',
+        "fetchUserDataAPIUrl" : 'http://localhost:4000/getUserData'
+    };
+
+    async function loadCuisineData(){
+        await axios.get(APIUrls.fetchFoodMenuAPIUrl).then((res) => {
             updateFoodList(res.data[1].data);
             updateTempFoodList(res.data[1].data);
         }).catch((error) => {
@@ -28,32 +34,28 @@ export default function AppFunction(){
         });
     }
 
+
     function checkUserLogedIn(){
         // store cartItems to local storage, so that on page load Ites in cart are not deleted
-        let userId  =   localStorage.getItem("krishMishUserId");
+        let userId  =   localStorage.getItem("krishmish@regUserId");
+        // let userId  =   JSON.parse(retCartDataStringFromLocalStorage);
+        console.log(userId);
         if(userId){
-            console.log("user found in local storage");
-            loadUserProfileData(userId);
-            setUserLoggedIn('true')
+            let mobNo   =   userId.split("@");
+            loadUserDataFunction(mobNo[1]);
         }else{
-            showLoginModal("show");
+            updateShowLoginModal("show");
         }
     }
 
-    function closeLoginModal(){
-        showLoginModal("hide");
-        
-    }
+    useEffect(() => {
+        loadCuisineData();
+        checkUserLogedIn();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    function openLoginModal(){
-        if(window.outerWidth < 768){
-            document.querySelector("button.navbar-toggler").click();
-        }
-        showLoginModal('show');
-        setDisplayFirstSlide('show');
-        setDisplaySecondSlide('hide');
-    }
 
+    // Ligin Form Modal slide switch functionality
     const [displayFirstSlide, setDisplayFirstSlide]     = useState('show');
     const [displaySecondSlide, setDisplaySecondSlide]   = useState('hide');
     function formNextSlide(){
@@ -66,15 +68,52 @@ export default function AppFunction(){
         setDisplaySecondSlide('hide');
     }
 
-    useEffect(() => {
-        loadCuisineData();
-        checkUserLogedIn();
-    }, []);
 
+    // close login Modal
+    function closeLoginModal(){
+        updateShowLoginModal("hide");
+        
+    }
+    // Open Login Modal
+    function openLoginModal(){
+        if(window.outerWidth < 768){
+            document.querySelector("button.navbar-toggler").click();
+        }
+        updateShowLoginModal('show');
+        setDisplayFirstSlide('show');
+        setDisplaySecondSlide('hide');
+    }
 
-    const [userData, updateUserData] = useState([]);
-    function loadUserProfileData(u_id){
-        console.log(u_id);
+    // signout user on click signout button
+    function signOutUser(){
+        localStorage.setItem("krishmish@regUserId", "");
+        window.location.reload();
+    }
+
+    // This function helps to get a userdata with phone number and set userLoggedIn and updateShowLoginModal data
+    async function loadUserDataFunction(phoneNum){
+        const formData  =   {
+            phone : parseInt(phoneNum)
+        }
+        const config = {
+            headers: { 'Content-Type': 'application/json'}
+        }
+        await axios.post(APIUrls.fetchUserDataAPIUrl, formData, {config})
+        .then(
+            (response) => {
+                if(response.data.message === 'success'){
+                    const resData = response.data.data; 
+                    setUserData(resData[0]);
+                    setUserLoggedIn('true');
+                    updateShowLoginModal('hide');
+                    localStorage.setItem("krishmish@regUserId", "krishmish@"+resData[0].phone);
+                }else{
+                    updateShowLoginModal("show");
+                }
+            }
+        ).catch(error => {
+            console.log(error);
+        });
     }
 
     // search functionality on input search bar
@@ -230,6 +269,19 @@ export default function AppFunction(){
 
     // Add to cart Functionality
     const [cartItem, setCartItem]       =   useState(fetchCartItemDataFromLocalStorage());
+
+    // This function fetch cartItem data from localstorage.
+    function fetchCartItemDataFromLocalStorage(){
+        let retCartDataStringFromLocalStorage   = localStorage.getItem("cartData");
+        let retCartDataFromLocalStorage         = JSON.parse(retCartDataStringFromLocalStorage);
+
+        if(retCartDataFromLocalStorage === null){
+            return [];
+        }else{
+            return retCartDataFromLocalStorage;
+        }
+    }
+
     const addItemToCart = (Itemdata) => {
         const findProduct = cartItem.find(item => item.product._id === Itemdata._id);
         if (findProduct) {
@@ -285,20 +337,9 @@ export default function AppFunction(){
     let convertCartDataToStringData = JSON.stringify(cartItem);
     localStorage.setItem("cartData", convertCartDataToStringData);
 
-    // This function fetch cartItem data from localstorage.
-    function fetchCartItemDataFromLocalStorage(){
-        let retCartDataStringFromLocalStorage   = localStorage.getItem("cartData")
-        let retCartDataFromLocalStorage         = JSON.parse(retCartDataStringFromLocalStorage);
-        return retCartDataFromLocalStorage;
-    }
-
-    function openUserProfile(){
-        console.log("todo");
-    }
-
     return (
         <Router>
-            <Navbar searchbar="false" totalCartItem={cartItem.length} loginModal={loginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} openUserProfile={openUserProfile} />
+            <Navbar searchbar="false" totalCartItem={cartItem.length} showLoginModal={showLoginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} isUserLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} loadUserDataFunction={loadUserDataFunction} loadUserData={loadUserData} signOutUser={signOutUser} />
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName} randomComboItemList={randomComboItemList}/>}/>
@@ -306,6 +347,8 @@ export default function AppFunction(){
                 <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
+                <Route exact path="/myprofile" element={<MyProfile loadUserData = {loadUserData} />} />
+
                 {/* <Route exact path="*" element={<NoPage />} /> */}
             </Routes>
             <Footer/>
