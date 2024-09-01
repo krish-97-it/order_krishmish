@@ -19,3 +19,12 @@ exports.addUserData = async(req,res) => {
         })
     }
 }
+
+exports.getUserData = async(req,res) => {
+    try{
+        const user_data = await userModel.find({phone: req.body.phone})
+        res.json({message: "success","data":user_data});
+    } catch(error) {
+        res.json({message:error.message});
+    }
+}

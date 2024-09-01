@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import axios from "axios";
 
-export default function LoginModal({loginModal, closeModal, formNextSlide, formPrevSlide, displayFirstSlide, displaySecondSlide}){
+export default function LoginModal({showLoginModal, closeModal, formNextSlide, formPrevSlide, displayFirstSlide, displaySecondSlide, loadUserDataFunction, loadUserData }){
     let states = [
         "Andhra Pradesh",
         "Arunachal Pradesh",
@@ -46,29 +46,9 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
         setPhoneNumber(e.target.value);
     }
     
-    const checkPhoneNumber = async(e) => {
+    const checkPhoneNumber = (e) => {
         e.preventDefault();
-
-        const formData = {
-            phone: phoneNumber
-        };
-
-        const config = {
-            headers: { 
-                'Authorization': 'Bearer my-token',
-                'customHeader': 'foobar',
-                // 'Content-Type': 'application/x-www-form-urlencoded'
-                'Content-Type': 'application/json'
-            }
-        }
-        await axios.post('http://localhost:4000/findUser', formData, {config})
-        .then(
-            (response) => {
-                console.log(response.data.data.phone);
-            }
-        ).catch(error => {
-            console.log(error);
-        });
+        loadUserDataFunction(phoneNumber);
     }
 
     const [newUserData, setNewUserData] = useState({
@@ -294,8 +274,6 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
             };
             const formDataJsonString    =   JSON.stringify(formData);
 
-           
-
             try {
                 const response = await fetch('http://localhost:4000/addNewUser', {
                     method: 'POST',
@@ -308,7 +286,8 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
                 const responseData = isJson && await response.json();
 
                 if(response.ok == true){
-                    console.log(responseData.data);
+                    localStorage.setItem("krishmish@regUserId", "krishmish@"+newUserData.phoneNum[0]);
+                    loadUserDataFunction(newUserData.phoneNum[0]);
                 }else{
                     const error = (responseData && responseData.message) || response.status;
                     return Promise.reject(error);
@@ -430,7 +409,7 @@ export default function LoginModal({loginModal, closeModal, formNextSlide, formP
     }
 
     return(
-        <div className="login-modal" id="loginModal" show-modal={loginModal}>
+        <div className="login-modal" id="loginModal" show-modal={showLoginModal}>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="form-slide-one" slide-display={displayFirstSlide}>

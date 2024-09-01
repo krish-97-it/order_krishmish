@@ -37,6 +37,7 @@ const customerSchema = new Schema(
         phone: {
             type: Number,
             required: true,
+            maxlength: 10
         },
         state:{
             type: String

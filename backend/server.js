@@ -29,7 +29,7 @@ app.use(express.json());
 app.use('/', customApis);
 
 app.post("/messages", (req, res) => {
-    res.send(req.body);
+    res.send("Hello World");
 });
   
 app.get("/:universalURL", (req, res) => {

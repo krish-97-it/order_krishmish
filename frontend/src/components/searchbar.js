@@ -6,7 +6,7 @@ export default function SearchBar({searchItem, getSearchInput, clearInput, getIn
     const currentPath = location.pathname;
     return(
 
-        <div className="container-fluid search-form-container" id="searchformid" search-bar-hide={(currentPath === '/special-combos' || currentPath === '/mycart' || currentPath === '/reviews') ? 'on' : 'off'} >
+        <div className="container-fluid search-form-container" id="searchformid" search-bar-hide={(currentPath.includes('/special-combos') || currentPath.includes('/mycart') || currentPath.includes('/reviews') || currentPath.includes('/myprofile')) ? 'on' : 'off'} >
             <div className="search-input-section">
                 <NavLink className="nav-link search-bar-page-load" to="/cuisine">
                     <form className="search-form" role="search" style={{width: "100%"}}>
