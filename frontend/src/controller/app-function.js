@@ -10,6 +10,7 @@ import ReviewPage from "../pages/reviews";
 import ShowCartPage from "../pages/show-cart";
 import SearchBar from "../components/searchbar";
 import MyProfile from "../pages/user-profile";
+import Costant_Variables from "./constant-variables";
 
 export default function AppFunction(){
 
@@ -21,8 +22,8 @@ export default function AppFunction(){
     const [loadUserData, setUserData]               =   useState([]);
 
     const APIUrls                                   =   {
-        "fetchFoodMenuAPIUrl" : 'http://localhost:4000/getFoodMenu',
-        "fetchUserDataAPIUrl" : 'http://localhost:4000/getUserData'
+        "fetchFoodMenuAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getFoodMenu',
+        "fetchUserDataAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getUserData'
     };
 
     async function loadCuisineData(){
