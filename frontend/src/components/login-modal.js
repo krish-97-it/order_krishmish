@@ -1,5 +1,6 @@
 import React,{useState} from "react";
 import axios from "axios";
+import Costant_Variables from "../controller/constant-variables";
 
 export default function LoginModal({showLoginModal, closeModal, formNextSlide, formPrevSlide, displayFirstSlide, displaySecondSlide, loadUserDataFunction, loadUserData }){
     let states = [
@@ -257,10 +258,11 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
 
     const newUserFormSubmit = async(e) => {
         e.preventDefault();
-        let validationFlag = onSubmitValidation(newUserData);
+        let validationFlag  = onSubmitValidation(newUserData);
+        const apiUrl        = Costant_Variables.SERVER_BASE_URL+'/addNewUser';
 
         if(validationFlag){
-            const formData = {
+            const formData  = {
                 firstname: newUserData.firstName[0],
                 lastname: newUserData.lastName[0],
                 nickname: newUserData.nickName[0],
@@ -275,7 +277,7 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
             const formDataJsonString    =   JSON.stringify(formData);
 
             try {
-                const response = await fetch('http://localhost:4000/addNewUser', {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     body: formDataJsonString,
                     datatype: "JSON",
