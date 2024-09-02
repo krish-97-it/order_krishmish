@@ -6,7 +6,7 @@ const MyProfile = ({loadUserData}) => {
     console.log(loadUserData);
     return (
         <div className="app-body">
-            <div className="main-content">
+            <div className="main-content" style={{marginTop:"62px", minHeight:"500px"}}>
                 <div className="container-fluid">
                     <div className="profile-heading-section">
                         <div className="dark-opacity">
@@ -14,7 +14,7 @@ const MyProfile = ({loadUserData}) => {
                                 <img src="" className="profile-picture"/>
                             </div>
                             <div className="user-name-section">
-                                <h3>{loadUserData.firstname}&nbsp;{loadUserData.lastname}</h3>
+                                <h3 style={{color:"white", fontWeight:"600"}}>{loadUserData.firstname}&nbsp;{loadUserData.lastname}</h3>
                             </div>
                             <div className="profile-quicklinks-section">
                                 <Link to="#mywishlist" className="profile-quicklinks">My Wishlist</Link>
@@ -23,7 +23,7 @@ const MyProfile = ({loadUserData}) => {
                             </div>
                         </div>
                     </div>
-                    <div className="profile-body-section mt-5">
+                    <div className="profile-body-section" style={{marginTop:"40px", marginBottom:"60px"}}>
                         <p>First Name : {loadUserData.firstname}</p>
                         <p>Last Name : {loadUserData.lastname}</p>
                         <p>Nick Name : {loadUserData.nickname}</p>

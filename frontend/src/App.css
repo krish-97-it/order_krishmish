@@ -63,3 +63,18 @@ body{
 [dark-theme="on"] .sort-by-btn{
   color: rgb(231, 157, 255) !important;
 }
+
+.error-page-msg-section{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+.error-page-msg-section .btn-primary{
+  max-width: 350px;
+}
+.sad-face-icon img{
+  height: 130px;
+  width: 130px;
+  margin-bottom: 15px;
+}

@@ -66,7 +66,8 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                             <p>{getTotalCost() === 0 ? '0' : (getTotalCost() - ((getTotalCost()*10)/100))}</p>
                         </div>
                         <div className="order-now-btn">
-                            <button>Place Your Order</button>
+                            <button disabled>Place Your Order</button>
+                            <p>Currently Place Order is disabled</p>
                         </div>
 
                     </div>
