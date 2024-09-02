@@ -19,3 +19,8 @@
     width: 100%;
     padding: 12px 12px 15px 12px;
 }
+.profile-quicklinks{
+    padding: 4px;
+    text-decoration: none;
+    color: rgb(207, 255, 158);
+}

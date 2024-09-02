@@ -1,8 +1,7 @@
 import React,{useState} from "react";
-import axios from "axios";
 import Costant_Variables from "../controller/constant-variables";
 
-export default function LoginModal({showLoginModal, closeModal, formNextSlide, formPrevSlide, displayFirstSlide, displaySecondSlide, loadUserDataFunction, loadUserData }){
+export default function LoginModal({showLoginModal, closeModal, formNextSlide, formPrevSlide, displayFirstSlide, displaySecondSlide, loadUserDataFunction, loadUserData, loginErrMssg, userMobNumber }){
     let states = [
         "Andhra Pradesh",
         "Arunachal Pradesh",
@@ -42,14 +41,32 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
         "Puducherry"
     ];
 
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState(userMobNumber);
+    const [loginNumErr, updateloginNumErr]      = useState({});
     function handlePhoneNumberChange(e){
-        setPhoneNumber(e.target.value);
+        const loginNum  =   e.target.value;
+        setPhoneNumber(loginNum);
+        let isLoginNumValid = phoneValidation("Mobile No.",loginNum);
+
+        if(isLoginNumValid !== 'valid'){
+            updateloginNumErr({...loginNumErr, err_mssg: isLoginNumValid, isValid: "invalid"})
+        }else{
+            updateloginNumErr({...loginNumErr, err_mssg: isLoginNumValid, isValid: "valid"})
+
+        }
     }
     
     const checkPhoneNumber = (e) => {
         e.preventDefault();
-        loadUserDataFunction(phoneNumber);
+
+        let loginNumValidation = phoneValidation("Mobile No.",phoneNumber);
+
+        if(loginNumValidation === 'valid'){
+            updateloginNumErr({...loginNumErr, err_mssg: loginNumValidation, isValid: "valid"})
+            loadUserDataFunction(phoneNumber);
+        }else{
+            updateloginNumErr({...loginNumErr, err_mssg: loginNumValidation, isValid: "invalid"})
+        }
     }
 
     const [newUserData, setNewUserData] = useState({
@@ -75,6 +92,8 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
     const [stateErr, updateStateErr]            = useState({});
     const [cityErr, updateCityErr]              = useState({});
     const [pinCodeErr, updatePinCodeErr]        = useState({});
+
+    const [loadingMssg, setLoadingMssg]         = useState(""); 
 
     const handlenewUserInput = (e) => {
         let ele         =   e.target.name;
@@ -262,6 +281,7 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
         const apiUrl        = Costant_Variables.SERVER_BASE_URL+'/addNewUser';
 
         if(validationFlag){
+            setLoadingMssg("Please wait !! submitting form...")
             const formData  = {
                 firstname: newUserData.firstName[0],
                 lastname: newUserData.lastName[0],
@@ -287,10 +307,12 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                 const isJson = response.headers.get('content-type')?.includes('application/json');
                 const responseData = isJson && await response.json();
 
-                if(response.ok == true){
+                if(response.ok === true){
                     localStorage.setItem("krishmish@regUserId", "krishmish@"+newUserData.phoneNum[0]);
                     loadUserDataFunction(newUserData.phoneNum[0]);
+                    setLoadingMssg("User Successfully Registered !!");
                 }else{
+                    setLoadingMssg("Something went wrong !! Please try after sometimes...")
                     const error = (responseData && responseData.message) || response.status;
                     return Promise.reject(error);
                 }
@@ -422,12 +444,21 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                         <div className="modal-body" style={{display:"flex", justifyContent:"center"}}>
                             <form className="row g-3 needs-validation old-user-form">
                                 <div className="col-sm-12">
-                                    <input type="phone" className="form-control" id="phoneNumberOne" placeholder="Enter your Mobile Number" value={phoneNumber} onChange={handlePhoneNumberChange} required/>
-                                    <div className="valid-feedback">
-                                    </div>
+                                    <input type="phone" className="form-control" id="phoneNumberOne" placeholder="Enter your Mobile Number" value={phoneNumber} onChange={handlePhoneNumberChange} form-valid={loginNumErr.isValid} maxLength="10"/>
+                                    {
+                                        (loginNumErr.err_mssg !== 'valid')?
+                                        <div className="invalid-feedback">
+                                            {loginNumErr.err_mssg}
+                                        </div>
+                                        :
+                                        <div className="valid-feedback">
+                                            {loginNumErr.err_mssg}
+                                        </div>
+                                    }
                                 </div>
                                 <div className="col-sm-12">
                                     <button className="btn btn-primary" type="submit" style={{width:"200px"}} onClick={checkPhoneNumber}>Get OTP</button>
+                                    <p style={{color:"red", marginTop:"10px", fontWeight:"600"}}>{loginErrMssg}</p>
                                 </div>
                             </form>
                         </div>
@@ -613,6 +644,7 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                                 </div>
                                 <div className="col-sm-12">
                                     <button className="btn btn-primary" type="submit">Submit form</button>
+                                    <p style={{fontWeight:"600"}}>{loadingMssg}</p>
                                 </div>
                             </form>
                         </div>

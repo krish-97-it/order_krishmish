@@ -11,8 +11,11 @@ import ShowCartPage from "../pages/show-cart";
 import SearchBar from "../components/searchbar";
 import MyProfile from "../pages/user-profile";
 import Costant_Variables from "./constant-variables";
+import Errorpage from "../pages/404-page";
 
 export default function AppFunction(){
+
+    let websiteBaseUrl = window.location.origin;
 
     // api call to get food menus from backend db. Api written in backend project
     const [foodlist, updateFoodList]                =   useState([]);
@@ -20,6 +23,8 @@ export default function AppFunction(){
     const [userLoggedIn, setUserLoggedIn]           =   useState('false');
     const [showLoginModal, updateShowLoginModal]    =   useState('hide');
     const [loadUserData, setUserData]               =   useState([]);
+    const [loginErrMssg, setLoginErrMssg]           =   useState('');
+    const [userMobnumber, updateUserMobNumber]      =   useState('');
 
     const APIUrls                                   =   {
         "fetchFoodMenuAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getFoodMenu',
@@ -43,6 +48,7 @@ export default function AppFunction(){
         console.log(userId);
         if(userId){
             let mobNo   =   userId.split("@");
+            updateUserMobNumber(mobNo[1]);
             loadUserDataFunction(mobNo[1]);
         }else{
             updateShowLoginModal("show");
@@ -88,26 +94,36 @@ export default function AppFunction(){
     // signout user on click signout button
     function signOutUser(){
         localStorage.setItem("krishmish@regUserId", "");
-        window.location.reload();
+        window.location.href = websiteBaseUrl;
+        // window.location.reload();
     }
 
     // This function helps to get a userdata with phone number and set userLoggedIn and updateShowLoginModal data
-    async function loadUserDataFunction(phoneNum){
+    function loadUserDataFunction(phoneNum){
         const formData  =   {
             phone : parseInt(phoneNum)
         }
         const config = {
             headers: { 'Content-Type': 'application/json'}
         }
-        await axios.post(APIUrls.fetchUserDataAPIUrl, formData, {config})
+        axios.post(APIUrls.fetchUserDataAPIUrl, formData, {config})
         .then(
             (response) => {
                 if(response.data.message === 'success'){
                     const resData = response.data.data; 
-                    setUserData(resData[0]);
-                    setUserLoggedIn('true');
-                    updateShowLoginModal('hide');
-                    localStorage.setItem("krishmish@regUserId", "krishmish@"+resData[0].phone);
+                    console.log(resData.length);
+                    if(resData.length > 0){
+                        setLoginErrMssg("Welcome Back!!");
+                        setUserData(resData[0]);
+                        setUserLoggedIn('true');
+                        updateShowLoginModal('hide');
+                        localStorage.setItem("krishmish@regUserId", "krishmish@"+resData[0].phone);
+                    }else{
+                        updateShowLoginModal("show");
+                        setUserLoggedIn('false');
+                        setLoginErrMssg("*Please try with a registered mobile number*");
+                        updateUserMobNumber(phoneNum);
+                    }
                 }else{
                     updateShowLoginModal("show");
                 }
@@ -340,7 +356,7 @@ export default function AppFunction(){
 
     return (
         <Router>
-            <Navbar searchbar="false" totalCartItem={cartItem.length} showLoginModal={showLoginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} isUserLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} loadUserDataFunction={loadUserDataFunction} loadUserData={loadUserData} signOutUser={signOutUser} />
+            <Navbar searchbar="false" totalCartItem={cartItem.length} showLoginModal={showLoginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} isUserLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} loadUserDataFunction={loadUserDataFunction} loadUserData={loadUserData} signOutUser={signOutUser} loginErrMssg={loginErrMssg} userMobnumber={userMobnumber} />
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine }/>
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName} randomComboItemList={randomComboItemList}/>}/>
@@ -349,8 +365,7 @@ export default function AppFunction(){
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
                 <Route exact path="/myprofile" element={<MyProfile loadUserData = {loadUserData} />} />
-
-                {/* <Route exact path="*" element={<NoPage />} /> */}
+                <Route exact path="*" element={<Errorpage />} />
             </Routes>
             <Footer/>
         </Router>
