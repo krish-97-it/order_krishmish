@@ -1,5 +1,5 @@
 const Costant_Variables = {
-    SERVER_BASE_URL : 'https://krishmish-order-backend-server.onrender.com'
+    SERVER_BASE_URL : 'https://krishmish-order-backend.onrender.com'
     // SERVER_BASE_URL : 'http://localhost:4000/getFoodMenu'
 }
 
