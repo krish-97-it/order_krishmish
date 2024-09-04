@@ -1,6 +1,26 @@
 .navbar-container-style{
     background-color: #262626;
-    border-bottom: 2px solid #2f2608;
+    border-bottom: 2px solid #262626;
+    border-top: 2px solid #262626;
+    justify-content: center;
+}
+.navbar-brand{
+    padding: 5px 0px 5px 0px;
+}
+.navbar-brand img{
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+}
+.brand-name-logo{
+    width:170px;
+    padding-right:25px;
+    padding-top: 1px;
+}
+.brand-name-logo-toggle{
+    width:142px;
+    /* padding-right:25px; */
+    margin-left: -10px;
 }
 .navbar-custom-style{
     padding-top: 0px !important;
@@ -21,6 +41,9 @@
 }
 .profile-dropdown::after{
     content: none;
+}
+.btn-close-white{
+    margin-top: -1px;
 }
 .profile-dropdown{
     background-color: transparent;
@@ -73,19 +96,30 @@ a.nav-link{
     padding-left: 7px;
     color: wheat;
 }
+.search-pos-fixed{
+    position: fixed;
+    z-index: 11;
+    width: 100%;
+    background-image: linear-gradient(to right, #753A0D 0%, #000000 50%, #005842 100%);
+    margin-top: -57px;
+}
 .search-form-container{
-    margin-top: 60px;
     display: flex;
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 .search-form{
     display: flex;
 }
 .search-bar-page-load{
     width: 100%;
+}
+.show-results-text{
+    background-color: black;
+    color: white;
+    text-align: left;
 }
 [search-bar-hide="on"]{
     display: none !important;
@@ -245,6 +279,9 @@ a.nav-link{
         padding-left: 15px !important;
         padding-right: 15px !important;
     }
+    .brand-name-logo{
+        display: none !important;
+    }
 }
 @media(max-width:991.98px){
     .modal-content{
@@ -253,7 +290,7 @@ a.nav-link{
 }
 @media(max-width: 767.98px){
     .offcanvas{
-        width: 50% !important;
+        width: 60% !important;
     }
     .custom-dropdown-menu-style[data-bs-popper] {
         right: auto;
@@ -271,14 +308,17 @@ a.nav-link{
     .modal-content{
         width:100%;
     }
+    .offcanvas{
+        width: 65% !important;
+    }
 }
 @media(max-width: 483.98px){
     .offcanvas.offcanvas-end{
-        width: 65% !important;
+        width: 75% !important;
     }
 }
 @media(max-width: 379.98px){
     .offcanvas.offcanvas-end{
-        width: 75% !important;
+        width: 90% !important;
     }
 }
