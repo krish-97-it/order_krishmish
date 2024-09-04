@@ -31,8 +31,8 @@ export default function AppFunction(){
         "fetchUserDataAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getUserData'
     };
 
-    async function loadCuisineData(){
-        await axios.get(APIUrls.fetchFoodMenuAPIUrl).then((res) => {
+    function loadCuisineData(){
+        axios.get(APIUrls.fetchFoodMenuAPIUrl).then((res) => {
             updateFoodList(res.data[1].data);
             updateTempFoodList(res.data[1].data);
         }).catch((error) => {
