@@ -10,7 +10,7 @@ export default function homePage({getHomeCuisineName, randomComboItemList}){
     return(
 
         <div className="app-body">
-            <div className="main-content">
+            <div className="main-content" style={{marginTop:"118px"}}>
                 {<HomeCarousel/>}
                 {<Foodcard getHomeCuisineName={getHomeCuisineName} randomComboItemList={randomComboItemList} />}
                 <GoToTop/>
