@@ -58,7 +58,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
 
     return(
         <div className="app-body">
-            <div className="main-content" style={{position:"relative"}}>
+            <div className="main-content" style={{position:"relative",marginTop:"118px"}}>
                 <h3 className="gradient-bg no-border-radius mb-0">What's on your mind?</h3>
                 <div className="select-cuisine-bg">
                     <div className="dark-opacity">
@@ -102,7 +102,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                         <button className="chevron-right-button" onClick={() => handlecardScroll('right')}><i className="fa fa-lg fa-chevron-right"></i></button>
                     </div>
                 </div>
-                <div className="show-all-products">
+                <div className="show-all-products" id="showAllProducts">
                     <h3 className="gradient-bg no-border-radius">
                         Food under <span className="cuisine-name-txt">{getCuisineName !== 'cuisines' ? getCuisineName.toUpperCase():'ALL'}</span> cuisine
                     </h3>

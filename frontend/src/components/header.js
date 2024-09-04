@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Brandlogo from '../assets/shop-logo-one-1.jpg';
+import BrandName from '../assets/krishmish_brand_name_logo.webp';
 import HamburgerIcon from '../assets/hamburger.svg';
 import { Link } from "react-router-dom";
 import lightDarkIcon from '../assets/day-light-mode-icon.svg';
@@ -35,15 +36,17 @@ const Navbar = (props) => {
         <header>
             <nav className="navbar navbar-expand-md navbar-custom-style bg-dark navbar-dark fixed-top">
                 <div className="container-fluid navbar-container-style">
-                    <Link className="navbar-brand" to="/"><img src={Brandlogo} alt="Brand" height="50px" width="54px"/></Link>
+                    <Link className="navbar-brand" to="/"><img src={Brandlogo} alt="Brand"/></Link>
+                    <img src={BrandName} alt="brand-name" className="brand-name-logo"/>
                     <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                         {/* <span className="navbar-toggler-icon"></span> */}
-                        <img src={HamburgerIcon} alt="toggle" style={{width:"36px"}}/>
+                        <img src={HamburgerIcon} alt="toggle" style={{width:"36px", paddingTop:"3px"}}/>
                     </button>
                     <div className="offcanvas offcanvas-end bg-dark navbar-dark" data-bs-scroll="true" data-bs-backdrop="static" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                         <div className="offcanvas-header">
                             {/* <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Home</h5> */}
-                            <Link className="navbar-brand" to="/"><img src={Brandlogo} alt="Brand" height="50px" width="54px"/></Link>
+                            {/* <Link className="navbar-brand" to="/"><img src={Brandlogo} alt="Brand"/></Link> */}
+                            <img src={BrandName} alt="brand-name" className="brand-name-logo-toggle"/>
                             <button type="button" className="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div className="offcanvas-body">

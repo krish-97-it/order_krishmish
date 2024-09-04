@@ -52,7 +52,7 @@ export default function Foodcard({getHomeCuisineName, randomComboItemList}){
                 </div>
             </div>
 
-            <div className="favourite-category-container mt-5">
+            <div className="favourite-category-container mt-4">
                 <h3 className="gradient-bg fav-cat-h3">Favourite Categories</h3>
                 <div className="fav-cat-section fav-cat-banner-section">
                     <div className="fav-cat-bg-opacity">
@@ -133,7 +133,7 @@ export default function Foodcard({getHomeCuisineName, randomComboItemList}){
                 </div>
             </div>
 
-            <div className="food-card-container mt-5">
+            <div className="food-card-container mt-4">
                 <h3 className="gradient-bg">Special Combos with Offers</h3>
                 <div className="container food-card-section food-card-section-home mt-3">
                     {listItems}
