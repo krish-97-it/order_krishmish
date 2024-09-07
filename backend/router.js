@@ -12,7 +12,8 @@ router.get('/getFoodMenu',foodMenuController.fetchFoodMenu);
 
 // Customer APIs Routes //
 router.post('/addNewUser',userDataController.addUserData);
-router.post('/getUserData', userDataController.getUserData)
+router.post('/getUserData', userDataController.getUserData);
+router.post('/updateUserData', userDataController.findAndUpdateUser);
 
 
 

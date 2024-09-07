@@ -110,8 +110,7 @@ export default function AppFunction(){
         .then(
             (response) => {
                 if(response.data.message === 'success'){
-                    const resData = response.data.data; 
-                    console.log(resData.length);
+                    const resData = response.data.data;
                     if(resData.length > 0){
                         setLoginErrMssg("Welcome Back!!");
                         setUserData(resData[0]);
@@ -365,7 +364,7 @@ export default function AppFunction(){
                 <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
-                <Route exact path="/myprofile" element={<MyProfile loadUserData = {loadUserData} />} />
+                <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} />} />
                 <Route exact path="*" element={<Errorpage />} />
             </Routes>
             <Footer/>

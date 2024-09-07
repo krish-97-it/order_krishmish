@@ -130,9 +130,9 @@ const Navbar = (props) => {
             <>
             {
                 (props.showLoginModal) === "show" ? 
-                <LoginModal show=" show" showLoginModal={props.showLoginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide} loadUserDataFunction={props.loadUserDataFunction} loadUserData={props.loadUserData} loginErrMssg={props.loginErrMssg} userMobNumber={props.userMobNumber} />
+                <LoginModal show=" show" showLoginModal={props.showLoginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide} loadUserDataFunction={props.loadUserDataFunction} loginErrMssg={props.loginErrMssg} userMobNumber={props.userMobNumber} />
                 : 
-                <LoginModal show="" showLoginModal={props.showLoginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide} loadUserDataFunction={props.loadUserDataFunction} loadUserData={props.loadUserData} userMobNumber={props.userMobNumber} />
+                <LoginModal show="" showLoginModal={props.showLoginModal} closeModal={props.closeLoginModal} formNextSlide={props.formNextSlide} formPrevSlide={props.formPrevSlide} displayFirstSlide={props.displayFirstSlide} displaySecondSlide={props.displaySecondSlide} loadUserDataFunction={props.loadUserDataFunction} userMobNumber={props.userMobNumber} />
             }
             </>
         </header>
