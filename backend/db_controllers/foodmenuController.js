@@ -10,17 +10,21 @@ const foodModel = require('../db_models/food_menu');
 //     });
 // });
 
-exports.fetchFoodMenu = async(req,res) => {
-    try{
-        const food = await foodModel.find({})
-        res.json([{message: "success"},{"data":food}]);
-    } catch(error) {
-        res.status(500).json({
-            success: false,
-            message: "Internal server error",
-            error: error.message
-        })
-    }
+exports.fetchFoodMenu = (req,res) => {
+        const food = foodModel.find({}).then(
+            (food) =>{
+                res.json([{message: "success"},{"data":food}]);
+            }
+        ).catch(
+            (error) =>{
+                res.status(500).json({
+                    success: false,
+                    message: "Internal server error",
+                    error: error.message
+                })
+            }
+        )
+    
     // try{
     //     await foodModel.find({}).then(
     //         (food) =>{
