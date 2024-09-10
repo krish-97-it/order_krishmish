@@ -22,7 +22,7 @@ export default function SearchBar({searchItem, getSearchInput, clearInput, getIn
             <div className="container-fluid search-form-container" id="searchformid" search-bar-hide={(currentPath.includes('/special-combos') || currentPath.includes('/mycart') || currentPath.includes('/reviews') || currentPath.includes('/myprofile')) ? 'on' : 'off'} >
                 <div className="search-input-section">
                     <NavLink className="nav-link search-bar-page-load" to={(currentPath.includes('/cuisine')? '#':'/cuisine')} onClick={onClickSearchBar}>
-                        <form className="search-form" role="" style={{width: "100%"}} onSubmit={disableOnSubmit}>
+                        <form className="search-form" style={{width: "100%"}} onSubmit={disableOnSubmit}>
                             <input className="form-control me-2 search-input-box" type="" placeholder="Search for a food..." id="searchInput" aria-label="Search" onChange={getSearchInput} value={searchItem}/>
                             {/* <button className="btn btn-outline-success" type="submit" onClick={getSearchInput}>Search</button> */}
                         </form>

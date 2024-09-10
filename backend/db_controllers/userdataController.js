@@ -2,7 +2,7 @@ const userModel = require('../db_models/customer');
 
 exports.getUserData = async(req,res) => {
     try{
-        const user_data = await userModel.find({phone: req.body.phone})
+        const user_data = await userModel.find({email: req.body.email})
         res.json({message: "success","data":user_data});
     } catch(error) {
         res.json({message:error.message});
@@ -10,10 +10,10 @@ exports.getUserData = async(req,res) => {
 }
 
 exports.addUserData = async(req,response) => {
-    await userModel.find({phone: req.body.phone}).then(
+    await userModel.find({email: req.body.email}).then(
         (res) =>{
             if(res.length != 0){
-                response.status(200).json({success: false, message: "Phone number is already registered. Try with a different phone number", error:"existing user"})
+                response.status(200).json({success: false, message: "Email Id is already registered. Try with a different email id.", error:"existing user"})
             }else{
                 userModel.create(req.body).then(
                     (data) =>{
@@ -46,7 +46,7 @@ exports.addUserData = async(req,response) => {
 }
 
 exports.findAndUpdateUser   = async(req,res)=>{
-    const query             = { phone: req.body.phone };
+    const query             = { email: req.body.email };
     const updatedParameter  = {
         firstname   :   req.body.firstname,
         lastname    :   req.body.lastname,

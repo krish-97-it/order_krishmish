@@ -78,3 +78,7 @@ body{
   width: 130px;
   margin-bottom: 15px;
 }
+
+body:has([show-modal="show"]){
+  overflow-y: hidden !important;
+}

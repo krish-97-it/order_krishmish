@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import Costant_Variables from "../controller/constant-variables";
 import ValidationFunctions from "../controller/validation-functions";
+import Swal from 'sweetalert2';
+import GoToTop from "../components/go-to-top";
 
 const MyProfile = ({loadUserDataFunction, loadUserData}) => {
 
@@ -21,8 +23,17 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
     });
 
     function enableEditBtn(){
-        // e.preventDefault();
-        // let ele = 'firstName';
+        setLoadingMssg("");
+        updateFirstNameErr({});
+        updateLastNameErr({});
+        updateNickNameErr({});
+        updateGenderErr({});
+        updateDobErr({});
+        updateEmailIdErr({});
+        updatePhoneNumErr({});
+        updateStateErr({});
+        updateCityErr({});
+        updatePinCodeErr({});
         setNewUserData({...newUserData, 'firstName' : loadUserData.firstname, 'lastName':loadUserData.lastname, 'nickName':loadUserData.nickname, 'dob':loadUserData.dob, 'gender':loadUserData.gender, 'emailId':loadUserData.email, 'phoneNum':loadUserData.phone, 'state':loadUserData.state, 'city':loadUserData.city, 'pinCode' : loadUserData.pincode});
     }
 
@@ -45,7 +56,6 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
     const [pinCodeErr, updatePinCodeErr]        = useState({});
 
     const [loadingMssg, setLoadingMssg]         = useState("");
-    const [msgStyle, setMsgStyle]               = useState("success");
 
     const handlenewUserInput = (e) => {
         let ele         =   e.target.name;
@@ -146,7 +156,6 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
     }
 
     const onSubmitValidation = (data) => {
-        console.log(data);
         let isfirstNameValid = ValidationFunctions.nameValidation("firstName",data.firstName);
         if(isfirstNameValid !== 'valid'){
             updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "invalid"})
@@ -248,37 +257,82 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
             };
             const formDataJsonString    =   JSON.stringify(formData);
 
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    body: formDataJsonString,
-                    datatype: "JSON",
-                    headers: { 'Content-Type': 'application/json' },
-                })
-
-                const isJson = response.headers.get('content-type')?.includes('application/json');
-                const responseData = isJson && await response.json();
-                console.log(responseData);
-                if(response.ok === true){
-                    if(responseData.success === true){
-                        localStorage.setItem("krishmish@regUserId", "krishmish@"+newUserData.phoneNum);
-                        loadUserDataFunction(newUserData.phoneNum);
-                        setLoadingMssg("User Successfully Registered !!");
-                        setMsgStyle("success");
-                    }else{
-                        setLoadingMssg(responseData.message);
-                        setMsgStyle("error");
-                    }
-                }else{
-                    setLoadingMssg("Something went wrong !! Please try after sometimes...");
-                    setMsgStyle("error");
-                    const error = (responseData && responseData.message) || response.status;
-                    return Promise.reject(error);
-                }
-
+            Swal.fire({
+                title: 'Confirm to update',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
+                icon: 'warning'
             }
-            catch(error){
-                console.log("Something went wrong!! please try again later");
+            ).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    updateApiCall()
+                } else{
+                    Swal.close();
+                    setLoadingMssg("");
+                }
+            })
+
+            const  updateApiCall = async ()=> {
+                setLoadingMssg("");
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        body: formDataJsonString,
+                        datatype: "JSON",
+                        headers: { 'Content-Type': 'application/json' },
+                    })
+    
+                    const isJson = response.headers.get('content-type')?.includes('application/json');
+                    const responseData = isJson && await response.json();
+
+                    if(response.ok === true){
+                        if(responseData.success === true){
+                            localStorage.setItem("krishmish@regUserId", "krishmish@"+newUserData.emailId);
+                            loadUserDataFunction(newUserData.emailId);
+                            Swal.fire(
+                                {
+                                    title: "Great!!",
+                                    text: "Successfully Updated",
+                                    icon: "success"
+                                }
+                            ).then(
+                                (result) =>{
+                                    if (result.isConfirmed) {
+                                        setTimeout(function(){
+                                            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                                        }, 300);
+                                        document.querySelector("button.back-to-profile").click();
+                                    }
+                                }
+                            )
+                        }else{
+                            Swal.fire(
+                                {
+                                    title: "Failed!",
+                                    text: responseData.message,
+                                    icon: "error"
+                                }
+                            )
+                        }
+                    }else{
+                        Swal.fire(
+                            {
+                                title: "Oops...",
+                                text: "Something went wrong !! Please try after sometimes.",
+                                icon: "error"
+                            }
+                        )
+                        const error = (responseData && responseData.message) || response.status;
+                        return Promise.reject(error);
+                    }
+    
+                }
+                catch(error){
+                    console.log("Something went wrong!! please try again later");
+                }
             }
 
         }else{
@@ -287,11 +341,10 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
 
     }
 
-
     return (
         <div className="app-body">
             <div className="main-content" style={{marginTop:"62px", minHeight:"500px"}}>
-                <div className="">
+                <div id="userProfilePage">
                     <div className="profile-heading-section">
                         <div className="dark-opacity">
                             <div className="profile-picture-section">
@@ -309,7 +362,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                     </div>
                     <div className="container mt-3">
                         <div className="accordion" id="profileAccordation">
-                            <div className="accordion-item">
+                            <div className="accordion-item profile-page-accordion-item">
                                 <h2 className="accordion-header">
                                     <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#personalDetails" aria-expanded="true" aria-controls="personalDetails">
                                         Personal Details
@@ -324,68 +377,78 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                                                 <div className="edit-profile-btn-section">
                                                     <button className="btn btn-primary edit-profile-btn" type="button" data-bs-target="#profileFormSlide" data-bs-slide="next" onClick={enableEditBtn}>Edit Profile</button>
                                                 </div>
-                                                <div className="profile-data-table">
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td className="td-label">Name</td>
-                                                                <td>: </td>
-                                                                <td className="td-data">{loadUserData.firstname} {loadUserData.lastname}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="td-label">Date Of Birth</td>
-                                                                <td>: </td>
-                                                                <td className="td-data">{loadUserData.dob}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="td-label">Gender</td>
-                                                                <td>: </td>
-                                                                <td className="td-data">{loadUserData.gender}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="td-label">Nick Name</td>
-                                                                <td>: </td>
-                                                                <td className="td-data">{loadUserData.nickname}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="td-label">Email</td>
-                                                                <td>: </td>
-                                                                <td className="td-data">{loadUserData.email}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="td-label">Phone</td>
-                                                                <td>: </td>
-                                                                <td className="td-data">{loadUserData.phone}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td className="td-label">Address</td>
-                                                                <td>: </td>
-                                                                <td className="td-data">{loadUserData.city ? loadUserData.city+", ":""} {loadUserData.state? loadUserData.state+", ":""} {loadUserData.pincode}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                <div style={{marginTop:"15px"}}>
+                                                    <div className="profile-data-row">
+                                                        <div className="profile-label-section">
+                                                            <p>Nick Name</p>
+                                                            <p>:</p>
+                                                        </div>
+                                                        <div className="profile-data-section">
+                                                            {loadUserData.firstname} {loadUserData.lastname}
+                                                        </div>
+                                                    </div>
+                                                    <div className="profile-data-row">
+                                                        <div className="profile-label-section">
+                                                            <p>Dob</p>
+                                                            <p>:</p>
+                                                        </div>
+                                                        <div className="profile-data-section">
+                                                            {loadUserData.dob}
+                                                        </div>
+                                                    </div>
+                                                    <div className="profile-data-row">
+                                                        <div className="profile-label-section">
+                                                            <p>Gender</p>
+                                                            <p>:</p>
+                                                        </div>
+                                                        <div className="profile-data-section">
+                                                            {loadUserData.gender}
+                                                        </div>
+                                                    </div>
+                                                    <div className="profile-data-row">
+                                                        <div className="profile-label-section">
+                                                            <p>Nick Name</p>
+                                                            <p>:</p>
+                                                        </div>
+                                                        <div className="profile-data-section">
+                                                            {loadUserData.nickname}
+                                                        </div>
+                                                    </div>
+                                                    <div className="profile-data-row">
+                                                        <div className="profile-label-section">
+                                                            <p>Phone No.</p>
+                                                            <p>:</p>
+                                                        </div>
+                                                        <div className="profile-data-section">
+                                                            {loadUserData.phone}
+                                                        </div>
+                                                    </div>
+                                                    <div className="profile-data-row">
+                                                        <div className="profile-label-section">
+                                                            <p>Email id</p>
+                                                            <p>:</p>
+                                                        </div>
+                                                        <div className="profile-data-section">
+                                                            {loadUserData.email}
+                                                        </div>
+                                                    </div>
+                                                    <div className="profile-data-row">
+                                                        <div className="profile-label-section">
+                                                            <p>Address</p>
+                                                            <p>:</p>
+                                                        </div>
+                                                        <div className="profile-data-section">
+                                                            {loadUserData.city ? loadUserData.city+", ":""} {loadUserData.state? loadUserData.state+", ":""} {loadUserData.pincode}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="carousel-item">
                                                 <div className="cancel-update-btn" style={{textAlign:"right"}}>
-                                                    <button className="btn btn-danger edit-profile-btn" type="button" data-bs-target="#profileFormSlide" data-bs-slide="prev">Cancel</button>
+                                                    <button className="btn btn-danger edit-profile-btn back-to-profile" type="button" data-bs-target="#profileFormSlide" data-bs-slide="prev">Cancel</button>
                                                 </div>
                                                 <form className="row g-3 needs-validation new-user-form" id="newUserForm" onSubmit={newUserFormSubmit}>
                                                     <div className="col-md-12 col-sm-12 new-form-field">
-                                                        <label htmlFor="phoneNum" className="form-label">Phone no.</label>
-                                                        <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={newUserData.phoneNum} onChange={(e)=>handlenewUserInput(e)} form-valid={phoneNumErr.isValid} maxLength="10" disabled/>
-                                                        {
-                                                            (phoneNumErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {phoneNumErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {phoneNumErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12 new-form-field">
                                                         <label htmlFor="firstName" className="form-label">First name</label>
                                                         <input type="text" className="form-control" id="firstName" name="firstName" placeholder="Enter your first name" value={newUserData.firstName} onChange={(e)=>handlenewUserInput(e)} form-valid={firstNameErr.isValid}/>
                                                         {
@@ -429,7 +492,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                                                     </div>
                                                     <div className="col-md-6 col-sm-12 new-form-field">
                                                         <label htmlFor="dob" className="form-label">Date Of Birth</label>
-                                                        <input type="date" className="form-control" id="dob" name="dob" value={newUserData.dobx} onChange={(e)=>handlenewUserInput(e)} form-valid={dobErr.isValid} select-color={newUserData.dob === ''?'novalue':'withvalue'} maxLength={10}/>
+                                                        <input type="date" className="form-control" id="dob" name="dob" value={newUserData.dob} onChange={(e)=>handlenewUserInput(e)} form-valid={dobErr.isValid} select-color={newUserData.dob === ''?'novalue':'withvalue'} maxLength={10}/>
                                                         {
                                                             (dobErr.err_mssg !== 'valid')?
                                                             <div className="invalid-feedback">
@@ -461,8 +524,22 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                                                         }
                                                     </div>
                                                     <div className="col-md-6 col-sm-12 new-form-field">
+                                                        <label htmlFor="phoneNum" className="form-label">Phone no.</label>
+                                                        <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={newUserData.phoneNum} onChange={(e)=>handlenewUserInput(e)} form-valid={phoneNumErr.isValid} maxLength="10"/>
+                                                        {
+                                                            (phoneNumErr.err_mssg !== 'valid')?
+                                                            <div className="invalid-feedback">
+                                                                {phoneNumErr.err_mssg}
+                                                            </div>
+                                                            :
+                                                            <div className="valid-feedback">
+                                                                {phoneNumErr.err_mssg}
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <div className="col-md-6 col-sm-12 new-form-field">
                                                         <label htmlFor="emailId" className="form-label">Email</label>
-                                                        <input type="text" className="form-control" id="emailId" name="emailId" placeholder="Enter your email..." value={newUserData.emailId} onChange={(e)=>handlenewUserInput(e)} form-valid={emailIdErr.isValid}/>
+                                                        <input type="text" className="form-control" id="emailId" name="emailId" placeholder="Enter your email..." value={newUserData.emailId} onChange={(e)=>handlenewUserInput(e)} form-valid={emailIdErr.isValid} disabled/>
                                                         {
                                                             (emailIdErr.err_mssg !== 'valid')?
                                                             <div className="invalid-feedback">
@@ -530,7 +607,6 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                                                         <div className="dp-image-input-section">
                                                             <div className="choose-profile-images">
                                                                 {
-                                                                    
                                                                     Costant_Variables.dp_array.map((data,index)=>{
                                                                         return (
                                                                             <button className="dp-img-select-btn" id="dpImgBtn" onClick={chooseProfilePicture} value={data.img_link} key={index} data-active={(dpImageLink === data.img_link)?'true':'false'}>
@@ -546,22 +622,9 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm-12 check-term-condition">
-                                                        <div className="form-check">
-                                                            <div className="agree-check-form">
-                                                                <input className="form-check-input" type="checkbox" value="" id="invalidCheck" required/>
-                                                                <label className="form-check-label" htmlFor="invalidCheck">
-                                                                    Agree to terms and conditions
-                                                                </label>
-                                                            </div>
-                                                            {/* <div className="invalid-feedback">
-                                                                You must agree before submitting.
-                                                            </div> */}
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-12">
-                                                        <button className="btn btn-primary" type="submit">Update</button>
-                                                        <p style={{fontWeight:"600"}} error-mssg-style={msgStyle}>{loadingMssg}</p>
+                                                    <div className="col-sm-12 mt-5">
+                                                        <button className="btn btn-primary update-data-btn" style={{width:"120px"}} type="submit">Update</button>
+                                                        <p style={{fontWeight:"600"}} error-mssg-style="success">{loadingMssg}</p>
                                                     </div>
                                                 </form>
 
@@ -580,7 +643,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="accordion-item">
+                            <div className="accordion-item profile-page-accordion-item">
                                 <h2 className="accordion-header">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#myWishList" aria-expanded="false" aria-controls="myWishList">
                                         Favourite Dishes
@@ -592,7 +655,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="accordion-item">
+                            <div className="accordion-item profile-page-accordion-item">
                                 <h2 className="accordion-header">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#orderHistory" aria-expanded="false" aria-controls="orderHistory">
                                         Order History
@@ -607,6 +670,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                         </div>
                     </div>
                 </div>
+                <GoToTop/>
             </div>
         </div>
     )
