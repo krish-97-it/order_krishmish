@@ -79,6 +79,7 @@
 
 .custom-card-width{
     max-width: 300px;
+    box-shadow: 0 24px 20px -15px #7a3e864f;
 }
 .custom-card-width-home{
     max-width: 250px;
@@ -197,7 +198,7 @@
 }
 @media(max-width: 1299.98px){
     .food-card-section{
-        gap: 12px;
+        gap: 18px;
     }
 }
 @media(max-width:767.98px){
@@ -227,7 +228,7 @@
 }
 @media(max-width:623.98px){
     .food-card-section{
-        gap: 10px;
+        gap: 16px;
         flex-wrap: wrap !important;
     }
     .custom-card-width{
