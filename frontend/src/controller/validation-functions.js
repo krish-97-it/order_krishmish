@@ -104,6 +104,25 @@ var custom_functions = {
             let err_mssg = 'valid';
             return err_mssg;
         }
+    },
+
+    verifyMobOtp : function (val){
+        if(!val || val === '' || val === null || val === 'undefined'){
+            let err_mssg = 'Incorrect Otp';
+            return err_mssg;
+        }else{
+            let err_mssg = 'valid';
+            return err_mssg;
+        }
+    },
+
+    sendMobOtp : function (val){
+        if(!val || val === '' || val === null || val === 'undefined'){
+            let err_mssg = 'OTP is required';
+            return err_mssg;
+        }else{
+            
+        }
     }
 }
 

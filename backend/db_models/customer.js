@@ -48,6 +48,9 @@ const customerSchema = new Schema(
         pincode: {
             type: Number,
         },
+        profileimg: {
+            type: String,
+        },
         createdat: {
             type: Date,
             default: Date.now,

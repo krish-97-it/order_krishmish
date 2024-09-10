@@ -1,6 +1,54 @@
 const Costant_Variables = {
-    SERVER_BASE_URL : 'https://krishmish-order-backend.onrender.com'
-    // SERVER_BASE_URL : 'http://localhost:4000/getFoodMenu'
+    SERVER_BASE_URL : 'https://krishmish-order-backend.onrender.com',
+    // SERVER_BASE_URL : 'http://localhost:4000',
+    dp_array : [
+        {"gender":"girl", "img_link":"https://img.perceptpixel.com/pykhlszs/dp_girl_two.webp"},
+        {"gender":"girl", "img_link":"https://img.perceptpixel.com/pykhlszs/dp_girl_one.webp"},
+        {"gender":"girl", "img_link":"https://img.perceptpixel.com/pykhlszs/dp_girl_four.webp"},
+        {"gender":"girl", "img_link":"https://img.perceptpixel.com/pykhlszs/dp_girl_three.webp"},
+        {"gender":"boy", "img_link":"https://img.perceptpixel.com/pykhlszs/dp_boy_three.webp"},
+        {"gender":"boy", "img_link":"https://img.perceptpixel.com/pykhlszs/dp_boy_one.webp"},
+        {"gender":"boy", "img_link":"https://img.perceptpixel.com/pykhlszs/dp_boy_two.webp"},
+    ],
+
+    states : [
+        "Andhra Pradesh",
+        "Arunachal Pradesh",
+        "Assam",
+        "Bihar",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Haryana",
+        "Himachal Pradesh",
+        "Jammu and Kashmir",
+        "Jharkhand",
+        "Karnataka",
+        "Kerala",
+        "Madhya Pradesh",
+        "Maharashtra",
+        "Manipur",
+        "Meghalaya",
+        "Mizoram",
+        "Nagaland",
+        "Odisha",
+        "Punjab",
+        "Rajasthan",
+        "Sikkim",
+        "Tamil Nadu",
+        "Telangana",
+        "Tripura",
+        "Uttarakhand",
+        "Uttar Pradesh",
+        "West Bengal",
+        "Andaman and Nicobar Islands",
+        "Chandigarh",
+        "Dadra and Nagar Haveli",
+        "Daman and Diu",
+        "Delhi",
+        "Lakshadweep",
+        "Puducherry"
+    ]
 }
 
 export default Costant_Variables;

@@ -12,6 +12,7 @@ import SearchBar from "../components/searchbar";
 import MyProfile from "../pages/user-profile";
 import Costant_Variables from "./constant-variables";
 import Errorpage from "../pages/404-page";
+import Swal from "sweetalert2";
 
 export default function AppFunction(){
 
@@ -24,7 +25,7 @@ export default function AppFunction(){
     const [showLoginModal, updateShowLoginModal]    =   useState('hide');
     const [loadUserData, setUserData]               =   useState([]);
     const [loginErrMssg, setLoginErrMssg]           =   useState('');
-    const [userMobnumber, updateUserMobNumber]      =   useState('');
+    const [userEmailId, updateuserEmailId]      =   useState('');
 
     const APIUrls                                   =   {
         "fetchFoodMenuAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getFoodMenu',
@@ -45,11 +46,10 @@ export default function AppFunction(){
         // store cartItems to local storage, so that on page load Ites in cart are not deleted
         let userId  =   localStorage.getItem("krishmish@regUserId");
         // let userId  =   JSON.parse(retCartDataStringFromLocalStorage);
-        console.log(userId);
         if(userId){
-            let mobNo   =   userId.split("@");
-            updateUserMobNumber(mobNo[1]);
-            loadUserDataFunction(mobNo[1]);
+            let emailid   =   userId.split("mish@");
+            updateuserEmailId(emailid[1]);
+            loadUserDataFunction(emailid[1]);
         }else{
             updateShowLoginModal("show");
         }
@@ -93,15 +93,31 @@ export default function AppFunction(){
 
     // signout user on click signout button
     function signOutUser(){
-        localStorage.setItem("krishmish@regUserId", "");
-        window.location.href = websiteBaseUrl;
-        // window.location.reload();
+        Swal.fire({
+            title: 'Are You Sure',
+            text: "Click 'Confirm' to Sign Out",
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonText: "OK",
+            cancelButtonText: "Cancel",
+            icon: 'warning'
+        }
+        ).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                localStorage.setItem("krishmish@regUserId", "");
+                window.location.href = websiteBaseUrl;
+                // window.location.reload();
+            } else{
+                Swal.close();
+            }
+        })
     }
 
     // This function helps to get a userdata with phone number and set userLoggedIn and updateShowLoginModal data
-    function loadUserDataFunction(phoneNum){
+    function loadUserDataFunction(email_id){
         const formData  =   {
-            phone : parseInt(phoneNum)
+            email : email_id
         }
         const config = {
             headers: { 'Content-Type': 'application/json'}
@@ -110,19 +126,18 @@ export default function AppFunction(){
         .then(
             (response) => {
                 if(response.data.message === 'success'){
-                    const resData = response.data.data; 
-                    console.log(resData.length);
+                    const resData = response.data.data;
                     if(resData.length > 0){
                         setLoginErrMssg("Welcome Back!!");
                         setUserData(resData[0]);
                         setUserLoggedIn('true');
                         updateShowLoginModal('hide');
-                        localStorage.setItem("krishmish@regUserId", "krishmish@"+resData[0].phone);
+                        localStorage.setItem("krishmish@regUserId", "krishmish@"+resData[0].email);
                     }else{
                         updateShowLoginModal("show");
                         setUserLoggedIn('false');
-                        setLoginErrMssg("*Please try with a registered mobile number*");
-                        updateUserMobNumber(phoneNum);
+                        setLoginErrMssg("User Not Found! Please try to login with a registered email id");
+                        updateuserEmailId(email_id);
                     }
                 }else{
                     updateShowLoginModal("show");
@@ -357,7 +372,7 @@ export default function AppFunction(){
 
     return (
         <Router>
-            <Navbar searchbar="false" totalCartItem={cartItem.length} showLoginModal={showLoginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} isUserLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} loadUserDataFunction={loadUserDataFunction} loadUserData={loadUserData} signOutUser={signOutUser} loginErrMssg={loginErrMssg} userMobnumber={userMobnumber} />
+            <Navbar searchbar="false" totalCartItem={cartItem.length} showLoginModal={showLoginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} isUserLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} loadUserDataFunction={loadUserDataFunction} loadUserData={loadUserData} signOutUser={signOutUser} loginErrMssg={loginErrMssg} userEmailId={userEmailId} />
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine } getFilteredItemList={getFilteredItemList}/>
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName} randomComboItemList={randomComboItemList}/>}/>
@@ -365,7 +380,7 @@ export default function AppFunction(){
                 <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
-                <Route exact path="/myprofile" element={<MyProfile loadUserData = {loadUserData} />} />
+                <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} />} />
                 <Route exact path="*" element={<Errorpage />} />
             </Routes>
             <Footer/>
