@@ -122,35 +122,40 @@ exports.sendEmailOtp        = async(req,res)=>{
             }
         }else if(user_type === 'new-user'){
             const options           = { upsert: true };
-            try{
-                const update_data   = await otpModel.updateOne(query, update, options);
-                if(update_data.acknowledged === true){
-                    await transporter.sendMail(email_params).then(
-                        (response) => {
-                            if(response.accepted.length > 0){
-                                return res.status(200).json({success:true, message: "OTP sent Successfully!!"});
-                            }else{
-                                return res.status(200).json({success:false, message: "Something went wrong! Please try again after sometimes"});
+            const find_email        = await userModel.find({email:user_email});
+            if(find_email.length > 0){
+                return res.status(200).json({success:false, message: "Entered email id is already registered. Try with a different email id"});
+            }else{
+                try{
+                    const update_data   = await otpModel.updateOne(query, update, options);
+                    if(update_data.acknowledged === true){
+                        await transporter.sendMail(email_params).then(
+                            (response) => {
+                                if(response.accepted.length > 0){
+                                    return res.status(200).json({success:true, message: "OTP sent Successfully!!"});
+                                }else{
+                                    return res.status(200).json({success:false, message: "Something went wrong! Please try again after sometimes"});
+                                }
                             }
-                        }
-                    ).catch(
-                        (error) =>{
-                            res.status(500).json({
-                                success: false,
-                                message: "Internal server error",
-                                error: error
-                            })
-                        }
-                    );
-                }else{
-                    res.status(200).json({success:false, message: "Failed to sent OTP", error:"Operation failed"});
+                        ).catch(
+                            (error) =>{
+                                res.status(500).json({
+                                    success: false,
+                                    message: "Internal server error",
+                                    error: error
+                                })
+                            }
+                        );
+                    }else{
+                        res.status(200).json({success:false, message: "Failed to sent OTP", error:"Operation failed"});
+                    }
+                }catch(error){
+                    res.status(500).json({
+                        success: false,
+                        message: "Internal server error",
+                        error: error.message
+                    })
                 }
-            }catch(error){
-                res.status(500).json({
-                    success: false,
-                    message: "Internal server error",
-                    error: error.message
-                })
             }
         }else{
             res.status(200).json({success:false, message: "Failed to sent OTP. Try after sometimes", error:"Operation failed"});
