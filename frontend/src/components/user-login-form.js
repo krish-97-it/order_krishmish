@@ -1,10 +1,14 @@
 import React, {useState} from "react";
 import Costant_Variables from "../controller/constant-variables";
-import ValidationFunctions from "../controller/validation-functions"
+import ValidationFunctions from "../controller/validation-functions";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const LoginForm = ({loadUserDataFunction})=> {
 
-    const apiUrl        =   Costant_Variables.SERVER_BASE_URL+'/addNewUser';
+    const apiUrl            =   Costant_Variables.SERVER_BASE_URL+'/addNewUser';
+    const sentOtpUrl        =   Costant_Variables.SERVER_BASE_URL+'/sendotp';
+    const verifyOtpApiUrl   =   Costant_Variables.SERVER_BASE_URL+'/verifyotp';
 
     const [dpImageLink, setDpImageLink] = useState('https://img.perceptpixel.com/pykhlszs/default_dp.webp')
     const chooseProfilePicture = (event) =>{
@@ -40,6 +44,10 @@ const LoginForm = ({loadUserDataFunction})=> {
 
     const [loadingMssg, setLoadingMssg]         = useState("");
     const [msgStyle, setMsgStyle]               = useState("success");
+    const [otploadingMssg, setOtpLoadingMssg]   = useState("");
+
+    const [isEmailVerified, setValidEmailId]    = useState("false");
+    let [seconds, setSeconds]                   = useState(59);
 
     const handlenewUserInput = (e) => {
         let ele         =   e.target.name;
@@ -92,7 +100,7 @@ const LoginForm = ({loadUserDataFunction})=> {
             }
         }else if(ele === 'emailId'){
             let isEmailValid = ValidationFunctions.emailValidation(ele,ele_val);
-
+            setValidEmailId("false");
             if(isEmailValid !== 'valid'){
                 updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "invalid"})
             }else{
@@ -140,7 +148,6 @@ const LoginForm = ({loadUserDataFunction})=> {
     }
 
     const onSubmitValidation = (data) => {
-        console.log(data);
         let isfirstNameValid = ValidationFunctions.nameValidation("firstName",data.firstName);
         if(isfirstNameValid !== 'valid'){
             updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "invalid"})
@@ -181,6 +188,8 @@ const LoginForm = ({loadUserDataFunction})=> {
         let isEmailValid = ValidationFunctions.emailValidation("emailId",data.emailId);
         if(isEmailValid !== 'valid'){
             updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "invalid"})
+        }else if(isEmailVerified === 'false'){
+            updateEmailIdErr({...emailIdErr, err_mssg: "Email is not verified", isValid: "invalid"})
         }else{
             updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "valid"})
         }
@@ -214,7 +223,7 @@ const LoginForm = ({loadUserDataFunction})=> {
         }
 
 
-        if(isfirstNameValid === 'valid' && isLastNameValid === 'valid' && isNickNameValid === 'valid' && isGenderValid === 'valid' && isDobValid === 'valid' && isEmailValid === 'valid' && isPhoneNumValid === 'valid' && isStateValid === 'valid' && isCityValid === 'valid' && isPinCodeValid === 'valid'){
+        if(isfirstNameValid === 'valid' && isLastNameValid === 'valid' && isNickNameValid === 'valid' && isGenderValid === 'valid' && isDobValid === 'valid' && (isEmailValid === 'valid' && isEmailVerified === 'true') && isPhoneNumValid === 'valid' && isStateValid === 'valid' && isCityValid === 'valid' && isPinCodeValid === 'valid'){
             return true
         }else{
             return false
@@ -252,16 +261,32 @@ const LoginForm = ({loadUserDataFunction})=> {
 
                 const isJson = response.headers.get('content-type')?.includes('application/json');
                 const responseData = isJson && await response.json();
-                console.log(responseData);
                 if(response.ok === true){
                     if(responseData.success === true){
-                        localStorage.setItem("krishmish@regUserId", "krishmish@"+newUserData.phoneNum);
-                        loadUserDataFunction(newUserData.phoneNum);
-                        setLoadingMssg("User Successfully Registered !!");
-                        setMsgStyle("success");
+                        setLoadingMssg("");
+                        Swal.fire(
+                            {
+                                title: "Success!",
+                                text: "User Successfully Registered",
+                                icon: "success"
+                            }
+                        ).then(
+                            (result) =>{
+                                if (result.isConfirmed) {
+                                    localStorage.setItem("krishmish@regUserId", "krishmish@"+newUserData.emailId);
+                                    loadUserDataFunction(newUserData.emailId);
+                                }
+                            }
+                        )
                     }else{
-                        setLoadingMssg(responseData.message);
-                        setMsgStyle("error");
+                        setLoadingMssg("");
+                        Swal.fire(
+                            {
+                                title: "Failed!",
+                                text: "User Registration Failed",
+                                icon: "error"
+                            }
+                        )
                     }
                 }else{
                     setLoadingMssg("Something went wrong !! Please try after sometimes...");
@@ -281,24 +306,122 @@ const LoginForm = ({loadUserDataFunction})=> {
 
     }
 
+    const [otpBox, setOtpBox]        = useState('hide');
+    const [otpInput, setotpInput]            = useState('');
+    function otpInputChange(e){
+        let ele_val     =   e.target.value;
+        setotpInput(ele_val);
+    }
+
+    const generateMobileOtp = async (e)=>{
+        e.preventDefault();
+        const formData      = {
+            email     : newUserData.emailId,
+            usertype  : 'new-user'
+        }
+        const config = {
+            headers: { 'Content-Type': 'application/json'}
+        }
+
+        let isEmailValid = ValidationFunctions.emailValidation("Email id", newUserData.emailId);
+        if(isEmailValid === 'valid'){
+            updateEmailIdErr({...emailIdErr, err_mssg: "Sending OTP...", isValid: "valid"});
+            document.getElementById("newUserGetOtpBtn").disabled = true;
+            await axios.post(sentOtpUrl, formData, {config}).then(
+                (response) => {
+                    if(response.data.success === true){
+                        updateEmailIdErr({...emailIdErr, err_mssg: "OTP is sent to the given email id", isValid: "valid"});
+                        let resendTimer = setInterval(function(){
+                            let time = seconds--;
+                            if(time > 0){
+                                setSeconds(time);
+                            }else{
+                                clearInterval(resendTimer);
+                                setSeconds(59);
+                            }
+                        }, 1000);
+                        setOtpBox('show');
+                        setResendButton();
+                    }else{
+                        updateEmailIdErr({...emailIdErr, err_mssg: "", isValid: "invalid"});
+                        setOtpBox('hide');
+                        document.getElementById("newUserGetOtpBtn").disabled = true;
+                        Swal.fire(
+                            {
+                                title: "Failed!",
+                                text: response.data.message,
+                                icon: "error"
+                            }
+                        )
+                    }
+                }
+            ).catch(error => {
+                console.log(error);
+            });
+
+        }else{
+            document.getElementById("getOtpBtn").disabled = false;
+            updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "invalid"})
+        }
+        console.log(emailIdErr.isValid);
+    }
+
+    const verifyEmailOtp = (e) => {
+        e.preventDefault();
+        if(otpInput.length >= 4){
+            let isEmailValid = ValidationFunctions.emailValidation("Email id",newUserData.emailId);
+            const formData      = {
+                email : newUserData.emailId,
+                otp   : parseInt(otpInput)    
+            }
+            const config = {
+                headers: { 'Content-Type': 'application/json'}
+            }
+        
+            if(isEmailValid === 'valid'){
+                updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "valid"})
+                axios.post(verifyOtpApiUrl, formData, {config}).then(
+                    (response) => {
+                        if(response.data.success === true){
+                            setValidEmailId('true');
+                            setOtpBox('hide');
+                            updateEmailIdErr({...emailIdErr, err_mssg: "OTP verfied Successfully!", isValid: "valid"})
+                        }else{
+                            updateEmailIdErr({...emailIdErr, err_mssg: "OTP Verification Failed!", isValid: "invalid"})
+                        }
+                    }
+                ).catch(error => {
+                    console.log(error);
+                });
+            }else{
+                updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "invalid"})
+            }
+        }
+    }
+
+    const [resendOtpTxt, setResendOtpTxt]  = useState("");
+    function setResendButton() {
+        setResendOtpTxt("show");
+        let ele = document.getElementById("newUserGetOtpBtn");
+        setTimeout(function() {
+            setResendOtpTxt("hide");
+            ele.disabled = false;
+        }, 59000);
+    }
+
+    function checkEnterPress(event){
+        console.log(event.keyCode);
+        if (event.keyCode === 13) {
+            // Prevent the default action
+            event.preventDefault();
+            verifyEmailOtp(event);
+        }        
+    }
+
     return(
         <form className="row g-3 needs-validation new-user-form" id="newUserForm" onSubmit={newUserFormSubmit}>
             <div className="col-md-12 col-sm-12 new-form-field">
-                <label htmlFor="phoneNum" className="form-label">Phone no.</label>
-                <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={newUserData.phoneNum} onChange={(e)=>handlenewUserInput(e)} form-valid={phoneNumErr.isValid} maxLength="10"/>
-                {
-                    (phoneNumErr.err_mssg !== 'valid')?
-                    <div className="invalid-feedback">
-                        {phoneNumErr.err_mssg}
-                    </div>
-                    :
-                    <div className="valid-feedback">
-                        {phoneNumErr.err_mssg}
-                    </div>
-                }
-            </div>
-            <div className="col-md-6 col-sm-12 new-form-field">
-                <label htmlFor="firstName" className="form-label">First name</label>
+                <label htmlFor="firstName" className="form-label">First name<span style={{color:"red"}}>*</span></label>
                 <input type="text" className="form-control" id="firstName" name="firstName" placeholder="Enter your first name" value={newUserData.firstName} onChange={(e)=>handlenewUserInput(e)} form-valid={firstNameErr.isValid}/>
                 {
                     (firstNameErr.err_mssg !== 'valid')?
@@ -312,7 +435,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                 }
             </div>
             <div className="col-md-6 col-sm-12 new-form-field">
-                <label htmlFor="lastName" className="form-label">Last name</label>
+                <label htmlFor="lastName" className="form-label">Last name<span style={{color:"red"}}>*</span></label>
                 <input type="text" className="form-control" id="lastName" name="lastName" placeholder="Enter your last name" value={newUserData.lastName} onChange={(e)=>handlenewUserInput(e)} form-valid={lastNameErr.isValid}/>
                 {
                     (lastNameErr.err_mssg !== 'valid')?
@@ -326,7 +449,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                 }
             </div>
             <div className="col-md-6 col-sm-12 new-form-field">
-                <label htmlFor="nickName" className="form-label">Nick Name</label>
+                <label htmlFor="nickName" className="form-label">Nick Name<span style={{color:"red"}}>*</span></label>
                 <input type="text" className="form-control" id="nickName" name="nickName" placeholder="Enter your nick name" value={newUserData.nickName} onChange={(e)=>handlenewUserInput(e)} form-valid={nickNameErr.isValid}/>
                 {
                     (nickNameErr.err_mssg !== 'valid')?
@@ -340,7 +463,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                 }
             </div>
             <div className="col-md-6 col-sm-12 new-form-field">
-                <label htmlFor="dob" className="form-label">Date Of Birth</label>
+                <label htmlFor="dob" className="form-label">Date Of Birth<span style={{color:"red"}}>*</span></label>
                 <input type="date" className="form-control" id="dob" name="dob" onChange={(e)=>handlenewUserInput(e)} form-valid={dobErr.isValid} select-color={newUserData.dob === ''?'novalue':'withvalue'}maxLength={10}/>
                 {
                     (dobErr.err_mssg !== 'valid')?
@@ -354,7 +477,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                 }
             </div>
             <div className="col-md-6 col-sm-12 new-form-field">
-            <label htmlFor="gender" className="form-label">Gender</label>
+            <label htmlFor="gender" className="form-label">Gender<span style={{color:"red"}}>*</span></label>
                 <select className="form-select" id="gender" name="gender" onChange={(e)=>handlenewUserInput(e)} form-valid={genderErr.isValid} value={newUserData.gender} select-color={newUserData.gender === ''?'novalue':'withvalue'}>
                     <option disabled value="">Select your gender</option>
                     <option value="male">Male</option>
@@ -373,21 +496,47 @@ const LoginForm = ({loadUserDataFunction})=> {
                 }
             </div>
             <div className="col-md-6 col-sm-12 new-form-field">
-                <label htmlFor="emailId" className="form-label">Email</label>
-                <input type="text" className="form-control" id="emailId" name="emailId" placeholder="Enter your email..." value={newUserData.emailId} onChange={(e)=>handlenewUserInput(e)} form-valid={emailIdErr.isValid}/>
+                <label htmlFor="phoneNum" className="form-label">Phone no.<span style={{color:"red"}}>*</span></label>
+                <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={newUserData.phoneNum} onChange={(e)=>handlenewUserInput(e)} form-valid={phoneNumErr.isValid} maxLength="10"/>
                 {
-                    (emailIdErr.err_mssg !== 'valid')?
+                    (phoneNumErr.err_mssg !== 'valid')?
+                    <div className="invalid-feedback">
+                        {phoneNumErr.err_mssg}
+                    </div>
+                    :
+                    <div className="valid-feedback">
+                        {phoneNumErr.err_mssg}
+                    </div>
+                }
+            </div>
+            <div className="col-md-6 col-sm-12 new-form-field" style={{position:"relative"}}>
+                <label htmlFor="emailId" className="form-label">Email<span style={{color:"red"}}>*</span></label>
+                <input type="text" className="form-control" id="emailId" name="emailId" placeholder="Enter your email..." value={newUserData.emailId} onChange={(e)=>handlenewUserInput(e)} form-valid={emailIdErr.isValid} style={{paddingRight:"85px"}}/>
+                <button className="btn btn-success new-user-get-otp-btn" id="newUserGetOtpBtn" type="submit" onClick={generateMobileOtp}>Get OTP</button>
+                {
+                    (emailIdErr.isValid === "invalid")?
                     <div className="invalid-feedback">
                         {emailIdErr.err_mssg}
                     </div>
                     :
-                    <div className="valid-feedback">
-                        {emailIdErr.err_mssg}
+                    <div className="valid-feedback email-id-valid-feedback">
+                        {
+                            (emailIdErr.err_mssg !== 'valid')? emailIdErr.err_mssg : ''
+                        }
                     </div>
                 }
+                <div className="otp-box-section" new-user-show-otp-box={otpBox} style={{margnTop:"5px", padding:"0px", flexDirection:"row" }}>
+                    <div className="" style={{textAlign:"left"}}>
+                        <input className="input" type="text" inputMode="numeric" maxLength="4" name="otpInput" id="otpInput" style={{width:"70px", padding:"2px 10px", textAlign:"left"}} value={otpInput} onInput={otpInputChange} onKeyDown={checkEnterPress} />
+                    </div>
+                    <div style={{textAlign:"left", marginLeft:"-2px"}}>
+                        <button className="btn btn-primary verify-otp-btn" type="submit" style={{width:"70px", borderRadius:"0px 2px 18px 0px", padding:"3px"}} onClick={verifyEmailOtp}>Verify</button>
+                    </div>
+                </div>
+                <span style={{textAlign:"left", fontSize:"12px"}} new-user-show-otp-box={otpBox} error-mssg-style="error" new-user-resend-otp-text={resendOtpTxt}>Resend OTP in {seconds} sec...</span>
             </div>
             <div className="col-md-6 col-sm-12 new-form-field">
-                <label htmlFor="state" className="form-label">State</label>
+                <label htmlFor="state" className="form-label">State<span style={{color:"red"}}>*</span></label>
                 <select className="form-select" id="state" name="state" value={newUserData.state} onChange={(e)=>handlenewUserInput(e)} form-valid={stateErr.isValid} select-color={newUserData.state === ''?'novalue':'withvalue'}>
                     <option value="" disabled>Choose your state</option>
                     {
@@ -472,7 +621,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                 </div>
             </div>
             <div className="col-sm-12">
-                <button className="btn btn-primary" type="submit">Submit form</button>
+                <button className="btn btn-primary new-user-form-submit" type="submit">Submit form</button>
                 <p style={{fontWeight:"600"}} error-mssg-style={msgStyle}>{loadingMssg}</p>
             </div>
         </form>

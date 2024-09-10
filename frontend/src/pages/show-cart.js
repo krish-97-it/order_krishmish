@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import GoToTop from "../components/go-to-top";
 
 export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCost, increaseItemQuantity, decreaseItemQuantity}){
@@ -16,7 +16,7 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                                         return(
                                             <div className="added-cart-item" key={"item-"+index}>
                                                 <div className="added-item-img">
-                                                    <img src={item.product.image.img_one} alt="item image"/>
+                                                    <img src={item.product.image.img_one} alt="food"/>
                                                 </div>
                                                 <div className="item-body-description">
                                                     <h5>{(item.product.name).length < 28? item.product.name : (item.product.name).substring(0,30)+'...'}</h5>

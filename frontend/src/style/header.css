@@ -190,10 +190,12 @@ a.nav-link{
   
 .modal-header {
     padding: 10px 12px;
-    background-color: #5cb85c;
-    color: white;
+    /* background-color: #5cb85c; */
+    /* background-image: linear-gradient(to right, #ffbc87 0%, #f3f45d 50%, #2a8e75 100%);
+    color: rgb(0, 0, 0); */
     border-radius: 16px 16px 0px 0px;
-    background-image: linear-gradient(to right, #753A0D 0%, #000000 50%, #005842 100%);
+    background-image: linear-gradient(to left, #ff6c75, #8C3FFF);
+    color: white;
     background-size: cover;
     background-position: center;
     font-size: 26px;
@@ -215,8 +217,11 @@ a.nav-link{
   
 .modal-footer {
     padding: 10px 16px;
-    background-image: linear-gradient(to right, #753A0D 0%, #000000 50%, #005842 100%);
+    /* background-image: linear-gradient(to right, #ffa159 0%, #f3f45d 50%, #2a8e75 100%);
+    color: rgb(0, 0, 0); */
+    background-image: linear-gradient(to left, #ff6c75, #8C3FFF);
     color: white;
+    font-weight: 700;
     border-radius: 0px 0px 15px 15px;
 }
 .login-modal[show-modal="show"]{
@@ -228,36 +233,50 @@ a.nav-link{
 
 .old-user-form{
     width: 100%;
-    padding: 40px;
+    padding: 40px 40px 10px 40px;
 }
 [show-otp-box="show"]{
     display: flex;
+    flex-direction: column;
 }
 [show-otp-box="hide"]{
     display: none;
 }
-.otp-input-section{
-    margin-top: 25px;
-    margin-bottom: 10px;
-    justify-content: center;
+[new-user-show-otp-box="show"]{
+    display: flex;
+}
+[new-user-show-otp-box="hide"]{
+    display: none;
+}
+.otp-input-box{
+    display: flex;
+    margin-bottom: 2px;
+    justify-content: left;
     gap: 20px;
 }
-.otp-input-section input{
+.otp-input-box input{
     height: 45px;
-    width: 45px;
+    width: 50px;
     text-align: center;
 }
-.phone-login-input:focus{
+.email-login-input:focus{
     outline: none;
     box-shadow: none;
 }
-.phone-login-input{
+.email-login-input{
     border-radius: 6px 0px 0px 6px;
 }
 .get-otp-btn{
     padding: 5px;
     width: 100px;
     border-radius: 0px 6px 6px 0px;
+    background-image: linear-gradient(to right, #5C72FF, #8C3FFF);
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+}
+.verify-otp-btn, .new-user-form-submit{
+    background-image: linear-gradient(to right, #5C72FF, #8C3FFF);
 }
 .login-err-mssg{
     color: red;
@@ -277,7 +296,7 @@ a.nav-link{
     gap: 8px;
 }
 .new-user-reg-btn, .old-user-login-btn{
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
     border: none;
 }
 [slide-display="show"]{
@@ -290,6 +309,19 @@ a.nav-link{
 
 .new-form-field{
     margin-bottom: 10px;
+}
+.new-user-get-otp-btn{
+    padding: 5px;
+    width: 80px;
+    border-radius: 0px 6px 6px 0px;
+    background-image: linear-gradient(to right, #5C72FF, #8C3FFF);
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    height: 38px;
+    position: absolute;
+    top: 32px;
+    right: 8px;
 }
 [form-valid="invalid"]{
     border: 1px solid #ff3c07;
@@ -304,6 +336,13 @@ a.nav-link{
     display: block;
     text-align: left;
     margin-top: 0px;
+}
+.email-id-valid-feedback{
+    display: block;
+    text-align: left;
+    margin-top: 0px;
+    font-weight: 500;
+    color: #009637;
 }
 [select-color="novalue"]{
     color: rgb(96 98 101);
@@ -349,6 +388,18 @@ a.nav-link{
 [error-mssg-style="success"]{
     color: rgb(111, 144, 47);
 }
+[resend-otp-text="show"]{
+    display: block;
+}
+[resend-otp-text="hide"]{
+    display: none;
+}
+[new-user-resend-otp-text="show"]{
+    display: block;
+}
+[new-user-resend-otp-text="hide"]{
+    display: none;
+}
 @media(max-width:1199.98px){
     .choose-profile-images{
         gap: 2px;
@@ -389,7 +440,7 @@ a.nav-link{
     }
     .old-user-form{
         width: 100%;
-        padding:30px 0px 10px 0px;
+        padding:30px 5px 10px 5px;
     }
     .choose-profile-images{
         gap: 20px;
@@ -424,9 +475,9 @@ a.nav-link{
     .new-user-reg-btn, .old-user-login-btn{
         padding-left: 7px;
         padding-right: 7px;
-        font-size: 15px;
+        font-size: 16px;
     }
     .modal-footer-p{
-        font-size: 11px;
+        font-size: 14px;
     }
 }

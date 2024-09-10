@@ -64,7 +64,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                     <div className="dark-opacity">
                         <div className="select-cuisine-container container">
                             <div className="select-cuisine-section cuisine-select-dropdown" show-on-cuisine-page = {currentPath === '/cuisine' ? 'on' : 'off'}>
-                                <p style={{border: "2px solid #8b8b8b", padding: "10px", color:"#fffcd9", background: "black", background: "rgb(0, 0, 0, 0.5)"}}>Choose a Specific CUISINE & Order your Favourite Dishes !!</p>
+                                <p style={{border: "2px solid #8b8b8b", padding: "10px", color:"#fffcd9", backgroundColor: "black", background: "rgb(0, 0, 0, 0.5)"}}>Choose a Specific CUISINE & Order your Favourite Dishes !!</p>
                                 <select id="cuisineselect" className="form-select item-filter-select" aria-label="Default select example" onChange={getInputCuisine}>
                                     <option defaultValue="all cuisines">All Cuisines</option>
                                     <option value="indian">Indian</option>
