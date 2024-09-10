@@ -15,13 +15,13 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
     // Horizontal scroll using buttons for food items
     const cardItem          =   useRef();
     const handlecardScroll  =   (direction) => {
-        sideScroll(cardItem.current,direction,20,160,10);
+        sideScroll(cardItem.current,direction,20,140,10);
     }
 
 
     const filterCatItem     =   useRef();
     const catFilterScroll   =   (direction) => {
-        sideScroll(filterCatItem.current,direction,20,160,10);
+        sideScroll(filterCatItem.current,direction,20,140,10);
     }
 
 
@@ -203,14 +203,16 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                             <div className="pos-bottom">
                                                                 <div className="price-order">
                                                                     <p key={item._id}>₹{item.price}  • {item.preptime}</p>
-                                                                    <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
-                                                                        Add
+                                                                    <div>
+                                                                        <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
+                                                                            <span>Add</span>
+                                                                        </button>
                                                                         {
                                                                             addedCartItem.map(data =>
-                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{data.item_quantity}</span> : <></>
+                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{(data.item_quantity > 9)? "9+":data.item_quantity}</span> : <></>
                                                                             )
                                                                         }
-                                                                    </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -231,14 +233,16 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                             <div className="pos-bottom">
                                                                 <div className="price-order">
                                                                     <p key={"item-"+index}>₹{item.price}  • {item.preptime}</p>
-                                                                    <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
-                                                                        Add
+                                                                    <div>
+                                                                        <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
+                                                                            <span>Add</span>
+                                                                        </button>
                                                                         {
                                                                             addedCartItem.map(data =>
-                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{data.item_quantity}</span> : <></>
+                                                                                data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{(data.item_quantity > 9)? "9+":data.item_quantity}</span> : <></>
                                                                             )
                                                                         }
-                                                                    </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -268,14 +272,16 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                                 <div className="pos-bottom">
                                                                     <div className="price-order">
                                                                         <p key={"item-"+index}>₹{item.price}  • {item.preptime}</p>
-                                                                        <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
-                                                                            <span>Add</span>
+                                                                        <div>
+                                                                            <button className="add-to-cart-btn" onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
+                                                                                <span>Add</span>
+                                                                            </button>
                                                                             {
                                                                                 addedCartItem.map(data =>
-                                                                                    data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{data.item_quantity}</span> : <></>
+                                                                                    data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{(data.item_quantity > 9)? "9+":data.item_quantity}</span> : <></>
                                                                                 )
                                                                             }
-                                                                        </button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>

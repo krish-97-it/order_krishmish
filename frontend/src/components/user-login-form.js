@@ -44,7 +44,6 @@ const LoginForm = ({loadUserDataFunction})=> {
 
     const [loadingMssg, setLoadingMssg]         = useState("");
     const [msgStyle, setMsgStyle]               = useState("success");
-    const [otploadingMssg, setOtpLoadingMssg]   = useState("");
 
     const [isEmailVerified, setValidEmailId]    = useState("false");
     let [seconds, setSeconds]                   = useState(59);
@@ -385,6 +384,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                         if(response.data.success === true){
                             setValidEmailId('true');
                             setOtpBox('hide');
+                            resendOtpTxt('hide');
                             updateEmailIdErr({...emailIdErr, err_mssg: "OTP verfied Successfully!", isValid: "valid"})
                         }else{
                             updateEmailIdErr({...emailIdErr, err_mssg: "OTP Verification Failed!", isValid: "invalid"})
@@ -525,7 +525,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                         }
                     </div>
                 }
-                <div className="otp-box-section" new-user-show-otp-box={otpBox} style={{margnTop:"5px", padding:"0px", flexDirection:"row" }}>
+                <div className="otp-box-section" new-user-show-otp-box={otpBox} style={{marginTop:"5px", padding:"0px", flexDirection:"row" }}>
                     <div className="" style={{textAlign:"left"}}>
                         <input className="input" type="text" inputMode="numeric" maxLength="4" name="otpInput" id="otpInput" style={{width:"70px", padding:"2px 10px", textAlign:"left"}} value={otpInput} onInput={otpInputChange} onKeyDown={checkEnterPress} />
                     </div>
