@@ -16,7 +16,7 @@ export default class Footer extends Component{
                             <div className="addressfooter">
                                 <p><span className="address-label">Address:</span>&nbsp;0/0/0H, Khanpur, West Bengal, India, 000000</p>
                                 <p><span className="address-label">Phone:</span>&nbsp;(+91) 8768119770</p>
-                                <p><span className="address-label">Email:</span>&nbsp;food2you.krishmish@gmail.com</p>
+                                <p><span className="address-label">Email:</span>&nbsp;mish.krish1996@gmail.com</p>
                             </div>
                             
                         </div>

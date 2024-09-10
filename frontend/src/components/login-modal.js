@@ -1,435 +1,208 @@
-import React,{useState} from "react";
+import React, {useState} from "react";
 import Costant_Variables from "../controller/constant-variables";
+import ValidationFunctions from "../controller/validation-functions"
+import NewLoginForm from "../components/user-login-form";
+import Swal from 'sweetalert2';
+import axios from "axios";
 
-export default function LoginModal({showLoginModal, closeModal, formNextSlide, formPrevSlide, displayFirstSlide, displaySecondSlide, loadUserDataFunction, loadUserData, loginErrMssg, userMobNumber }){
-    let states = [
-        "Andhra Pradesh",
-        "Arunachal Pradesh",
-        "Assam",
-        "Bihar",
-        "Chhattisgarh",
-        "Goa",
-        "Gujarat",
-        "Haryana",
-        "Himachal Pradesh",
-        "Jammu and Kashmir",
-        "Jharkhand",
-        "Karnataka",
-        "Kerala",
-        "Madhya Pradesh",
-        "Maharashtra",
-        "Manipur",
-        "Meghalaya",
-        "Mizoram",
-        "Nagaland",
-        "Odisha",
-        "Punjab",
-        "Rajasthan",
-        "Sikkim",
-        "Tamil Nadu",
-        "Telangana",
-        "Tripura",
-        "Uttarakhand",
-        "Uttar Pradesh",
-        "West Bengal",
-        "Andaman and Nicobar Islands",
-        "Chandigarh",
-        "Dadra and Nagar Haveli",
-        "Daman and Diu",
-        "Delhi",
-        "Lakshadweep",
-        "Puducherry"
-    ];
+export default function LoginModal({showLoginModal, closeModal, formNextSlide, formPrevSlide, displayFirstSlide, displaySecondSlide, loadUserDataFunction, loadUserData, loginErrMssg, userEmailId }){
 
-    const [phoneNumber, setPhoneNumber] = useState(userMobNumber);
-    const [loginNumErr, updateloginNumErr]      = useState({});
-    function handlePhoneNumberChange(e){
-        const loginNum  =   e.target.value;
-        setPhoneNumber(loginNum);
-        let isLoginNumValid = phoneValidation("Mobile No.",loginNum);
+    const [emailId, updateEmailId]              = useState(userEmailId);
+    const [loginEmailErr, updateLoginEmailErr]  = useState({});
+    const [otpBox, setOtpBox]                   = useState('hide');
+    const [otp1, setOtp1]                       = useState('');
+    const [otp2, setOtp2]                       = useState('');
+    const [otp3, setOtp3]                       = useState('');
+    const [otp4, setOtp4]                       = useState('');
+
+    const sendOtpApiUrl                         = Costant_Variables.SERVER_BASE_URL+'/sendotp';
+    const verifyOtpApiUrl                       = Costant_Variables.SERVER_BASE_URL+'/verifyotp';
+
+    const [loadingMssg, setLoadingMssg]         = useState("");
+    const [resendOtpTxt, setResendOtpTxt]       = useState("");
+    const [msgStyle, setMsgStyle]               = useState("success");
+    let [seconds, setSeconds]                   = useState(59);
+
+    function otpInputChange(e){
+        let ele_val     =   e.target.value;
+        let ele_name    =   e.target.name; 
+
+        if (ele_val.match(/^\d{0,1}$/)){
+            if(ele_name === 'otp1'){
+                setOtp1(ele_val);
+                let nextfield = document.getElementById("otp2");
+                if(ele_val !== ''){
+                    nextfield.focus();
+                }
+            }else if(ele_name === 'otp2'){
+                setOtp2(ele_val);
+                let nextfield = document.getElementById("otp3");
+                let prevfield = document.getElementById("otp1");
+                if(ele_val !== ''){
+                    nextfield.focus();
+                }else{
+                    prevfield.focus();
+                }
+            }else if(ele_name === 'otp3'){
+                setOtp3(ele_val);
+                let nextfield = document.getElementById("otp4");
+                let prevfield = document.getElementById("otp2");
+                if(ele_val !== ''){
+                    nextfield.focus();
+                }else{
+                    prevfield.focus();
+                }
+            }else if(ele_name === 'otp4'){
+                setOtp4(ele_val);
+                let prevfield = document.getElementById("otp3");
+                if(ele_val === ''){
+                    prevfield.focus();
+                }
+            }
+        }
+    }
+    function handleEmailIdChange(e){
+        const email_id      =   e.target.value;
+        updateEmailId(email_id);
+
+        let isLoginNumValid = ValidationFunctions.emailValidation("Email id",email_id);
 
         if(isLoginNumValid !== 'valid'){
-            updateloginNumErr({...loginNumErr, err_mssg: isLoginNumValid, isValid: "invalid"})
+            updateLoginEmailErr({...loginEmailErr, err_mssg: isLoginNumValid, isValid: "invalid"})
         }else{
-            updateloginNumErr({...loginNumErr, err_mssg: isLoginNumValid, isValid: "valid"})
+            updateLoginEmailErr({...loginEmailErr, err_mssg: isLoginNumValid, isValid: "valid"})
 
         }
     }
-    
-    const checkPhoneNumber = (e) => {
+
+    const verifyEmailOtp = (e) => {
         e.preventDefault();
-
-        let loginNumValidation = phoneValidation("Mobile No.",phoneNumber);
-
-        if(loginNumValidation === 'valid'){
-            updateloginNumErr({...loginNumErr, err_mssg: loginNumValidation, isValid: "valid"})
-            loadUserDataFunction(phoneNumber);
-        }else{
-            updateloginNumErr({...loginNumErr, err_mssg: loginNumValidation, isValid: "invalid"})
-        }
-    }
-
-    const [newUserData, setNewUserData] = useState({
-        firstName: '',
-        lastName: '',
-        nickName: '',
-        gender: '',
-        dob:'',
-        phoneNum: '',
-        emailId: '',
-        state: '',
-        city: '',
-        pinCode: '',
-
-    });
-    const [firstNameErr, updateFirstNameErr]    = useState({});
-    const [lastNameErr, updateLastNameErr]      = useState({});
-    const [nickNameErr, updateNickNameErr]      = useState({});
-    const [genderErr, updateGenderErr]          = useState({});
-    const [dobErr, updateDobErr]                = useState({});
-    const [emailIdErr, updateEmailIdErr]        = useState({});
-    const [phoneNumErr, updatePhoneNumErr]      = useState({});
-    const [stateErr, updateStateErr]            = useState({});
-    const [cityErr, updateCityErr]              = useState({});
-    const [pinCodeErr, updatePinCodeErr]        = useState({});
-
-    const [loadingMssg, setLoadingMssg]         = useState(""); 
-
-    const handlenewUserInput = (e) => {
-        let ele         =   e.target.name;
-        let ele_val     =   e.target.value;
-        setNewUserData({...newUserData, [ele]:[ele_val]});
-
-        if(ele === 'firstName'){
-            let isfirstNameValid = nameValidation(ele,ele_val);
-
-            if(isfirstNameValid !== 'valid'){
-                updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "invalid"})
-            }else{
-                updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "valid"})
-
+        const joinOtps = (otp1 + otp2 + otp3 + otp4);
+        if(joinOtps.length >= 4){
+            let loginEmailValidation = ValidationFunctions.emailValidation("Email id",emailId);
+            const formData      = {
+                email : emailId,
+                otp   : parseInt(joinOtps)    
             }
-        }else if(ele === 'lastName'){
-            let isLastNameValid = nameValidation(ele,ele_val);
-
-            if(isLastNameValid !== 'valid'){
-                updateLastNameErr({...lastNameErr, err_mssg: isLastNameValid, isValid: "invalid"})
-            }else{
-                updateLastNameErr({...lastNameErr, err_mssg: isLastNameValid, isValid: "valid"})
-
+            const config = {
+                headers: { 'Content-Type': 'application/json'}
             }
-        }else if(ele === 'nickName'){
-            let isNickNameValid = nameValidation(ele,ele_val);
-
-            if(isNickNameValid !== 'valid'){
-                updateNickNameErr({...nickNameErr, err_mssg: isNickNameValid, isValid: "invalid"})
-            }else{
-                updateNickNameErr({...nickNameErr, err_mssg: isNickNameValid, isValid: "valid"})
-
-            }
-        }else if(ele === 'gender'){
-            let isGenderValid = requiredValidation(ele,ele_val);
-
-            if(isGenderValid !== 'valid'){
-                updateGenderErr({...genderErr, err_mssg: isGenderValid, isValid: "invalid"})
-            }else{
-                updateGenderErr({...genderErr, err_mssg: isGenderValid, isValid: "valid"})
-
-            }
-        }else if(ele === 'dob'){
-            let isDobValid = dobValidation("Date Of Birth",ele_val);
-
-            if(isDobValid !== 'valid'){
-                updateDobErr({...dobErr, err_mssg: isDobValid, isValid: "invalid"})
-            }else{
-                updateDobErr({...dobErr, err_mssg: isDobValid, isValid: "valid"})
-
-            }
-        }else if(ele === 'emailId'){
-            let isEmailValid = emailValidation(ele,ele_val);
-
-            if(isEmailValid !== 'valid'){
-                updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "invalid"})
-            }else{
-                updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "valid"})
-
-            }
-        }else if(ele === 'phoneNum'){
-            let isPhoneNumValid = phoneValidation(ele,ele_val);
-
-            if(isPhoneNumValid !== 'valid'){
-                updatePhoneNumErr({...phoneNumErr, err_mssg: isPhoneNumValid, isValid: "invalid"})
-            }else{
-                updatePhoneNumErr({...phoneNumErr, err_mssg: isPhoneNumValid, isValid: "valid"})
-
-            }
-        }else if(ele === 'state'){
-            let isStateValid = requiredValidation("State",ele_val);
-
-            if(isStateValid !== 'valid'){
-                updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "invalid"})
-            }else{
-                updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "valid"})
-
-            }
-        }else if(ele === 'city'){
-            let isCityValid = cityValidation(ele,ele_val);
-
-            if(isCityValid !== 'valid'){
-                updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "invalid"})
-            }else{
-                updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "optional"})
-
-            }
-        }else if(ele === 'pinCode'){
-            let isPinCodeValid = pinCodeValidation(ele,ele_val);
-
-            if(isPinCodeValid !== 'valid'){
-                updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "invalid"})
-            }else{
-                updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "optional"})
-
-            }
-        }
-
-    }
-
-    const onSubmitValidation = (data) => {
-        let isfirstNameValid = nameValidation("firstName",data.firstName[0]);
-        if(isfirstNameValid !== 'valid'){
-            updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "invalid"})
-        }else{
-            updateFirstNameErr({...firstNameErr, err_mssg: isfirstNameValid, isValid: "valid"})
-        }
-
-        let isLastNameValid  = nameValidation("lastName",data.lastName[0]);
-        if(isLastNameValid !== 'valid'){
-            updateLastNameErr({...lastNameErr, err_mssg: isLastNameValid, isValid: "invalid"})
-        }else{
-            updateLastNameErr({...lastNameErr, err_mssg: isLastNameValid, isValid: "valid"})
-        }
-
-        let isNickNameValid = nameValidation("nickName",data.nickName[0]);
-        if(isNickNameValid !== 'valid'){
-            updateNickNameErr({...nickNameErr, err_mssg: isNickNameValid, isValid: "invalid"})
-        }else{
-            updateNickNameErr({...nickNameErr, err_mssg: isNickNameValid, isValid: "valid"})
-        }
-
-        let isGenderValid = requiredValidation("Gender",data.gender[0]);
-        if(isGenderValid !== 'valid'){
-            updateGenderErr({...genderErr, err_mssg: isGenderValid, isValid: "invalid"})
-        }else{
-            updateGenderErr({...genderErr, err_mssg: isGenderValid, isValid: "valid"})
-
-        }
-
-        let isDobValid = dobValidation("Date Of Birth",data.dob[0]);
-        if(isDobValid !== 'valid'){
-            updateDobErr({...dobErr, err_mssg: isDobValid, isValid: "invalid"})
-        }else{
-            updateDobErr({...dobErr, err_mssg: isDobValid, isValid: "valid"})
-
-        }
         
-        let isEmailValid = emailValidation("emailId",data.emailId[0]);
-        if(isEmailValid !== 'valid'){
-            updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "invalid"})
+            if(loginEmailValidation === 'valid'){
+                updateLoginEmailErr({...loginEmailErr, err_mssg: loginEmailValidation, isValid: "valid"});
+                axios.post(verifyOtpApiUrl, formData, {config}).then(
+                    (response) => {
+                        if(response.data.success === true){
+                            loadUserDataFunction(emailId);
+                            updateLoginEmailErr({...loginEmailErr, err_mssg: "OTP verfied Successfully!", isValid: "valid"})
+                            Swal.fire(
+                                {
+                                    title: "Welcome Back!",
+                                    text: "Successfully Logged in",
+                                    icon: "success"
+                                }
+                            )
+                        }else{
+                            updateLoginEmailErr({...loginEmailErr, err_mssg: "", isValid: "invalid"})
+                            Swal.fire(
+                                {
+                                    title: "Failed!",
+                                    text: response.data.message,
+                                    icon: "error"
+                                }
+                            )
+                        }
+                    }
+                ).catch(error => {
+                    console.log(error);
+                });
+            }else{
+                updateLoginEmailErr({...loginEmailErr, err_mssg: loginEmailValidation, isValid: "invalid"})
+            }
         }else{
-            updateEmailIdErr({...emailIdErr, err_mssg: isEmailValid, isValid: "valid"})
-        }
-
-        let isPhoneNumValid = phoneValidation("phoneNum",data.phoneNum[0]);
-        if(isPhoneNumValid !== 'valid'){
-            updatePhoneNumErr({...phoneNumErr, err_mssg: isPhoneNumValid, isValid: "invalid"})
-        }else{
-            updatePhoneNumErr({...phoneNumErr, err_mssg: isPhoneNumValid, isValid: "valid"})
-        }
-
-        let isStateValid = requiredValidation("State",data.state[0]);
-        if(isStateValid !== 'valid'){
-            updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "invalid"})
-        }else{
-            updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "valid"})
-        }
-
-        let isCityValid = cityValidation("city",data.city[0]);
-        if(isCityValid !== 'valid'){
-            updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "invalid"})
-        }else{
-            updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "optional"})
-        }
-
-        let isPinCodeValid = pinCodeValidation("pinCode",data.pinCode[0]);
-        if(isPinCodeValid !== 'valid'){
-            updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "invalid"})
-        }else{
-            updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "optional"})
-        }
-
-
-        if(isfirstNameValid === 'valid' && isLastNameValid === 'valid' && isNickNameValid === 'valid' && isGenderValid === 'valid' && isDobValid === 'valid' && isEmailValid === 'valid' && isPhoneNumValid === 'valid' && isStateValid === 'valid' && isCityValid === 'valid' && isPinCodeValid === 'valid'){
-            return true
-        }else{
-            return false
-        }
-    }
-
-    const newUserFormSubmit = async(e) => {
-        e.preventDefault();
-        let validationFlag  = onSubmitValidation(newUserData);
-        const apiUrl        = Costant_Variables.SERVER_BASE_URL+'/addNewUser';
-
-        if(validationFlag){
-            setLoadingMssg("Please wait !! submitting form...")
-            const formData  = {
-                firstname: newUserData.firstName[0],
-                lastname: newUserData.lastName[0],
-                nickname: newUserData.nickName[0],
-                gender: newUserData.gender[0],
-                dob: newUserData.dob[0],
-                email: newUserData.emailId[0],
-                phone: parseInt(newUserData.phoneNum[0]),
-                state: newUserData.state[0],
-                city: newUserData.city[0],
-                pincode: newUserData.pinCode[0], 
-            };
-            const formDataJsonString    =   JSON.stringify(formData);
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    body: formDataJsonString,
-                    datatype: "JSON",
-                    headers: { 'Content-Type': 'application/json' },
-                })
-
-                const isJson = response.headers.get('content-type')?.includes('application/json');
-                const responseData = isJson && await response.json();
-
-                if(response.ok === true){
-                    localStorage.setItem("krishmish@regUserId", "krishmish@"+newUserData.phoneNum[0]);
-                    loadUserDataFunction(newUserData.phoneNum[0]);
-                    setLoadingMssg("User Successfully Registered !!");
-                }else{
-                    setLoadingMssg("Something went wrong !! Please try after sometimes...")
-                    const error = (responseData && responseData.message) || response.status;
-                    return Promise.reject(error);
+            Swal.fire(
+                {
+                    title: "Failed!",
+                    text: "OTP should be in 4 digits",
+                    icon: "error"
                 }
-
-            }
-            catch(error){
-                console.log("Something went wrong!! please try again later");
-            }
-
-        }else{
-            console.log("Invalid Form Fields");
-        }
-
-    }
-
-    function nameValidation(ele,val){
-        let ele_name = (ele === 'firstName') ? "First name" : "Last Name";
-        ele_name     = (ele === 'nickName') ? "Nick Name": ele_name;
-        let reg_exp  = /^[a-zA-Z][a-zA-Z\-\ \.]{2,}$/i;
-
-        if(!val || val === '' || val === null || val === 'undefined'){
-            let err_mssg    =   ele_name+" is required";
-            return err_mssg;
-        }else if(val.length <= 2){
-            let err_mssg = ele_name+" should be minimum 3 characters.";
-            return err_mssg;
-        }else if(!reg_exp.test(val)){
-            let err_mssg = 'Accepts Alphabels Only';
-            return err_mssg;
-        }else{
-            let err_mssg = 'valid';
-            return err_mssg;
+            )
         }
     }
 
-    function emailValidation(ele,val){
-        var reg_exp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,13}))$/;
-        if(!val || val === '' || val === null || val === 'undefined'){
-            let err_mssg    =   "Email-Id is required";
-            return err_mssg;
-        }else if(!reg_exp.test(val)){
-            let err_mssg    =   "Email-id is not valid";
-            return err_mssg;
+    const generateMobileOtp = async (e)=>{
+        e.preventDefault();
+        setLoadingMssg("");
+        const formData      = {
+            email    : emailId,
+            usertype : 'existing-user',
+        }
+        const config = {
+            headers: { 'Content-Type': 'application/json'}
+        }
+
+        let loginEmailValidation = ValidationFunctions.emailValidation("Email id",emailId);
+        if(loginEmailValidation === 'valid'){
+            updateLoginEmailErr({...loginEmailErr, err_mssg: "Sending OTP...", isValid: "valid"});
+            document.getElementById("getOtpBtn").disabled = true;
+            await axios.post(sendOtpApiUrl, formData, {config}).then(
+                (response) => {
+                    if(response.data.success === true){
+                        updateLoginEmailErr({...loginEmailErr, err_mssg: "OTP is sent to the given email id", isValid: "valid"});
+                        // setLoadingMssg("OTP is sent to the given email id");
+                        // setMsgStyle("success");
+                        let resendTimer = setInterval(function(){
+                            let time = seconds--;
+                            if(time > 0){
+                                setSeconds(time);
+                            }else{
+                                clearInterval(resendTimer);
+                                setSeconds(59);
+                            }
+                        }, 1000);
+                        setOtpBox('show');
+                        setResendButton()
+                    }else{
+                        // setLoadingMssg("");
+                        updateLoginEmailErr({...loginEmailErr, err_mssg: "", isValid: "invalid"});
+                        setOtpBox('hide');
+                        document.getElementById("getOtpBtn").disabled = false;
+                        Swal.fire(
+                            {
+                                title: "Failed!",
+                                text: response.data.message,
+                                icon: "error"
+                            }
+                        )
+                    }
+                }
+            ).catch(error => {
+                console.log(error);
+            });
+
         }else{
-            let err_mssg = 'valid';
-            return err_mssg;
+            document.getElementById("getOtpBtn").disabled = false;
+            updateLoginEmailErr({...loginEmailErr, err_mssg: loginEmailValidation, isValid: "invalid"})
         }
     }
-    function phoneValidation(ele,val){
-        let reg_exp  = /^\d{10}$/;
 
-        if(!val || val === '' || val === null || val === 'undefined'){
-            let err_mssg    =   "Mobile No is required";
-            return err_mssg;
-        }else if(!reg_exp.test(val)){
-            let err_mssg = 'Mobile No. should be 10 digits.';
-            return err_mssg;
-        }else{
-            let err_mssg = 'valid';
-            return err_mssg;
-        }
-    }
-    function dobValidation(ele,val){
-        let currentDate =  new Date();
-        let currentYear =  currentDate.getFullYear();
-        let birthDate   =  new Date(val);
-        let birthYear   =  birthDate.getFullYear();
-
-        if(!val || val === '' || val === null || val === 'undefined'){
-            let err_mssg    =   ele+" is required";
-            return err_mssg;
-        }else if(birthYear > currentYear) {
-            let err_mssg    =   "Future date is not allowed";
-            return err_mssg;
-        }else{
-            let err_mssg = 'valid';
-            return err_mssg;
-        }
+    function setResendButton() {
+        setResendOtpTxt("show");
+        let ele = document.getElementById("getOtpBtn");
+        // ele.disabled = true;
+        setTimeout(function() {
+            setResendOtpTxt("hide");
+            ele.disabled = false;
+        }, 59000);
     }
 
-    function requiredValidation(ele,val){
-        if(!val || val === '' || val === null || val === 'undefined'){
-            let err_mssg = ele+" is required";
-            return err_mssg;
-        }else{
-            let err_mssg = 'valid';
-            return err_mssg;
-        }
-    }
-
-    function cityValidation(ele,val){
-        let reg_exp  = /^[a-zA-Z][a-zA-Z\-\ \.]{0,}$/i;
-
-        if(!val || val === '' || val === null || val === 'undefined'){
-            let err_mssg = 'valid';
-            return err_mssg;
-        }else if(!reg_exp.test(val)){
-            let err_mssg = 'Accepts Alphabels Only';
-            return err_mssg;
-        }else{
-            let err_mssg = 'valid';
-            return err_mssg;
-        }
-    }
-    function pinCodeValidation(ele,val){
-        let reg_exp  = /^\d{0,}$/;
-
-        if(!val || val === '' || val === null || val === 'undefined'){
-            let err_mssg = 'valid';
-            return err_mssg;
-        }else if(!reg_exp.test(val)){
-            let err_mssg = 'Pin code should be digits.';
-            return err_mssg;
-        }else{
-            let err_mssg = 'valid';
-            return err_mssg;
-        }
+    function checkEnterPress(event){
+        console.log(event.keyCode);
+        if (event.keyCode === 13) {
+            // Prevent the default action
+            event.preventDefault();
+            verifyEmailOtp(event);
+        }        
     }
 
     return(
@@ -438,33 +211,58 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                 <div className="modal-content">
                     <div className="form-slide-one" slide-display={displayFirstSlide}>
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="exampleModalLabel">Log In</h1>
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Sign In / Sign Up</h1>
                             <button type="button" className="login-modal-close" onClick={closeModal}>X</button>
                         </div>
                         <div className="modal-body" style={{display:"flex", justifyContent:"center"}}>
                             <form className="row g-3 needs-validation old-user-form">
-                                <div className="col-sm-12">
-                                    <input type="phone" className="form-control" id="phoneNumberOne" placeholder="Enter your Mobile Number" value={phoneNumber} onChange={handlePhoneNumberChange} form-valid={loginNumErr.isValid} maxLength="10"/>
+                                <div className="col-sm-12" style={{marginTop:"0px", padding:"0px"}}>
+                                    <h6 style={{textAlign:"left", marginBottom:"5px", fontWeight:"400"}}>Email Id<span style={{color:"red"}}>*</span></h6>
+                                    <div style={{display:"flex", marginTop:"0px"}}>
+                                        <div style={{width:"100%"}}>
+                                            <input type="text" className="form-control email-login-input" id="emailId" name="emailId" placeholder="Your registered email..." value={emailId} onChange={(e)=>handleEmailIdChange(e)} form-valid={loginEmailErr.isValid}/>
+                                        </div>
+                                        <button className="btn btn-success get-otp-btn" id="getOtpBtn" type="submit" onClick={generateMobileOtp}>Get OTP</button>
+                                    </div>
                                     {
-                                        (loginNumErr.err_mssg !== 'valid')?
+
+                                        (loginEmailErr.isValid === "invalid")?
                                         <div className="invalid-feedback">
-                                            {loginNumErr.err_mssg}
+                                            {loginEmailErr.err_mssg}
                                         </div>
                                         :
-                                        <div className="valid-feedback">
-                                            {loginNumErr.err_mssg}
+                                        <div className="valid-feedback email-id-valid-feedback">
+                                            {
+                                                (loginEmailErr.err_mssg !== 'valid')? loginEmailErr.err_mssg : ''
+                                            }
                                         </div>
                                     }
+                                    {/* <p style={{fontWeight:"600", textAlign:"left", marginBottom:"0px"}} error-mssg-style={msgStyle}>{loadingMssg}</p> */}
                                 </div>
-                                <div className="col-sm-12">
-                                    <button className="btn btn-primary" type="submit" style={{width:"200px"}} onClick={checkPhoneNumber}>Get OTP</button>
-                                    <p style={{color:"red", marginTop:"10px", fontWeight:"600"}}>{loginErrMssg}</p>
+                                <div className="col-sm-12 otp-box-section" show-otp-box={otpBox} style={{padding:"0px"}}>
+                                    <h6 style={{textAlign:"left", marginBottom:"5px", fontWeight:"400"}}>Otp<span style={{color:"red"}}>*</span></h6>   
+                                    <div className="otp-input-box">
+                                        <input className="input" type="text" inputMode="numeric" maxLength="1" name="otp1" id="otp1" value={otp1} onInput={otpInputChange} onKeyDown={checkEnterPress} />
+                                        <input className="input" type="text" inputMode="numeric" maxLength="1" name="otp2" id="otp2" value={otp2} onInput={otpInputChange} onKeyDown={checkEnterPress}/>
+                                        <input className="input" type="text" inputMode="numeric" maxLength="1" name="otp3" id="otp3" value={otp3} onInput={otpInputChange} onKeyDown={checkEnterPress}/>
+                                        <input className="input" type="text" inputMode="numeric" maxLength="1" name="otp4" id="otp4" value={otp4} onInput={otpInputChange} onKeyDown={checkEnterPress}/>
+                                    </div>
+                                    <p style={{fontWeight:"500", fontSize:"14px", textAlign:"left", marginBottom:"0px"}} error-mssg-style="error" resend-otp-text={resendOtpTxt}>Resend OTP in {seconds} sec...</p>
+                                    <button className="btn btn-primary verify-otp-btn" type="submit" style={{width:"120px", marginTop:"24px"}} onClick={verifyEmailOtp}>Log In</button>
+                                </div>
+                                <div className="col-sm-12" style={{textAlign:"left", padding:"10px 15px"}}>
+                                    {
+                                        (loginErrMssg !== '')?
+                                            <p className="login-err-mssg">{loginErrMssg}</p>
+                                        :
+                                        <></>
+                                    }
                                 </div>
                             </form>
                         </div>
                         <div className="modal-footer">
                             {/* <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button> */}
-                            <p>New User Login?&nbsp;</p>
+                            <p className="modal-footer-p">New User?&nbsp;</p>
                             <button type="button" className="btn btn-primary new-user-reg-btn" onClick={formNextSlide}>Create a new account</button>
                         </div>
                     </div>
@@ -474,183 +272,11 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                             <button type="button" className="login-modal-close" onClick={closeModal}>X</button>
                         </div>
                         <div className="modal-body">
-                            <form className="row g-3 needs-validation new-user-form" id="newUserForm" onSubmit={newUserFormSubmit}>
-                                <div className="col-md-12 col-sm-12 new-form-field">
-                                    <label htmlFor="firstName" className="form-label">First name</label>
-                                    <input type="text" className="form-control" id="firstName" name="firstName" placeholder="Enter your first name" value={newUserData.firstName} onChange={(e)=>handlenewUserInput(e)} form-valid={firstNameErr.isValid}/>
-                                    {
-                                        (firstNameErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {firstNameErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {firstNameErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-6 col-sm-12 new-form-field">
-                                    <label htmlFor="lastName" className="form-label">Last name</label>
-                                    <input type="text" className="form-control" id="lastName" name="lastName" placeholder="Enter your last name" value={newUserData.lastName} onChange={(e)=>handlenewUserInput(e)} form-valid={lastNameErr.isValid}/>
-                                    {
-                                        (lastNameErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {lastNameErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {lastNameErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-6 col-sm-12 new-form-field">
-                                    <label htmlFor="nickName" className="form-label">Nick Name</label>
-                                    <input type="text" className="form-control" id="nickName" name="nickName" placeholder="Enter your nick name" value={newUserData.nickName} onChange={(e)=>handlenewUserInput(e)} form-valid={nickNameErr.isValid}/>
-                                    {
-                                        (nickNameErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {nickNameErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {nickNameErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-6 col-sm-12 new-form-field">
-                                    <label htmlFor="dob" className="form-label">Date Of Birth</label>
-                                    <input type="date" className="form-control" id="dob" name="dob" onChange={(e)=>handlenewUserInput(e)} form-valid={dobErr.isValid} select-color={newUserData.dob === ''?'novalue':'withvalue'}maxLength={10}/>
-                                    {
-                                        (dobErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {dobErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {dobErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-6 col-sm-12 new-form-field">
-                                <label htmlFor="gender" className="form-label">Gender</label>
-                                    <select className="form-select" id="gender" name="gender" onChange={(e)=>handlenewUserInput(e)} form-valid={genderErr.isValid} value={newUserData.gender} select-color={newUserData.gender === ''?'novalue':'withvalue'}>
-                                        <option disabled value="">Select your gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="others">Others</option>
-                                    </select>
-                                    {
-                                        (genderErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {genderErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {genderErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-6 col-sm-12 new-form-field">
-                                    <label htmlFor="emailId" className="form-label">Email</label>
-                                    <input type="text" className="form-control" id="emailId" name="emailId" placeholder="Enter your email..." value={newUserData.emailId} onChange={(e)=>handlenewUserInput(e)} form-valid={emailIdErr.isValid}/>
-                                    {
-                                        (emailIdErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {emailIdErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {emailIdErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-6 col-sm-12 new-form-field">
-                                    <label htmlFor="phoneNum" className="form-label">Phone no.</label>
-                                    <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={newUserData.phoneNum} onChange={(e)=>handlenewUserInput(e)} form-valid={phoneNumErr.isValid} maxLength="10"/>
-                                    {
-                                        (phoneNumErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {phoneNumErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {phoneNumErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-12 col-sm-12 new-form-field">
-                                    <label htmlFor="state" className="form-label">State</label>
-                                    <select className="form-select" id="state" name="state" value={newUserData.state} onChange={(e)=>handlenewUserInput(e)} form-valid={stateErr.isValid} select-color={newUserData.state === ''?'novalue':'withvalue'}>
-                                        <option value="" disabled>Choose your state</option>
-                                        {
-                                            states.map((data,index)=>{
-                                                return(
-                                                    <option value={data} key={index}>{data}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                    {
-                                        (stateErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {stateErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {stateErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-6 col-sm-12 new-form-field">
-                                    <label htmlFor="city" className="form-label">City</label>
-                                    <input type="text" className="form-control" id="city" name="city" placeholder="Enter your city" value={newUserData.city} onChange={(e)=>handlenewUserInput(e)} form-valid={cityErr.isValid}/>
-                                    {
-                                        (cityErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {cityErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {cityErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-md-6 col-sm-12">
-                                    <label htmlFor="pinCode" className="form-label">Pin code</label>
-                                    <input type="text" className="form-control" id="pinCode" name="pinCode" placeholder="Enter your Pin code" value={newUserData.pinCode} onChange={(e)=>handlenewUserInput(e)} form-valid={pinCodeErr.isValid}/>
-                                    {
-                                        (pinCodeErr.err_mssg !== 'valid')?
-                                        <div className="invalid-feedback">
-                                            {pinCodeErr.err_mssg}
-                                        </div>
-                                        :
-                                        <div className="valid-feedback">
-                                            {pinCodeErr.err_mssg}
-                                        </div>
-                                    }
-                                </div>
-                                <div className="col-sm-12">
-                                    <div className="form-check">
-                                        <div className="agree-check-form">
-                                            <input className="form-check-input" type="checkbox" value="" id="invalidCheck" required/>
-                                            <label className="form-check-label" htmlFor="invalidCheck">
-                                                Agree to terms and conditions
-                                            </label>
-                                        </div>
-                                        {/* <div className="invalid-feedback">
-                                            You must agree before submitting.
-                                        </div> */}
-                                    </div>
-                                </div>
-                                <div className="col-sm-12">
-                                    <button className="btn btn-primary" type="submit">Submit form</button>
-                                    <p style={{fontWeight:"600"}}>{loadingMssg}</p>
-                                </div>
-                            </form>
+                            <NewLoginForm loadUserDataFunction={loadUserDataFunction} generateMobileOtp={generateMobileOtp}/>
                         </div>
                         <div className="modal-footer">
                             {/* <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button> */}
-                            <p>Existing User?&nbsp;</p>
+                            <p className="modal-footer-p">Existing User?&nbsp;</p>
                             <button type="button" className="btn btn-primary old-user-login-btn" onClick={formPrevSlide}>Log in now</button>
                         </div>
                     </div>

@@ -152,14 +152,14 @@ a.nav-link{
     margin: auto;
     padding: 0;
     border: none;
-    width: 80%;
-    max-width: 1100px;
+    width: 90%;
+    max-width: 1000px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
     animation-duration: 0.4s;
-    border-radius: 16px 16px 5px 5px;
+    border-radius: 16px 16px 16px 16px;
 }
   
 /* Add Animation */
@@ -190,10 +190,12 @@ a.nav-link{
   
 .modal-header {
     padding: 10px 12px;
-    background-color: #5cb85c;
-    color: white;
+    /* background-color: #5cb85c; */
+    /* background-image: linear-gradient(to right, #ffbc87 0%, #f3f45d 50%, #2a8e75 100%);
+    color: rgb(0, 0, 0); */
     border-radius: 16px 16px 0px 0px;
-    background-image: linear-gradient(to right, #753A0D 0%, #000000 50%, #005842 100%);
+    background-image: linear-gradient(to left, #ff6c75, #8C3FFF);
+    color: white;
     background-size: cover;
     background-position: center;
     font-size: 26px;
@@ -215,9 +217,12 @@ a.nav-link{
   
 .modal-footer {
     padding: 10px 16px;
-    background-image: linear-gradient(to right, #753A0D 0%, #000000 50%, #005842 100%);
+    /* background-image: linear-gradient(to right, #ffa159 0%, #f3f45d 50%, #2a8e75 100%);
+    color: rgb(0, 0, 0); */
+    background-image: linear-gradient(to left, #ff6c75, #8C3FFF);
     color: white;
-    border-radius: 0px 0px 5px 5px;
+    font-weight: 700;
+    border-radius: 0px 0px 15px 15px;
 }
 .login-modal[show-modal="show"]{
     display: block;
@@ -228,7 +233,59 @@ a.nav-link{
 
 .old-user-form{
     width: 100%;
-    padding: 40px;
+    padding: 40px 40px 10px 40px;
+}
+[show-otp-box="show"]{
+    display: flex;
+    flex-direction: column;
+}
+[show-otp-box="hide"]{
+    display: none;
+}
+[new-user-show-otp-box="show"]{
+    display: flex;
+}
+[new-user-show-otp-box="hide"]{
+    display: none;
+}
+.otp-input-box{
+    display: flex;
+    margin-bottom: 2px;
+    justify-content: left;
+    gap: 20px;
+}
+.otp-input-box input{
+    height: 45px;
+    width: 50px;
+    text-align: center;
+}
+.email-login-input:focus{
+    outline: none;
+    box-shadow: none;
+}
+.email-login-input{
+    border-radius: 6px 0px 0px 6px;
+}
+.get-otp-btn{
+    padding: 5px;
+    width: 100px;
+    border-radius: 0px 6px 6px 0px;
+    background-image: linear-gradient(to right, #5C72FF, #8C3FFF);
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+}
+.verify-otp-btn, .new-user-form-submit{
+    background-image: linear-gradient(to right, #5C72FF, #8C3FFF);
+}
+.login-err-mssg{
+    color: red;
+    margin-top: 15px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 11px;
+    background: beige;
+    padding: 5px;
 }
 .new-user-form .form-label{
     float: left;
@@ -239,7 +296,7 @@ a.nav-link{
     gap: 8px;
 }
 .new-user-reg-btn, .old-user-login-btn{
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
     border: none;
 }
 [slide-display="show"]{
@@ -252,6 +309,19 @@ a.nav-link{
 
 .new-form-field{
     margin-bottom: 10px;
+}
+.new-user-get-otp-btn{
+    padding: 5px;
+    width: 80px;
+    border-radius: 0px 6px 6px 0px;
+    background-image: linear-gradient(to right, #5C72FF, #8C3FFF);
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    height: 38px;
+    position: absolute;
+    top: 32px;
+    right: 8px;
 }
 [form-valid="invalid"]{
     border: 1px solid #ff3c07;
@@ -267,13 +337,82 @@ a.nav-link{
     text-align: left;
     margin-top: 0px;
 }
+.email-id-valid-feedback{
+    display: block;
+    text-align: left;
+    margin-top: 0px;
+    font-weight: 500;
+    color: #009637;
+}
 [select-color="novalue"]{
     color: rgb(96 98 101);
 }
 [select-color="withvalue"]{
     color: var(--bs-body-color);
 }
+.dp-label{
+    margin-bottom: 2px;
+}
+.dp-image-input-section{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-top: 30px;
+}
+.dp-img-select-btn{
+    border: none;
+    display: block;
+    position: relative;
+    background: transparent;
+}
+.choose-profile-images{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.dp-img-select-btn:hover, .dp-img-select-btn:focus{
+    border: 2px solid rgb(186, 186, 186);
+}
 
+[data-active="true"]{
+    border: 2px solid rgb(186, 186, 186);
+}
+
+.check-term-condition{
+    margin-top: 40px;
+}
+
+[error-mssg-style="error"]{
+    color: rgb(171, 59, 11);
+}
+[error-mssg-style="success"]{
+    color: rgb(111, 144, 47);
+}
+[resend-otp-text="show"]{
+    display: block;
+}
+[resend-otp-text="hide"]{
+    display: none;
+}
+[new-user-resend-otp-text="show"]{
+    display: block;
+}
+[new-user-resend-otp-text="hide"]{
+    display: none;
+}
+@media(max-width:1199.98px){
+    .choose-profile-images{
+        gap: 2px;
+    }
+}
+@media(max-width:1049.98px){
+    .last-two-fields{
+        width: 100%;
+    }
+    .choose-profile-images{
+        gap: 25px;
+    }
+}
 @media(min-width:768px){
     .modal-body{
         padding-left: 15px !important;
@@ -285,40 +424,60 @@ a.nav-link{
 }
 @media(max-width:991.98px){
     .modal-content{
-        width:90%;
+        width:85%;
     }
 }
 @media(max-width: 767.98px){
     .offcanvas{
-        width: 60% !important;
+        width: 80% !important;
     }
     .custom-dropdown-menu-style[data-bs-popper] {
         right: auto;
         left: 0;
     }    
     .modal-content{
-        width:95%;
+        width:80%;
     }
     .old-user-form{
         width: 100%;
-        padding:15px 0px 10px 0px;
+        padding:30px 5px 10px 5px;
+    }
+    .choose-profile-images{
+        gap: 20px;
     }
 }
 @media(max-width:649.98px){
     .modal-content{
-        width:100%;
+        width:90%;
     }
     .offcanvas{
         width: 65% !important;
+    }
+    .choose-profile-images{
+        gap: 15px;
     }
 }
 @media(max-width: 483.98px){
     .offcanvas.offcanvas-end{
         width: 75% !important;
     }
+    .choose-profile-images{
+        gap: 10px;
+    }
+    .modal-content{
+        width:100%;
+    }
 }
 @media(max-width: 379.98px){
     .offcanvas.offcanvas-end{
         width: 90% !important;
+    }
+    .new-user-reg-btn, .old-user-login-btn{
+        padding-left: 7px;
+        padding-right: 7px;
+        font-size: 16px;
+    }
+    .modal-footer-p{
+        font-size: 14px;
     }
 }
