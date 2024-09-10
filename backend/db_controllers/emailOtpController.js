@@ -56,7 +56,7 @@ exports.sendEmailOtp        = async(req,res)=>{
         secure: true, // true for port 465, false for other ports
         auth: {
             user: 'mish.krish1996@gmail.com',
-            pass: 'ptwd dsoe wlgh hgud'
+            pass: process.env.EMAIL_APP_PASS
         }
     });
     const emailHtml         = createEmailHtml(otpCode);
