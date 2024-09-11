@@ -51,11 +51,11 @@ const customerSchema = new Schema(
         profileimg: {
             type: String,
         },
-        createdat: {
+        created_at: {
             type: Date,
             default: Date.now,
         },
-        updatedat: {
+        updated_at: {
             type: Date,
             default: Date.now,
         },

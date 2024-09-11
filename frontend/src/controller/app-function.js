@@ -25,11 +25,15 @@ export default function AppFunction(){
     const [showLoginModal, updateShowLoginModal]    =   useState('hide');
     const [loadUserData, setUserData]               =   useState([]);
     const [loginErrMssg, setLoginErrMssg]           =   useState('');
-    const [userEmailId, updateuserEmailId]      =   useState('');
+    const [userEmailId, updateuserEmailId]          =   useState('');
+    const [currentUrl, updateCurrentUrl]            =   useState('');
+    const urlPath                                   =   window.location.href ;
 
     const APIUrls                                   =   {
         "fetchFoodMenuAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getFoodMenu',
-        "fetchUserDataAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getUserData'
+        "fetchUserDataAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getUserData',
+        "saveFavItemsAPIUrl"  : Costant_Variables.SERVER_BASE_URL+'/savewishlist',
+        "fetchFavItemsAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getwishlist',
     };
 
     function loadCuisineData(){
@@ -58,9 +62,15 @@ export default function AppFunction(){
     useEffect(() => {
         loadCuisineData();
         checkUserLogedIn();
+        getCurrentPath(urlPath);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
+    function getCurrentPath(path){
+        const url_Path = path? path:window.location.href
+        updateCurrentUrl(url_Path);
+    }
 
     // Ligin Form Modal slide switch functionality
     const [displayFirstSlide, setDisplayFirstSlide]     = useState('show');
@@ -106,6 +116,7 @@ export default function AppFunction(){
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 localStorage.setItem("krishmish@regUserId", "");
+                localStorage.setItem("favouriteItems", JSON.stringify([]));
                 window.location.href = websiteBaseUrl;
                 // window.location.reload();
             } else{
@@ -130,6 +141,7 @@ export default function AppFunction(){
                     if(resData.length > 0){
                         setLoginErrMssg("Welcome Back!!");
                         setUserData(resData[0]);
+                        fetchFavouriteItemsFromDb(resData[0]._id);
                         setUserLoggedIn('true');
                         updateShowLoginModal('hide');
                         localStorage.setItem("krishmish@regUserId", "krishmish@"+resData[0].email);
@@ -301,7 +313,7 @@ export default function AppFunction(){
     
 
     // Add to cart Functionality
-    const [cartItem, setCartItem]       =   useState(fetchCartItemDataFromLocalStorage());
+    const [cartItem, setCartItem]               =   useState(fetchCartItemDataFromLocalStorage());
 
     // This function fetch cartItem data from localstorage.
     function fetchCartItemDataFromLocalStorage(){
@@ -370,17 +382,112 @@ export default function AppFunction(){
     let convertCartDataToStringData = JSON.stringify(cartItem);
     localStorage.setItem("cartData", convertCartDataToStringData);
 
+
+    // Fav Item List / Wish list Functionality
+    const [favouriteItems, setFavouriteItems]   =   useState(fetchFavouriteItemsFromLocalStorage());
+
+    
+    function fetchFavouriteItemsFromLocalStorage(){
+        let favItemStringFromLocalStorage   = localStorage.getItem("favouriteItems");
+        let favItemsFromLocalStorage        = JSON.parse(favItemStringFromLocalStorage);
+
+        if(favItemsFromLocalStorage === null){
+            return [];
+        }else{
+            return favItemsFromLocalStorage;
+        }
+    }
+
+    function fetchFavouriteItemsFromDb(user_id){
+        const formData  =   {
+            userid   : user_id,
+        }
+        const config = {
+            headers: { 'Content-Type': 'application/json'}
+        }
+        axios.post(APIUrls.fetchFavItemsAPIUrl, formData, {config})
+        .then(
+            (response) => {
+                if(response.data.success === true){
+                    const resData = response.data.data;
+                    if(resData.length > 0){
+                        const convertFavItemsToStringData = JSON.stringify(resData[0].fav_items);
+                        localStorage.setItem("favouriteItems", convertFavItemsToStringData);
+                        setFavouriteItems(resData[0].fav_items);
+                    }else{
+                        console.log("No Items found in wishlist");
+                    }
+                }else{
+                    console.log("Faied to fetch wishlist")
+                }
+            }
+        ).catch(error => {
+            console.log(error)
+        });
+    }
+
+    const addToFavourite = (Itemdata) =>{
+        if(userLoggedIn === 'true'){
+            updateShowLoginModal("hide");
+            const findProduct = favouriteItems.find(item => item.product._id === Itemdata._id);
+            if (!findProduct){
+                setFavouriteItems([...favouriteItems, {product: Itemdata}]);
+            } else {
+                const updated_list = favouriteItems.filter(item => item.product._id !== Itemdata._id)
+                setFavouriteItems(updated_list);
+            }
+        }else{
+            updateShowLoginModal('show');
+        }
+
+        setTimeout((saveToDbFavList),2000)
+    }
+
+    function saveToDbFavList(){
+        const favItemsFromLocalStorage  =  fetchFavouriteItemsFromLocalStorage();
+        const formData  =   {
+            userid   : loadUserData._id,
+            favitems : favItemsFromLocalStorage
+        }
+        const config = {
+            headers: { 'Content-Type': 'application/json'}
+        }
+        axios.post(APIUrls.saveFavItemsAPIUrl, formData, {config})
+        .then(
+            (response) => {
+                if(response.data.success === true){
+                    const resData = response.data.data;
+                    if(resData.length > 0){
+                        console.log("wishlist updated successfully");
+                    }else{
+                        console.log("No Items added to wishlist");
+                    }
+                }else{
+                    console.log("Faied to save favourite items")
+                }
+            }
+        ).catch(error => {
+            
+        });
+    }
+
+    let convertFavItemsToStringData = JSON.stringify(favouriteItems);
+    localStorage.setItem("favouriteItems", convertFavItemsToStringData);
+
+    // localStorage.setItem("currentPageUrl", window.location.href);
+    // updateCurrentUrl(localStorage.getItem("currentPageUrl"));
+
     return (
         <Router>
-            <Navbar searchbar="false" totalCartItem={cartItem.length} showLoginModal={showLoginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} isUserLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} loadUserDataFunction={loadUserDataFunction} loadUserData={loadUserData} signOutUser={signOutUser} loginErrMssg={loginErrMssg} userEmailId={userEmailId} />
+            <Navbar searchbar="false" totalCartItem={cartItem.length} showLoginModal={showLoginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} isUserLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} loadUserDataFunction={loadUserDataFunction} loadUserData={loadUserData} signOutUser={signOutUser} loginErrMssg={loginErrMssg} userEmailId={userEmailId} getCurrentPath={getCurrentPath} />
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine } getFilteredItemList={getFilteredItemList}/>
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName} randomComboItemList={randomComboItemList}/>}/>
-                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getSortFilterInput={getSortFilterInput} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
+                <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getSortFilterInput={getSortFilterInput} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length} addToFavourite={addToFavourite} favouriteItems={favouriteItems}/>} />
                 <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
-                <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} />} />
+                <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} addToFavourite={addToFavourite} favouriteItems={favouriteItems} addToCartFunction={addItemToCart} addedCartItem = {cartItem} currentUrl={currentUrl} />} />
                 <Route exact path="*" element={<Errorpage />} />
             </Routes>
             <Footer/>
