@@ -36,18 +36,23 @@ body{
   color: white !important;
 }
 
-[dark-theme="off"] .a-tag-style, .item-description{
+[dark-theme="on"] .top-pics-item-name .a-tag-style{
   color: black !important;
 }
 
-[dark-theme="off"] .billing-details-secton{
-  background-color: #f7f7f7;
-  transition: background-color 2s;
+[dark-theme="on"] .custom-card-width{
+  box-shadow: 7px 7px 20px 0px #5ec9ff66 !important;
 }
+
+[dark-theme="on"] .top-pics-section {
+  box-shadow: 7px 7px 20px 0px #5ec9ff66 !important;
+}
+
 [dark-theme="on"] .billing-details-secton{
   background-color: #2e2e2e;
   transition: background-color 2s;
 }
+
 [dark-theme="on"] .food-cat-name{
   color: black;
 }
@@ -62,6 +67,23 @@ body{
 }
 [dark-theme="on"] .sort-by-btn{
   color: rgb(231, 157, 255) !important;
+}
+
+[dark-theme="off"] .a-tag-style, .item-description{
+  color: black !important;
+}
+
+[dark-theme="off"] .billing-details-secton{
+  background-color: #f7f7f7;
+  transition: background-color 2s;
+}
+
+[dark-theme="off"] .custom-card-width {
+  box-shadow: 0 24px 20px -15px #7a3e864f !important;
+}
+
+[dark-theme="off"] .top-pics-section {
+  box-shadow: 0 24px 20px -15px #7a3e864f !important;
 }
 
 .error-page-msg-section{

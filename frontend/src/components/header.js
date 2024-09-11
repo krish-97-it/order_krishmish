@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import Brandlogo from '../assets/shop-logo-one-1.jpg';
 import BrandName from '../assets/krishmish_brand_name_logo.webp';
@@ -8,7 +8,23 @@ import lightDarkIcon from '../assets/day-light-mode-icon.svg';
 import LoginModal from './login-modal';
 
 const Navbar = (props) => {
-    function closeOffCanvas() {
+
+    // set active on current element
+    // function sendCurrentUrl(){
+    //     const cur_url       =    window.location.href;
+    //     props.getCurrentPath(cur_url);
+    // }
+
+    useEffect(()=>{
+        const cur_url       =    window.location.href;
+        props.getCurrentPath(cur_url);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const [isActive, setActive] = useState(null);
+    function closeOffCanvas(e) {
+        let eleid       = e.target.id;
+        setActive(eleid);
         if(window.outerWidth < 768){
             document.querySelector("button.navbar-toggler").click();
         }
@@ -99,9 +115,9 @@ const Navbar = (props) => {
                                             </button>
                                             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-start custom-dropdown-menu-style">
                                                 {/* <li><button className="dropdown-item" type="button" onClick={props.openUserProfile}>Profile</button></li> */}
-                                                <li><NavLink className="dropdown-item" to="/myprofile" onClick={closeOffCanvas}>Profile</NavLink></li>
-                                                <li><NavLink className="dropdown-item" to="/myprofile/#mywishlist" onClick={closeOffCanvas}>Favourites</NavLink></li>
-                                                <li><NavLink className="dropdown-item" to="/myprofile/#orderhistory" onClick={closeOffCanvas}>Order Hitory</NavLink></li>   
+                                                <li><NavLink className="dropdown-item-custom-style" id="dropdown-one" data-href="/myprofile" to="/myprofile" onClick={(e)=>closeOffCanvas(e)} dropdown-item-active={(isActive === 'dropdown-one')?"true":"false"}>Profile</NavLink></li>
+                                                <li><NavLink className="dropdown-item-custom-style" id="dropdown-two" data-href="/myprofile/#mywishlist" to="/myprofile/#mywishlist" onClick={(e)=>closeOffCanvas(e)} dropdown-item-active={(isActive === 'dropdown-two')?"true":"false"}>Favourites</NavLink></li>
+                                                <li><NavLink className="dropdown-item-custom-style" id="dropdown-three" data-href="myprofile/#orderhistory" to="/myprofile/#orderhistory" onClick={(e)=>closeOffCanvas(e)} dropdown-item-active={(isActive === 'dropdown-three')?"true":"false"}>Order Hitory</NavLink></li>   
                                                 <li><button className="dropdown-item" type="button" onClick={props.signOutUser}>Sign Out</button></li>
                                                 <li style={{display:"flex", paddingLeft:"15px", paddingTop:"5px"}}>
                                                     <span>Dark Mode: &nbsp;</span>
