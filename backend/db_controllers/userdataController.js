@@ -58,7 +58,8 @@ exports.findAndUpdateUser   = async(req,res)=>{
         state       :   req.body.state,
         city        :   req.body.city,
         pincode     :   req.body.pincode,
-        profileimg  :   req.body.profileimg
+        profileimg  :   req.body.profileimg,
+        updated_at  :   Date.now()
     }
     const update            = { $set: updatedParameter };
     const options           = { upsert: false };

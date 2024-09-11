@@ -197,7 +197,6 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
     }
 
     function checkEnterPress(event){
-        console.log(event.keyCode);
         if (event.keyCode === 13) {
             // Prevent the default action
             event.preventDefault();
