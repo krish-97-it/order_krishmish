@@ -7,7 +7,7 @@ import BottomToast from "../components/bottom-toast";
 import GoToTop from "../components/go-to-top";
 
 
-export default function Cuisine({getItemList, getFilteredItemList, getInputCuisine, getCuisineName, getFoodName, getFoodNameByCategory, getSortFilterInput, getTopPicsItemList, addToCartFunction, addedCartItem, totalCartItem}){
+export default function Cuisine({getItemList, getFilteredItemList, getInputCuisine, getCuisineName, getFoodName, getFoodNameByCategory, getSortFilterInput, getTopPicsItemList, addToCartFunction, addedCartItem, totalCartItem, addToFavourite, favouriteItems}){
 
     const location = useLocation();
     const currentPath = location.pathname;
@@ -197,6 +197,16 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                         <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
                                                         <p className="item-category-symbol"><img src={((item.category) === 'veg') ? vegIcon : nonVegIcon} alt="Food Category"/></p>
                                                         <p className="item-rating">{item.rating}<img src={ratingSvg} alt="rating"/></p>
+                                                        <div className="heart-icon-section">
+                                                            <button onClick={()=>addToFavourite(item)}>
+                                                                {
+                                                                    (favouriteItems.find(data => data.product._id === item._id))?
+                                                                    <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"24px"}}></i>
+                                                                    :
+                                                                    <i className="fa fa-heart heart-icon-color" style={{fontSize:"24px"}}></i>
+                                                                }
+                                                            </button>
+                                                        </div>
                                                         <div className="card-body card-body-style">
                                                             <h5 className="card-title all-item-card-title">{item.name}<p>{item.subtitle}</p></h5>
                                                             <p className="item-description" id={"item-"+index}>{(item.description).substring(0, 50)}<span onClick={()=> showFlullContent(index, item.description)}>...read more</span></p>
@@ -227,6 +237,16 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                         <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
                                                         <p className="item-category-symbol"><img src={((item.category) === 'veg') ? vegIcon : nonVegIcon} alt="Food Category"/></p>
                                                         <p className="item-rating">{item.rating}<img src={ratingSvg} alt="rating"/></p>
+                                                        <div className="heart-icon-section">
+                                                            <button onClick={()=>addToFavourite(item)}>
+                                                                {
+                                                                    (favouriteItems.find(data => data.product._id === item._id))?
+                                                                    <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"24px"}}></i>
+                                                                    :
+                                                                    <i className="fa fa-heart heart-icon-color" style={{fontSize:"24px"}}></i>
+                                                                }
+                                                            </button>
+                                                        </div>
                                                         <div className="card-body card-body-style">
                                                             <h5 className="card-title all-item-card-title">{item.name}<p>{item.subtitle}</p></h5>
                                                             <p className="item-description" id={"item-"+index}>{(item.description).substring(0, 50)}<span onClick={()=> showFlullContent(index, item.description)}>...read more</span></p>
@@ -266,6 +286,16 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                             <img className="card-img-top img-w-100 all-item-card-img" src={item.image.img_one} alt="Food Card"/>
                                                             <p className="item-category-symbol"><img src={((item.category) === 'veg') ? vegIcon : nonVegIcon} alt="Food Category"/></p>
                                                             <p className="item-rating">{item.rating}<img src={ratingSvg} alt="rating"/></p>
+                                                            <div className="heart-icon-section">
+                                                                <button onClick={()=>addToFavourite(item)}>
+                                                                    {
+                                                                        (favouriteItems.find(data => data.product._id === item._id))?
+                                                                        <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"24px"}}></i>
+                                                                        :
+                                                                        <i className="fa fa-heart heart-icon-color" style={{fontSize:"24px"}}></i>
+                                                                    }
+                                                                </button>
+                                                            </div>
                                                             <div className="card-body card-body-style">
                                                                 <h5 className="card-title all-item-card-title">{item.name}<p>{item.subtitle}</p></h5>
                                                                 <p className="item-description" id={"item-"+index}>{(item.description).substring(0, 50)}<span onClick={()=> showFlullContent(index, item.description)}>...read more</span></p>

@@ -1,11 +1,39 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import Costant_Variables from "../controller/constant-variables";
 import ValidationFunctions from "../controller/validation-functions";
 import Swal from 'sweetalert2';
 import GoToTop from "../components/go-to-top";
 
-const MyProfile = ({loadUserDataFunction, loadUserData}) => {
+const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favouriteItems, addToCartFunction, addedCartItem, currentUrl}) => {
+
+    // function checkUrlPath(){
+        // const url = currentUrl;
+        // if(currentUrl.includes('/#mywishlist')){
+        //     // const aria_expand = document.querySelector("button.open-wishlist-btn").getAttribute('aria-expanded');
+        //     // console.log(aria_expand);
+        //     // if(aria_expand === false){
+        //     //     // document.querySelector("button.open-wishlist-btn").click();
+        //     // }
+        //     document.querySelector("button.open-wishlist-btn").click();
+
+        // }else if(url.includes('/#orderhistory')){
+        //     document.querySelector(".order-history-btn").click();
+        // }else if(url.includes('/myprofile')){
+        //     document.querySelector(".open-profile-btn").click();
+        // }
+    // }
+
+    useEffect(() => {
+       const url = window.location.href;
+        if(url.includes('/#mywishlist')){
+            document.querySelector("button.open-wishlist-btn").click();
+        }else if(url.includes('/#orderhistory')){
+            document.querySelector(".order-history-btn").click();
+        }else if(url.includes('/myprofile')){
+            // document.querySelector(".open-profile-btn").click();
+        }
+    },[]);
 
     const apiUrl        =   Costant_Variables.SERVER_BASE_URL+'/updateUserData';
     const [newUserData, setNewUserData] = useState({
@@ -345,7 +373,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
         <div className="app-body">
             <div className="main-content" style={{marginTop:"62px", minHeight:"500px"}}>
                 <div id="userProfilePage">
-                    <div className="profile-heading-section">
+                    <div className="profile-heading-section" id="myprofilepage">
                         <div className="dark-opacity">
                             <div className="profile-picture-section">
                                 <img src={loadUserData.profileimg} className="profile-picture" alt="profile img"/>
@@ -354,9 +382,9 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                                 <h3 style={{color:"white", fontWeight:"600"}}>{loadUserData.firstname}&nbsp;{loadUserData.lastname}</h3>
                             </div>
                             <div className="profile-quicklinks-section">
-                                <Link to="#mywishlist" className="profile-quicklinks">My Wishlist</Link>
-                                <Link to="#mywishlist" className="profile-quicklinks">Order History</Link>
-                                <Link to="#mywishlist" className="profile-quicklinks">Reviews</Link>
+                                <Link to="/myprofile/#mywishlist" className="profile-quicklinks">My Wishlist</Link>
+                                <Link to="/myprofile/#orderhistory" className="profile-quicklinks">Order History</Link>
+                                <Link to="/myprofile/#mywishlist" className="profile-quicklinks">Reviews</Link>
                             </div>
                         </div>
                     </div>
@@ -364,7 +392,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                         <div className="accordion" id="profileAccordation">
                             <div className="accordion-item profile-page-accordion-item">
                                 <h2 className="accordion-header">
-                                    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#personalDetails" aria-expanded="true" aria-controls="personalDetails">
+                                    <button className="accordion-button open-profile-btn" type="button" data-bs-toggle="collapse" data-bs-target="#personalDetails" aria-expanded="true" aria-controls="personalDetails">
                                         Personal Details
                                     </button>
                                 </h2>
@@ -645,19 +673,53 @@ const MyProfile = ({loadUserDataFunction, loadUserData}) => {
                             </div>
                             <div className="accordion-item profile-page-accordion-item">
                                 <h2 className="accordion-header">
-                                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#myWishList" aria-expanded="false" aria-controls="myWishList">
-                                        Favourite Dishes
+                                    <button className="accordion-button collapsed open-wishlist-btn" type="button" id="wishlistBtn" data-bs-toggle="collapse" data-bs-target="#myWishList" aria-expanded="false" aria-controls="myWishList">
+                                        Favourite Dishest
                                     </button>
                                 </h2>
                                 <div id="myWishList" className="accordion-collapse collapse" data-bs-parent="#profileAccordation">
                                     <div className="accordion-body">
-                                        
+                                        <div className="row">
+                                            {
+                                                (favouriteItems.length) > 0 ? 
+                                                <>
+                                                    {
+                                                        favouriteItems.map((item,index) =>{
+                                                            return(
+                                                                <div className="col-md-6 col-sm-12" key={"item-"+index}>
+                                                                    <div className="favourite-item-card">
+                                                                        <div className="fav-item-img">
+                                                                            <img src={item.product.image.img_one} alt="food"/>
+                                                                        </div>
+                                                                        <div className="item-body-description" style={{position:"relative"}}>
+                                                                            <div style={{display:"flex", justifyContent:"space-between", alignItems:"start"}}>
+                                                                                <h5>{(item.product.name).length < 28? item.product.name : (item.product.name).substring(0,30)+'...'}</h5>
+                                                                                <button className="heart-btn-style" onClick={()=>addToFavourite(item.product)}>
+                                                                                    <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"20px"}}></i>
+                                                                                </button>
+                                                                            </div>
+                                                                            <p className="price-section" style={{textAlign:"left"}}>Price: ₹{" "+item.product.price}</p>
+                                                                            <div className="pos-bottom">
+                                                                                <button className="fav-item-cart-btn" onClick={(e)=>{e.preventDefault(); addToCartFunction(item.product)}} id={"item-"+item._id}>
+                                                                                    Add To Cart
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </> :
+                                                <p>Empty Wishlist !! No Item is added to wishlist Yet.</p>
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="accordion-item profile-page-accordion-item">
                                 <h2 className="accordion-header">
-                                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#orderHistory" aria-expanded="false" aria-controls="orderHistory">
+                                    <button className="accordion-button collapsed order-history-btn" type="button" data-bs-toggle="collapse" data-bs-target="#orderHistory" aria-expanded="false" aria-controls="orderHistory">
                                         Order History
                                     </button>
                                 </h2>

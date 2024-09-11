@@ -59,6 +59,25 @@
 .custom-dropdown-menu-style{
     width: 200px;
 }
+.dropdown-item-custom-style{
+    display: block;
+    width: 100%;
+    padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+    clear: both;
+    font-weight: 400;
+    color: var(--bs-dropdown-link-color);
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+[dropdown-item-active="true"]{
+    color: var(--bs-dropdown-link-active-color);
+    text-decoration: none;
+    background-color: var(--bs-dropdown-link-active-bg);
+}
+
 
 .offcanvas-header{
     padding-bottom: 5px;
