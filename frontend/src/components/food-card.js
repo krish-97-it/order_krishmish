@@ -24,7 +24,7 @@ export default function Foodcard({getHomeCuisineName, randomComboItemList}){
         <div className="container-fluid mt-3 mb-3">
             <div className="food-category-container mt-5">
                 <h3 className="gradient-bg">Iconic Multi Cuisine</h3>
-                <div className="food-category-section mt-3 ">
+                <div className="food-category-section">
                     <div className="food-card mb-sm-0">
                         <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("indian")}} value="indian">
                             <img src="https://img.perceptpixel.com/pykhlszs/indian-cuisine.webp" className="img-w-100 border-rounded food-cat-card-img" alt="Food Category"/>

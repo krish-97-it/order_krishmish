@@ -92,11 +92,11 @@ function ComboItemCarousel({comboItemList, getHomeCuisineName, addToCartFunction
                                         </div>
                                         <div className="pos-bottom" style={{textAlign:"center"}}>
                                             {/* <Link to="/cuisine" className="btn btn-primary" style={{width:"100%"}} onClick={()=>getHomeCuisineName(item.name)}>Check Now</Link> */}
-                                            <button className="btn btn-primary" style={{width:"100%"}} onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
+                                            <button className="btn btn-pimaary combo-page-add-to-cart-btn" style={{width:"100%"}} onClick={()=>addToCartFunction(item)} id={"item-"+item._id}>
                                                 Add To Cart
                                                 {
                                                     addedCartItem.map(data =>
-                                                        data.product._id === item._id ? <span className="highlight-quantity-txt" key={"item-"+data.product._id}>{data.item_quantity}</span> : <></>
+                                                        data.product._id === item._id ? <span className="highlight-quantity-txt combo-page-qty-btn" key={"item-"+data.product._id}>{data.item_quantity}</span> : <></>
                                                     )
                                                 }
                                             </button>

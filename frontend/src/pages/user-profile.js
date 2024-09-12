@@ -1,39 +1,35 @@
-import React, {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import { NavLink } from "react-router-dom";
 import Costant_Variables from "../controller/constant-variables";
 import ValidationFunctions from "../controller/validation-functions";
 import Swal from 'sweetalert2';
 import GoToTop from "../components/go-to-top";
+import WishList from "../components/wishlist";
+import OrderHistory from "../components/order-history";
 
-const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favouriteItems, addToCartFunction, addedCartItem, currentUrl}) => {
+const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favouriteItems, addToCartFunction}) => {
 
-    // function checkUrlPath(){
-        // const url = currentUrl;
-        // if(currentUrl.includes('/#mywishlist')){
-        //     // const aria_expand = document.querySelector("button.open-wishlist-btn").getAttribute('aria-expanded');
-        //     // console.log(aria_expand);
-        //     // if(aria_expand === false){
-        //     //     // document.querySelector("button.open-wishlist-btn").click();
-        //     // }
-        //     document.querySelector("button.open-wishlist-btn").click();
-
-        // }else if(url.includes('/#orderhistory')){
-        //     document.querySelector(".order-history-btn").click();
-        // }else if(url.includes('/myprofile')){
-        //     document.querySelector(".open-profile-btn").click();
-        // }
-    // }
-
-    useEffect(() => {
-       const url = window.location.href;
-        if(url.includes('/#mywishlist')){
-            document.querySelector("button.open-wishlist-btn").click();
-        }else if(url.includes('/#orderhistory')){
-            document.querySelector(".order-history-btn").click();
-        }else if(url.includes('/myprofile')){
-            // document.querySelector(".open-profile-btn").click();
+    function scrollToWishList(){
+        const aria_expand = document.querySelector("button.open-wishlist-btn").getAttribute('aria-expanded');
+        if(aria_expand === 'true'){
+            setTimeout(function(){
+                window.scrollTo({ top:325, behavior: "smooth" });
+            }, 300);
+        }else{
+            window.scrollTo({ top:0, behavior: "smooth" });
         }
-    },[]);
+    }
+
+    function scrollToOrderHistory(){
+        const aria_expand = document.querySelector("button.order-history-btn").getAttribute('aria-expanded');
+        if(aria_expand === 'true'){
+            setTimeout(function(){
+                window.scrollTo({ top:405, behavior: "smooth" });
+            }, 300);
+        }else{
+            window.scrollTo({ top:0, behavior: "smooth" });
+        }
+    }
 
     const apiUrl        =   Costant_Variables.SERVER_BASE_URL+'/updateUserData';
     const [newUserData, setNewUserData] = useState({
@@ -371,7 +367,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
 
     return (
         <div className="app-body">
-            <div className="main-content" style={{marginTop:"62px", minHeight:"500px"}}>
+            <div className="main-content" style={{marginTop:"61px"}}>
                 <div id="userProfilePage">
                     <div className="profile-heading-section" id="myprofilepage">
                         <div className="dark-opacity">
@@ -382,13 +378,13 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
                                 <h3 style={{color:"white", fontWeight:"600"}}>{loadUserData.firstname}&nbsp;{loadUserData.lastname}</h3>
                             </div>
                             <div className="profile-quicklinks-section">
-                                <Link to="/myprofile/#mywishlist" className="profile-quicklinks">My Wishlist</Link>
-                                <Link to="/myprofile/#orderhistory" className="profile-quicklinks">Order History</Link>
-                                <Link to="/myprofile/#mywishlist" className="profile-quicklinks">Reviews</Link>
+                                <button className="profile-quicklinks"  data-bs-toggle="collapse" data-bs-target="#myWishList" onClick={scrollToWishList}>My Wishlist</button>
+                                <button className="profile-quicklinks"  data-bs-toggle="collapse" data-bs-target="#orderHistory" onClick={scrollToOrderHistory}>Order History</button>
+                                <button className="profile-quicklinks">Review</button>
                             </div>
                         </div>
                     </div>
-                    <div className="container mt-3">
+                    <div className="container profile-accordion-container mt-3">
                         <div className="accordion" id="profileAccordation">
                             <div className="accordion-item profile-page-accordion-item">
                                 <h2 className="accordion-header">
@@ -671,63 +667,39 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
                                     </div>
                                 </div>
                             </div>
-                            <div className="accordion-item profile-page-accordion-item">
+                            <div className="accordion-item profile-page-accordion-item" id="wishListSection">
                                 <h2 className="accordion-header">
-                                    <button className="accordion-button collapsed open-wishlist-btn" type="button" id="wishlistBtn" data-bs-toggle="collapse" data-bs-target="#myWishList" aria-expanded="false" aria-controls="myWishList">
-                                        Favourite Dishest
+                                    <button className="accordion-button collapsed open-wishlist-btn" type="button" id="wishlistBtn" data-bs-toggle="collapse" data-bs-target="#myWishList" aria-expanded="false" aria-controls="myWishList" onClick={scrollToWishList}>
+                                        Favourite Dishes
                                     </button>
                                 </h2>
                                 <div id="myWishList" className="accordion-collapse collapse" data-bs-parent="#profileAccordation">
                                     <div className="accordion-body">
-                                        <div className="row">
-                                            {
-                                                (favouriteItems.length) > 0 ? 
-                                                <>
-                                                    {
-                                                        favouriteItems.map((item,index) =>{
-                                                            return(
-                                                                <div className="col-md-6 col-sm-12" key={"item-"+index}>
-                                                                    <div className="favourite-item-card">
-                                                                        <div className="fav-item-img">
-                                                                            <img src={item.product.image.img_one} alt="food"/>
-                                                                        </div>
-                                                                        <div className="item-body-description" style={{position:"relative"}}>
-                                                                            <div style={{display:"flex", justifyContent:"space-between", alignItems:"start"}}>
-                                                                                <h5>{(item.product.name).length < 28? item.product.name : (item.product.name).substring(0,30)+'...'}</h5>
-                                                                                <button className="heart-btn-style" onClick={()=>addToFavourite(item.product)}>
-                                                                                    <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"20px"}}></i>
-                                                                                </button>
-                                                                            </div>
-                                                                            <p className="price-section" style={{textAlign:"left"}}>Price: ₹{" "+item.product.price}</p>
-                                                                            <div className="pos-bottom">
-                                                                                <button className="fav-item-cart-btn" onClick={(e)=>{e.preventDefault(); addToCartFunction(item.product)}} id={"item-"+item._id}>
-                                                                                    Add To Cart
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
-                                                </> :
-                                                <p>Empty Wishlist !! No Item is added to wishlist Yet.</p>
-                                            }
+                                        <WishList addToCartFunction={addToCartFunction} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={6}/>
+                                        <div>
+                                            <NavLink className="btn btn-primary" to="/myprofile/wishlist">View All</NavLink>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="accordion-item profile-page-accordion-item">
+                            <div className="accordion-item profile-page-accordion-item" id="orderHistorySection">
                                 <h2 className="accordion-header">
-                                    <button className="accordion-button collapsed order-history-btn" type="button" data-bs-toggle="collapse" data-bs-target="#orderHistory" aria-expanded="false" aria-controls="orderHistory">
+                                    <button className="accordion-button collapsed order-history-btn" type="button" data-bs-toggle="collapse" data-bs-target="#orderHistory" aria-expanded="false" aria-controls="orderHistory" onClick={scrollToOrderHistory}>
                                         Order History
                                     </button>
                                 </h2>
                                 <div id="orderHistory" className="accordion-collapse collapse" data-bs-parent="#profileAccordation">
                                     <div className="accordion-body">
-                                        
+                                        <OrderHistory/>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="promo-banner-section mb-3">
+                                <picture>
+                                    <source media="(min-width:484px)" srcSet="https://img.perceptpixel.com/pykhlszs/combo-banner.webp"/>
+                                    <source media="(max-width:483.98px)" srcSet="https://img.perceptpixel.com/pykhlszs/combo-mob-banner.webp"/>
+                                    <img src="https://img.perceptpixel.com/pykhlszs/combo-mob-banner.webp" alt="combo banners" style={{width:"100%", height:"auto"}}/>
+                                </picture>
                             </div>
                         </div>
                     </div>
