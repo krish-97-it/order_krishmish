@@ -31,6 +31,24 @@
     max-height: 240px !important;
     object-fit: cover;
 }
+.combo-page-add-to-cart-btn{
+    background-image: linear-gradient(to right, #5C72FF, #8C3FFF);
+    color: white;
+    font-weight: 500;
+    border: none;
+    /* border-radius: 14px; */
+    /* height: 36px; */
+}
+.combo-page-add-to-cart-btn:active{
+    background-image: linear-gradient(to right, #364acc, #7335d1);
+    color: white;
+}
+.combo-page-add-to-cart-btn:hover{
+    color: white;
+}
+.combo-page-qty-btn{
+    top: 2px !important;
+}
 
 @media(min-width:992px){
     .combo-item-card{

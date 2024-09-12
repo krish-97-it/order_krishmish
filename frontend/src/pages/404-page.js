@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 function Errorpage() {
   return (
     <div className="app-body">
-        <div className="main-content container mt-5">
+        <div className="main-content container">
             <div className="error-page-msg-section">
                 <div className="sad-face-icon">
                     <img src={sadSvg} alt="error"/>

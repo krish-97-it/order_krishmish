@@ -5,7 +5,8 @@ import './style/home.css';
 import './style/food-item-card.css';
 import './style/my-cart.css';
 import './style/combo-page.css';
-import './style/user-profile.css'
+import './style/user-profile.css';
+import './style/user-wishlist.css';
 import AppFunction from './controller/app-function';
 
 function App() {

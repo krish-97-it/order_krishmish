@@ -13,6 +13,8 @@ import MyProfile from "../pages/user-profile";
 import Costant_Variables from "./constant-variables";
 import Errorpage from "../pages/404-page";
 import Swal from "sweetalert2";
+import WishListPage from "../pages/user-wishlist";
+import OrderHistoryPage from "../pages/user-order-history";
 
 export default function AppFunction(){
 
@@ -26,8 +28,6 @@ export default function AppFunction(){
     const [loadUserData, setUserData]               =   useState([]);
     const [loginErrMssg, setLoginErrMssg]           =   useState('');
     const [userEmailId, updateuserEmailId]          =   useState('');
-    const [currentUrl, updateCurrentUrl]            =   useState('');
-    const urlPath                                   =   window.location.href ;
 
     const APIUrls                                   =   {
         "fetchFoodMenuAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getFoodMenu',
@@ -62,15 +62,8 @@ export default function AppFunction(){
     useEffect(() => {
         loadCuisineData();
         checkUserLogedIn();
-        getCurrentPath(urlPath);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-
-    function getCurrentPath(path){
-        const url_Path = path? path:window.location.href
-        updateCurrentUrl(url_Path);
-    }
 
     // Ligin Form Modal slide switch functionality
     const [displayFirstSlide, setDisplayFirstSlide]     = useState('show');
@@ -385,7 +378,6 @@ export default function AppFunction(){
 
     // Fav Item List / Wish list Functionality
     const [favouriteItems, setFavouriteItems]   =   useState(fetchFavouriteItemsFromLocalStorage());
-
     
     function fetchFavouriteItemsFromLocalStorage(){
         let favItemStringFromLocalStorage   = localStorage.getItem("favouriteItems");
@@ -474,12 +466,10 @@ export default function AppFunction(){
     let convertFavItemsToStringData = JSON.stringify(favouriteItems);
     localStorage.setItem("favouriteItems", convertFavItemsToStringData);
 
-    // localStorage.setItem("currentPageUrl", window.location.href);
-    // updateCurrentUrl(localStorage.getItem("currentPageUrl"));
 
     return (
         <Router>
-            <Navbar searchbar="false" totalCartItem={cartItem.length} showLoginModal={showLoginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} isUserLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} loadUserDataFunction={loadUserDataFunction} loadUserData={loadUserData} signOutUser={signOutUser} loginErrMssg={loginErrMssg} userEmailId={userEmailId} getCurrentPath={getCurrentPath} />
+            <Navbar searchbar="false" totalCartItem={cartItem.length} showLoginModal={showLoginModal} closeLoginModal={closeLoginModal} openLoginModal={openLoginModal} isUserLoggedIn={userLoggedIn} formNextSlide={formNextSlide} formPrevSlide={formPrevSlide} displayFirstSlide={displayFirstSlide} displaySecondSlide={displaySecondSlide} loadUserDataFunction={loadUserDataFunction} loadUserData={loadUserData} signOutUser={signOutUser} loginErrMssg={loginErrMssg} userEmailId={userEmailId}/>
             <SearchBar searchItem = {searchItem} getSearchInput = {getSearchInput} clearInput = {clearInput} getInputCuisine={ getInputCuisine } getFilteredItemList={getFilteredItemList}/>
             <Routes>
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName} randomComboItemList={randomComboItemList}/>}/>
@@ -487,7 +477,9 @@ export default function AppFunction(){
                 <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
-                <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} addToFavourite={addToFavourite} favouriteItems={favouriteItems} addToCartFunction={addItemToCart} addedCartItem = {cartItem} currentUrl={currentUrl} />} />
+                <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} addToFavourite={addToFavourite} favouriteItems={favouriteItems} addToCartFunction={addItemToCart} addedCartItem = {cartItem} />} />
+                <Route exact path="/myprofile/wishlist" element={<WishListPage addToCartFunction={addItemToCart} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={favouriteItems.length} />} />
+                <Route exact path="/myprofile/order-history" element={<OrderHistoryPage/>} />
                 <Route exact path="*" element={<Errorpage />} />
             </Routes>
             <Footer/>
