@@ -18,9 +18,7 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
     const sendOtpApiUrl                         = Costant_Variables.SERVER_BASE_URL+'/sendotp';
     const verifyOtpApiUrl                       = Costant_Variables.SERVER_BASE_URL+'/verifyotp';
 
-    const [loadingMssg, setLoadingMssg]         = useState("");
     const [resendOtpTxt, setResendOtpTxt]       = useState("");
-    const [msgStyle, setMsgStyle]               = useState("success");
     let [seconds, setSeconds]                   = useState(59);
 
     function otpInputChange(e){
@@ -132,7 +130,6 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
 
     const generateMobileOtp = async (e)=>{
         e.preventDefault();
-        setLoadingMssg("");
         const formData      = {
             email    : emailId,
             usertype : 'existing-user',
@@ -149,8 +146,6 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                 (response) => {
                     if(response.data.success === true){
                         updateLoginEmailErr({...loginEmailErr, err_mssg: "OTP is sent to the given email id", isValid: "valid"});
-                        // setLoadingMssg("OTP is sent to the given email id");
-                        // setMsgStyle("success");
                         let resendTimer = setInterval(function(){
                             let time = seconds--;
                             if(time > 0){
@@ -163,7 +158,6 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                         setOtpBox('show');
                         setResendButton()
                     }else{
-                        // setLoadingMssg("");
                         updateLoginEmailErr({...loginEmailErr, err_mssg: "", isValid: "invalid"});
                         setOtpBox('hide');
                         document.getElementById("getOtpBtn").disabled = false;
@@ -236,7 +230,6 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                                             }
                                         </div>
                                     }
-                                    {/* <p style={{fontWeight:"600", textAlign:"left", marginBottom:"0px"}} error-mssg-style={msgStyle}>{loadingMssg}</p> */}
                                 </div>
                                 <div className="col-sm-12 otp-box-section" show-otp-box={otpBox} style={{padding:"0px"}}>
                                     <h6 style={{textAlign:"left", marginBottom:"5px", fontWeight:"400"}}>Otp<span style={{color:"red"}}>*</span></h6>   
