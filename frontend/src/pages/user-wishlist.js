@@ -2,7 +2,7 @@ import React from "react";
 import WishList from "../components/wishlist";
 import GoToTop from "../components/go-to-top";
 
-const WishListPage = ({addToCartFunction, favouriteItems, addToFavourite, showItems}) => {
+const WishListPage = ({addToCartFunction, favouriteItems, addToFavourite, showItems, parentClass}) => {
     return(
         <div className="app-body">
             <div className="main-content mb-3" style={{marginTop:"61px"}}>
@@ -18,8 +18,8 @@ const WishListPage = ({addToCartFunction, favouriteItems, addToFavourite, showIt
                 <div className="container-fluid mt-3">
                     <h5 className="gradient-bg fav-dish-heading">Favourite Dishes</h5>
                 </div>
-                <div className="container">
-                    <WishList addToCartFunction={addToCartFunction} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={showItems}/>
+                <div className="container mt-3">
+                    <WishList addToCartFunction={addToCartFunction} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={showItems} parentClass={parentClass}/>
                 </div>
                 <GoToTop/>
             </div>
