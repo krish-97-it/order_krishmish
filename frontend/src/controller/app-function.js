@@ -478,7 +478,7 @@ export default function AppFunction(){
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
                 <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} addToFavourite={addToFavourite} favouriteItems={favouriteItems} addToCartFunction={addItemToCart} addedCartItem = {cartItem} />} />
-                <Route exact path="/myprofile/wishlist" element={<WishListPage addToCartFunction={addItemToCart} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={favouriteItems.length} />} />
+                <Route exact path="/myprofile/wishlist" element={<WishListPage addToCartFunction={addItemToCart} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={favouriteItems.length} parentClass={"wishlist-page-section"} />} />
                 <Route exact path="/myprofile/order-history" element={<OrderHistoryPage/>} />
                 <Route exact path="*" element={<Errorpage />} />
             </Routes>
