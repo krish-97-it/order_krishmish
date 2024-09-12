@@ -119,7 +119,7 @@ a.nav-link{
     position: fixed;
     z-index: 11;
     width: 100%;
-    background-image: linear-gradient(to right, #753A0D 0%, #000000 50%, #005842 100%);
+    /* background-image: linear-gradient(to right, #753A0D 0%, #000000 50%, #005842 100%); */
     margin-top: -57px;
 }
 .search-form-container{
@@ -128,6 +128,7 @@ a.nav-link{
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: rgba(0, 0, 0, 0.6);
+    background-image: linear-gradient(to right, #ca4a4adb, #6600ffa6);
 }
 .search-form{
     display: flex;

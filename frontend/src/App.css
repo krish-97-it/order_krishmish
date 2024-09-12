@@ -91,6 +91,12 @@ body{
   justify-content: center;
   flex-direction: column;
   margin-bottom: 50px;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
 }
 .error-page-msg-section .btn-primary{
   max-width: 350px;
