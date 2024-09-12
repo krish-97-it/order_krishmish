@@ -675,7 +675,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
                                 </h2>
                                 <div id="myWishList" className="accordion-collapse collapse" data-bs-parent="#profileAccordation">
                                     <div className="accordion-body">
-                                        <WishList addToCartFunction={addToCartFunction} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={6}/>
+                                        <WishList addToCartFunction={addToCartFunction} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={6} parentClass={"profile-wishlist-section"}/>
                                         <div>
                                             <NavLink className="btn btn-primary" to="/myprofile/wishlist">View All</NavLink>
                                         </div>

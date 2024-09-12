@@ -1,3 +1,7 @@
+.profile-wishlist-section .wishlist-item{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
 .wishlist-banner-section{
     background: linear-gradient(180deg, black, #202020, #393939, #1e1e1e, black);
 }

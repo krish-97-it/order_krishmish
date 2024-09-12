@@ -1,8 +1,8 @@
 import React from "react";
 
-const WishList = ({addToCartFunction, favouriteItems, addToFavourite, showItems}) =>{
+const WishList = ({addToCartFunction, favouriteItems, addToFavourite, showItems, parentClass}) =>{
     return(
-        <div className="row">
+        <div className={(parentClass === "profile-wishlist-section")? "row profile-wishlist-section":"row wishlist-page-section"}>
             {
                 (favouriteItems.length) > 0 ? 
                 <>
@@ -12,7 +12,7 @@ const WishList = ({addToCartFunction, favouriteItems, addToFavourite, showItems}
                                 
                                 (index<showItems)?
                                     
-                                <div className="col-md-6 col-sm-12" style={{padding:"0px 5px"}} key={"item-"+index}>
+                                <div className="col-md-6 col-sm-12 wishlist-item" key={"item-"+index}>
                                     <div className="favourite-item-card">
                                         <div className="fav-item-img">
                                             <img src={item.product.image.img_one} alt="food"/>
@@ -20,7 +20,7 @@ const WishList = ({addToCartFunction, favouriteItems, addToFavourite, showItems}
                                         <div className="item-body-description profile-page-item-body-description" style={{position:"relative"}}>
                                             <h5>{(item.product.name).length < 28? item.product.name : (item.product.name).substring(0,30)+'...'}</h5>
                                             <div style={{display:"flex", justifyContent:"space-between", alignItems:"start"}}>
-                                                <p className="price-section" style={{textAlign:"left"}}>Price: ₹{" "+item.product.price}</p>
+                                                <p className="price-section" style={{textAlign:"left"}}>Price: ₹{item.product.price}</p>
                                                 <button className="heart-btn-style profile-page-heart-btn" onClick={()=>addToFavourite(item.product)}>
                                                     <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"20px"}}></i>
                                                 </button>
