@@ -44,3 +44,15 @@
 .fav-item-cart-btn:active{
     background-image: linear-gradient(to right, #3c4caf, #682ac5);
 }
+
+@media(min-width:768px) and (max-width:991.98px){
+    .fav-item-img img{
+        width: 130px;
+    }
+}
+
+@media(max-width:483.98px){
+    .fav-item-img img{
+        width: 125px;
+    }
+}
