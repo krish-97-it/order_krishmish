@@ -34,6 +34,8 @@ export default function AppFunction(){
         "fetchUserDataAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getUserData',
         "saveFavItemsAPIUrl"  : Costant_Variables.SERVER_BASE_URL+'/savewishlist',
         "fetchFavItemsAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getwishlist',
+        "fetchCartItemApiUrl" : Costant_Variables.SERVER_BASE_URL+'/getcartitems',
+        "saveCartItemApiUrl"  : Costant_Variables.SERVER_BASE_URL+'/savecartitems',
     };
 
     function loadCuisineData(){
@@ -110,6 +112,7 @@ export default function AppFunction(){
             if (result.isConfirmed) {
                 localStorage.setItem("krishmish@regUserId", "");
                 localStorage.setItem("favouriteItems", JSON.stringify([]));
+                localStorage.setItem("cartData", JSON.stringify([]));
                 window.location.href = websiteBaseUrl;
                 // window.location.reload();
             } else{
@@ -134,9 +137,10 @@ export default function AppFunction(){
                     if(resData.length > 0){
                         setLoginErrMssg("Welcome Back!!");
                         setUserData(resData[0]);
-                        fetchFavouriteItemsFromDb(resData[0]._id);
                         setUserLoggedIn('true');
                         updateShowLoginModal('hide');
+                        fetchFavouriteItemsFromDb(resData[0]._id);
+                        fetchCartDataFromDb(resData[0]._id);
                         localStorage.setItem("krishmish@regUserId", "krishmish@"+resData[0].email);
                     }else{
                         updateShowLoginModal("show");
@@ -320,6 +324,57 @@ export default function AppFunction(){
         }
     }
 
+    // Fetch Cart Data From Db
+    // Usage - once a user logged in this function will be called with user id to update cartItem with db and local data by combing these two
+    function fetchCartDataFromDb(user_id){
+        const formData  =   {
+            userid   : user_id,
+        }
+        const config = {
+            headers: { 'Content-Type': 'application/json'}
+        }
+        axios.post(APIUrls.fetchCartItemApiUrl, formData, {config})         // Api is called to fetch data from db
+        .then(
+            (response) => {
+                if(response.data.success === true){             // If response status is success
+                    const resData = response.data.data;         // Now response data consists of data of cart of the given user_id - id, user_id, cart_items etc
+                    const cart_items = resData[0].cart_items    // we require only cart_items
+                    if(cart_items.length > 0){                  // if cart_items is not empty , else empty cart
+                        if(cartItem.length > 0){                // if cartItem - local data is not empty, then proceed to compare and merge local data and db data
+                            // let mergedArray = cartItem.map(item => item);
+                            let mergedArray = [...cart_items];    // store db data in a new array first
+                            for(let i = 0; i<cartItem.length; i++){     // loop all local data
+                                const findProduct = mergedArray.find(item => item.product._id === cartItem[i].product._id);  // compare id of items from db and local data return undefined if not match
+                                if(!findProduct){
+                                    mergedArray.push(cartItem[i]); // add local item from local data that is not present in db
+                                }else{
+                                    console.log("Element already present");
+                                }
+                            }
+
+                            // update cartItem with merged data
+                            setCartItem(mergedArray);
+
+                        }else{
+                            // no local cartItem so, set db data on cartItem
+                            setCartItem(cart_items);
+                        }
+                    }else{
+                        // console.log("got empty cart from db")
+                    }
+                }else{
+                    // console.log("failed to fetch db data from db");
+                }
+                // trigger function to update cart items in db
+                setTimeout(function(){
+                    saveCartItemsToDb(user_id);
+                }, 3000)
+            }
+        ).catch(error => {
+            console.log(error)
+        });
+    }
+
     const addItemToCart = (Itemdata) => {
         const findProduct = cartItem.find(item => item.product._id === Itemdata._id);
         if (findProduct) {
@@ -332,12 +387,24 @@ export default function AppFunction(){
         } else {
             setCartItem([...cartItem, {product: Itemdata, item_quantity: 1}]);
         }
+
+        if(userLoggedIn === 'true'){
+            setTimeout(function(){
+                saveCartItemsToDb(loadUserData._id);
+            }, 3000)
+        }
     }
 
     // delete a item from cart
     const deleteItemToCart = (Itemdata) => {
         const updated_list = cartItem.filter(item => item.product._id !== Itemdata.product._id)
         setCartItem(updated_list);
+
+        if(userLoggedIn === 'true'){
+            setTimeout(function(){
+                saveCartItemsToDb(loadUserData._id);
+            }, 3000)
+        }
     }
 
     // Evaluate Total Cost and helps to generate bill
@@ -359,6 +426,12 @@ export default function AppFunction(){
             data
         );
         setCartItem(updatedCart);
+
+        if(userLoggedIn === 'true'){
+            setTimeout(function(){
+                saveCartItemsToDb(loadUserData._id);
+            }, 3000)
+        }
     }
     const decreaseItemQuantity = (item) => {
         const updatedCart = cartItem.map((data) =>
@@ -369,6 +442,41 @@ export default function AppFunction(){
             data
         );
         setCartItem(updatedCart);
+
+        if(userLoggedIn === 'true'){
+            setTimeout(function(){
+                saveCartItemsToDb(loadUserData._id);
+            }, 3000)
+        }
+    }
+
+    function saveCartItemsToDb(user_id){
+        const cartItemsFromLocalStorage  =  fetchCartItemDataFromLocalStorage();
+
+        const formData  =   {
+            userid      : user_id,
+            cartitems   : cartItemsFromLocalStorage
+        }
+        const config = {
+            headers: { 'Content-Type': 'application/json'}
+        }
+        axios.post(APIUrls.saveCartItemApiUrl, formData, {config})
+        .then(
+            (response) => {
+                if(response.data.success === true){
+                    const resData = response.data.data;
+                    if(resData.length > 0){
+                        console.log("cart updated successfully");
+                    }else{
+                        console.log("cart is empty");
+                    }
+                }else{
+                    console.log("Faied to save cart items")
+                }
+            }
+        ).catch(error => {
+            console.log(error);
+        });
     }
 
     // store cartItems to local storage, so that on page load Ites in cart are not deleted
@@ -459,7 +567,7 @@ export default function AppFunction(){
                 }
             }
         ).catch(error => {
-            
+            console.log(error);
         });
     }
 
@@ -478,8 +586,8 @@ export default function AppFunction(){
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} />} />
                 <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} addToFavourite={addToFavourite} favouriteItems={favouriteItems} addToCartFunction={addItemToCart} addedCartItem = {cartItem} />} />
-                <Route exact path="/myprofile/wishlist" element={<WishListPage addToCartFunction={addItemToCart} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={favouriteItems.length} parentClass={"wishlist-page-section"} />} />
-                <Route exact path="/myprofile/order-history" element={<OrderHistoryPage/>} />
+                <Route exact path="/myprofile/wishlist" element={<WishListPage addToCartFunction={addItemToCart} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={favouriteItems.length} parentClass={"wishlist-page-section"} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn}/>} />
+                <Route exact path="/myprofile/order-history" element={<OrderHistoryPage userLoggedIn={userLoggedIn}/>}/>
                 <Route exact path="*" element={<Errorpage />} />
             </Routes>
             <Footer/>
