@@ -110,7 +110,7 @@ const Navbar = (props) => {
                                                 {/* <li><button className="dropdown-item" type="button" onClick={props.openUserProfile}>Profile</button></li> */}
                                                 <li><NavLink className="dropdown-item-custom-style" id="dropdown-one" to="/myprofile" onClick={(e)=>{highlightActiveItem(e)}} dropdown-item-active={(isActive === 'dropdown-one')?"true":"false"}>Profile</NavLink></li>
                                                 <li><NavLink className="dropdown-item-custom-style" id="dropdown-two" to="/myprofile/wishlist" onClick={(e)=>{highlightActiveItem(e)}} dropdown-item-active={(isActive === 'dropdown-two')?"true":"false"}>Favourites</NavLink></li>
-                                                <li><NavLink className="dropdown-item-custom-style" id="dropdown-three" to="/myprofile/order-history" onClick={(e)=>{highlightActiveItem(e)}} dropdown-item-active={(isActive === 'dropdown-three')?"true":"false"}>Order Hitory</NavLink></li>   
+                                                <li><NavLink className="dropdown-item-custom-style" id="dropdown-three" to="/myprofile/order-history" onClick={(e)=>{highlightActiveItem(e)}} dropdown-item-active={(isActive === 'dropdown-three')?"true":"false"}>Order History</NavLink></li>   
                                                 <li><button className="dropdown-item" type="button" onClick={props.signOutUser}>Sign Out</button></li>
                                                 <li style={{display:"flex", paddingLeft:"15px", paddingTop:"5px"}}>
                                                     <span>Dark Mode: &nbsp;</span>

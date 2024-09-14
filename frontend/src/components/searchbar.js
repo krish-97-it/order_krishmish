@@ -10,7 +10,10 @@ export default function SearchBar({searchItem, getSearchInput, clearInput, getIn
 
     function disableOnSubmit(e){
         e.preventDefault();
-        document.getElementById("showAllProducts").scrollIntoView({ behavior: "smooth" });
+        document.querySelector('#searchInput').blur();
+        setTimeout(function(){
+            document.getElementById("showAllProducts").scrollIntoView({ behavior: "smooth" });
+        },100);
     }
 
     function onClickSearchBar(e){
