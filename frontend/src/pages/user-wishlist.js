@@ -26,9 +26,14 @@ const WishListPage = ({addToCartFunction, favouriteItems, addToFavourite, showIt
                     :
                     <div className="container no-data-found">
                         <h3>It seems like, You have not added any food in your favourites or wishlist. Log in Now and order your favourite dishes</h3>
-                        <div className="mt-2">
-                            <button to="/" type="button" className="btn btn-primary" onClick={openLoginModal}>Sign In</button>
-                        </div>
+                        {
+                            (userLoggedIn !== 'true')?
+                            <div className="mt-2">
+                                <button to="/" type="button" className="btn btn-primary" onClick={openLoginModal}>Sign In</button>
+                            </div>
+                            :
+                            <></>
+                        }
                     </div>
                 }
                 <GoToTop/>

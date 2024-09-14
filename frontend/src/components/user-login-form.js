@@ -344,7 +344,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                     }else{
                         updateEmailIdErr({...emailIdErr, err_mssg: "", isValid: "invalid"});
                         setOtpBox('hide');
-                        document.getElementById("newUserGetOtpBtn").disabled = true;
+                        document.getElementById("newUserGetOtpBtn").disabled = false;
                         Swal.fire(
                             {
                                 title: "Failed!",
@@ -384,7 +384,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                         if(response.data.success === true){
                             setValidEmailId('true');
                             setOtpBox('hide');
-                            resendOtpTxt('hide');
+                            setResendOtpTxt('hide');
                             updateEmailIdErr({...emailIdErr, err_mssg: "OTP verfied Successfully!", isValid: "valid"})
                         }else{
                             updateEmailIdErr({...emailIdErr, err_mssg: "OTP Verification Failed!", isValid: "invalid"})
@@ -495,20 +495,6 @@ const LoginForm = ({loadUserDataFunction})=> {
                     </div>
                 }
             </div>
-            <div className="col-md-6 col-sm-12 new-form-field">
-                <label htmlFor="phoneNum" className="form-label">Phone no.<span style={{color:"red"}}>*</span></label>
-                <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={newUserData.phoneNum} onChange={(e)=>handlenewUserInput(e)} form-valid={phoneNumErr.isValid} maxLength="10"/>
-                {
-                    (phoneNumErr.err_mssg !== 'valid')?
-                    <div className="invalid-feedback">
-                        {phoneNumErr.err_mssg}
-                    </div>
-                    :
-                    <div className="valid-feedback">
-                        {phoneNumErr.err_mssg}
-                    </div>
-                }
-            </div>
             <div className="col-md-6 col-sm-12 new-form-field" style={{position:"relative"}}>
                 <label htmlFor="emailId" className="form-label">Email<span style={{color:"red"}}>*</span></label>
                 <input type="text" className="form-control" id="emailId" name="emailId" placeholder="Enter your email..." value={newUserData.emailId} onChange={(e)=>handlenewUserInput(e)} form-valid={emailIdErr.isValid} style={{paddingRight:"85px"}}/>
@@ -534,6 +520,20 @@ const LoginForm = ({loadUserDataFunction})=> {
                     </div>
                 </div>
                 <span style={{textAlign:"left", fontSize:"12px"}} new-user-show-otp-box={otpBox} error-mssg-style="error" new-user-resend-otp-text={resendOtpTxt}>Resend OTP in {seconds} sec...</span>
+            </div>
+            <div className="col-md-6 col-sm-12 new-form-field">
+                <label htmlFor="phoneNum" className="form-label">Phone no.<span style={{color:"red"}}>*</span></label>
+                <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={newUserData.phoneNum} onChange={(e)=>handlenewUserInput(e)} form-valid={phoneNumErr.isValid} maxLength="10"/>
+                {
+                    (phoneNumErr.err_mssg !== 'valid')?
+                    <div className="invalid-feedback">
+                        {phoneNumErr.err_mssg}
+                    </div>
+                    :
+                    <div className="valid-feedback">
+                        {phoneNumErr.err_mssg}
+                    </div>
+                }
             </div>
             <div className="col-md-6 col-sm-12 new-form-field">
                 <label htmlFor="state" className="form-label">State<span style={{color:"red"}}>*</span></label>
