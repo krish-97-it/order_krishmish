@@ -21,31 +21,31 @@ export default function Foodcard({getHomeCuisineName, randomComboItemList}){
         <></>
     );
     return(
-        <div className="container-fluid mt-3 mb-3">
-            <div className="food-category-container mt-5">
+        <div className="container-fluid mt-0 mb-3">
+            <div className="food-category-container mt-4">
                 <h3 className="gradient-bg">Iconic Multi Cuisine</h3>
                 <div className="food-category-section">
                     <div className="food-card mb-sm-0">
                         <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("indian")}} value="indian">
                             <img src="https://img.perceptpixel.com/pykhlszs/indian-cuisine.webp" className="img-w-100 border-rounded food-cat-card-img" alt="Food Category"/>
-                            <div className="card-name">
-                                <h5>Indian</h5>
+                            <div className="card-name mt-1">
+                                <h5 className="cuisine-name-heading">Indian</h5>
                             </div>
                         </Link>
                     </div>
                     <div className="food-card mb-sm-0">
                     <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("chinese")}} value="chinese">
                         <img src="https://img.perceptpixel.com/pykhlszs/chinese-cuisine.webp" className="img-w-100 border-rounded food-cat-card-img" alt="Food Category"/>
-                        <div className="card-name">
-                            <h5>chinese</h5>
+                        <div className="card-name mt-1">
+                            <h5 className="cuisine-name-heading">chinese</h5>
                         </div>
                     </Link>
                     </div>
                     <div className="food-card mb-sm-0">
                         <Link to="/cuisine" className="a-tag-style" onClick={(e)=>{getHomeCuisineName("italian")}} value="italian">
                             <img src="https://img.perceptpixel.com/pykhlszs/italian-cuisine.webp" className="img-w-100 border-rounded food-cat-card-img" alt="Food Category"/>
-                            <div className="card-name">
-                                <h5>Italian</h5>
+                            <div className="card-name mt-1">
+                                <h5 className="cuisine-name-heading">Italian</h5>
                             </div>
                         </Link>
                     </div>
@@ -143,7 +143,7 @@ export default function Foodcard({getHomeCuisineName, randomComboItemList}){
                 </div>
             </div>
 
-            <div className="mt-5"><h3 className="gradient-bg">Customer Reviews</h3></div>
+            {/* <div className="mt-5"><h3 className="gradient-bg">Customer Reviews</h3></div> */}
         </div>
     )
 }

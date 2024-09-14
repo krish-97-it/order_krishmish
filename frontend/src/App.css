@@ -37,15 +37,42 @@ body{
 }
 
 [dark-theme="on"] .top-pics-item-name .a-tag-style{
-  color: black !important;
+  color: rgb(255, 255, 255) !important;
 }
 
 [dark-theme="on"] .custom-card-width{
   box-shadow: 7px 7px 20px 0px #5ec9ff66 !important;
 }
 
+[dark-theme="on"] .toast-header-section button {
+  border: 1px solid orange;
+}
+
 [dark-theme="on"] .top-pics-section {
   box-shadow: 7px 7px 20px 0px #5ec9ff66 !important;
+  background: transparent;
+  border-left: 10px solid black;
+  border-right: 10px solid black;
+}
+
+[dark-theme="on"] .all-item-card{
+  background-color: #000000;
+  border: 1px solid rgb(119, 119, 119);
+}
+[dark-theme="on"] .all-item-card h5{
+  color: white;
+}
+[dark-theme="on"] .all-item-card .item-description{
+  color: white !important;
+}
+
+[dark-theme="on"] .combo-item-card{
+  background-color: #000000;
+  border: 1px solid grey;
+}
+
+[dark-theme="on"] .combo-item-card .card-title{
+  color: white;
 }
 
 [dark-theme="on"] .billing-details-secton{
@@ -65,6 +92,11 @@ body{
 [dark-theme="on"] .combo-carousel-arrow{
   color: #ffffff !important;
 }
+
+[dark-theme="on"] .cuisine-name-heading{
+  color: #000000 !important;
+}
+
 [dark-theme="on"] .sort-by-btn{
   color: rgb(231, 157, 255) !important;
 }
@@ -96,7 +128,6 @@ body{
   bottom: 0;
   left: 0;
   right: 0;
-
 }
 .error-page-msg-section .btn-primary{
   max-width: 350px;

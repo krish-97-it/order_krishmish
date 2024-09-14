@@ -10,7 +10,7 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 30px;
 }
 .added-item-txt{
@@ -28,7 +28,7 @@
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 24px 20px -15px #7a3e864f;
-    max-height: 540px;
+    max-height: 600px;
     overflow-y: hidden;
     overflow: scroll;
 }
@@ -107,6 +107,7 @@
     flex: 2 1;
     justify-content: center;
     box-shadow: 0 24px 20px -15px #7a3e864f;
+    border: 1px solid #e1e1e1;
 }
 .total-item-count{
     display: flex;
@@ -138,10 +139,16 @@ hr{
     .item-body-description h5{
         font-size: 14px !important;
     }
+    .cart-item-billing-section {
+        gap: 10px;
+    }
 }
 @media(max-width:767.98px){
     .cart-item-billing-section{
         flex-direction:column;
+    }
+    .cart-item-billing-section {
+        gap: 25px;
     }
 }
 @media(max-width:483.98px){
