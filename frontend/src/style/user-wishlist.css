@@ -3,11 +3,26 @@
     padding-right: 5px !important;
 }
 .wishlist-banner-section{
-    background: linear-gradient(180deg, black, #202020, #393939, #1e1e1e, black);
+    /* background: linear-gradient(180deg, black, #202020, #393939, #1e1e1e, black); */
+    background-image: url('https://img.perceptpixel.com/pykhlszs/fav_blur_bg.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.wishlist-banner-section img{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
 .fav-dish-heading{
     font-family: monospace;
 }
+
+.no-data-found{
+    color: rgb(148, 148, 148);
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+}
+
 /* Favourite list Css */
 .favourite-item-card{
     display: flex;
@@ -45,14 +60,42 @@
     background-image: linear-gradient(to right, #3c4caf, #682ac5);
 }
 
+@media(min-width:992px){
+    .no-data-found{
+        min-height: calc(100vh - 495px);
+    }
+}
 @media(min-width:768px) and (max-width:991.98px){
     .fav-item-img img{
         width: 130px;
     }
+    .no-data-found{
+        min-height: calc(100vh - 402px);
+    }
 }
-
+@media(max-width:767.98px){
+    .no-data-found{
+        min-height: calc(100vh - 338px);
+    }
+}
+@media(max-width:699.98px){
+    .no-data-found{
+        min-height: calc(100vh - 470px);
+    }
+}
 @media(max-width:483.98px){
     .fav-item-img img{
         width: 125px;
+    }
+    .no-data-found{
+        min-height: calc(100vh - 370px);
+    }
+}
+
+@media(max-width: 383.98px){
+    @media(max-width:483.98px){
+        .no-data-found{
+            min-height: calc(100vh - 330px);
+        }
     }
 }

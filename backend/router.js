@@ -5,6 +5,7 @@ const foodMenuController   =   require('./db_controllers/foodmenuController');
 const userDataController   =   require('./db_controllers/userdataController');
 const emailOtpController   =   require('./db_controllers/emailOtpController');
 const wishlistController   =   require('./db_controllers/wishlistController');
+const userCartController   =   require('./db_controllers/userCartController');
 
 
 
@@ -24,6 +25,10 @@ router.post('/verifyotp', emailOtpController.verifyEmailOtp);
 //Wishlist save and fetch apis
 router.post('/getwishlist', wishlistController.getWishList);
 router.post('/savewishlist', wishlistController.updateWishList);
+
+//Cart Data save and fetch apis
+router.post('/getcartitems', userCartController.getCartData);
+router.post('/savecartitems', userCartController.updateCartData);
 
 
 module.exports = router;
