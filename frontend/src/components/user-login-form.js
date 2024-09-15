@@ -355,7 +355,9 @@ const LoginForm = ({loadUserDataFunction})=> {
                     }
                 }
             ).catch(error => {
-                console.log(error);
+                // console.log(error);
+                updateEmailIdErr({...emailIdErr, err_mssg: "Something Went wrong!", isValid: "invalid"});
+                document.getElementById("newUserGetOtpBtn").disabled = false;
             });
 
         }else{

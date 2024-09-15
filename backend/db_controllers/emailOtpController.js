@@ -20,7 +20,7 @@ const mail_html       = '<div style="font-family: Helvetica,Arial,sans-serif;min
                             '<div style="margin:50px auto;width:70%;padding:20px 0">'+
                                 '<div style="border-bottom:2px solid #eee">'+
                                     '<div style="background-image: linear-gradient(to right, #ffbc87 0%, #f3f45d 50%, #2a8e75 100%); padding-left: 10px; margin-bottom: 5px;">'+
-                                        '<a href="https://krishmish-order.onrender.com/" style="background-color:black; color:white !important; text-decoration:none !important; font-size: 18px; font-weight:600">KrishMish</a>'+
+                                        '<a href="https://krishmish-order.onrender.com/" style="background-color:black; color:white !important; text-decoration:none !important; font-size: 18px; font-weight:600; padding:2px 8px; border-radius:6px">KrishMish</a>'+
                                     '</div>'+
                                 '</div>'+
                                 '<div style="padding-left:10px; padding-right: 10px;">'+
