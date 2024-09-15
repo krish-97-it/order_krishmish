@@ -171,7 +171,9 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                     }
                 }
             ).catch(error => {
-                console.log(error);
+                // console.log(error);
+                updateLoginEmailErr({...loginEmailErr, err_mssg: "Something Went wrong!", isValid: "invalid"});
+                document.getElementById("getOtpBtn").disabled = false;
             });
 
         }else{
