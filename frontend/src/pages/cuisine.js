@@ -57,7 +57,7 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
     }
 
     return(
-        <div className="app-body">
+        <div className="app-body" page-transition="on">
             <div className="main-content" style={{position:"relative",marginTop:"118px"}}>
                 <h3 className="gradient-bg no-border-radius mb-0">What's on your mind?</h3>
                 <div className="select-cuisine-bg">

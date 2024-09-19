@@ -56,6 +56,7 @@ exports.findAndUpdateUser   = async(req,res)=>{
         email       :   req.body.email,
         phone       :   req.body.phone,
         state       :   req.body.state,
+        district    :   req.body.district,
         city        :   req.body.city,
         pincode     :   req.body.pincode,
         profileimg  :   req.body.profileimg,

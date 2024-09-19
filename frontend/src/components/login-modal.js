@@ -92,7 +92,7 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                     (response) => {
                         if(response.data.success === true){
                             loadUserDataFunction(emailId);
-                            updateLoginEmailErr({...loginEmailErr, err_mssg: "OTP verfied Successfully!", isValid: "valid"})
+                            updateLoginEmailErr({...loginEmailErr, err_mssg: "OTP verfied Successfully!", isValid: "valid"});
                             Swal.fire(
                                 {
                                     title: "Welcome Back!",
@@ -266,7 +266,7 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
                             <button type="button" className="login-modal-close" onClick={closeModal}>X</button>
                         </div>
                         <div className="modal-body">
-                            <NewLoginForm loadUserDataFunction={loadUserDataFunction} generateMobileOtp={generateMobileOtp}/>
+                            <NewLoginForm loadUserDataFunction={loadUserDataFunction}/>
                         </div>
                         <div className="modal-footer">
                             {/* <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button> */}

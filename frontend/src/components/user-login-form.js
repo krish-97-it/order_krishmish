@@ -27,6 +27,7 @@ const LoginForm = ({loadUserDataFunction})=> {
         emailId: '',
         state: '',
         city: '',
+        district: '',
         pinCode: '',
 
     });
@@ -40,6 +41,7 @@ const LoginForm = ({loadUserDataFunction})=> {
     const [phoneNumErr, updatePhoneNumErr]      = useState({});
     const [stateErr, updateStateErr]            = useState({});
     const [cityErr, updateCityErr]              = useState({});
+    const [districtErr, updateDistErr]          = useState({});
     const [pinCodeErr, updatePinCodeErr]        = useState({});
 
     const [loadingMssg, setLoadingMssg]         = useState("");
@@ -122,6 +124,8 @@ const LoginForm = ({loadUserDataFunction})=> {
                 updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "invalid"})
             }else{
                 updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "valid"})
+                let dist = "district";
+                setNewUserData({...newUserData, [ele] : ele_val, [dist]:''});
 
             }
         }else if(ele === 'city'){
@@ -131,6 +135,15 @@ const LoginForm = ({loadUserDataFunction})=> {
                 updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "invalid"})
             }else{
                 updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "optional"})
+
+            }
+        }else if(ele === 'district'){
+            let isDistrictValid = ValidationFunctions.requiredValidation("District",ele_val);
+
+            if(isDistrictValid !== 'valid'){
+                updateDistErr({...districtErr, err_mssg: isDistrictValid, isValid: "invalid"})
+            }else{
+                updateDistErr({...districtErr, err_mssg: isDistrictValid, isValid: "valid"})
 
             }
         }else if(ele === 'pinCode'){
@@ -207,6 +220,13 @@ const LoginForm = ({loadUserDataFunction})=> {
             updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "valid"})
         }
 
+        let isDistrictValid = ValidationFunctions.requiredValidation("District",data.district);
+        if(isDistrictValid !== 'valid'){
+            updateDistErr({...districtErr, err_mssg: isDistrictValid, isValid: "invalid"})
+        }else{
+            updateDistErr({...districtErr, err_mssg: isDistrictValid, isValid: "valid"})
+        }
+
         let isCityValid = ValidationFunctions.cityValidation("city",data.city);
         if(isCityValid !== 'valid'){
             updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "invalid"})
@@ -222,7 +242,7 @@ const LoginForm = ({loadUserDataFunction})=> {
         }
 
 
-        if(isfirstNameValid === 'valid' && isLastNameValid === 'valid' && isNickNameValid === 'valid' && isGenderValid === 'valid' && isDobValid === 'valid' && (isEmailValid === 'valid' && isEmailVerified === 'true') && isPhoneNumValid === 'valid' && isStateValid === 'valid' && isCityValid === 'valid' && isPinCodeValid === 'valid'){
+        if(isfirstNameValid === 'valid' && isLastNameValid === 'valid' && isNickNameValid === 'valid' && isGenderValid === 'valid' && isDobValid === 'valid' && (isEmailValid === 'valid' && isEmailVerified === 'true') && isPhoneNumValid === 'valid' && isStateValid === 'valid' && isDistrictValid === 'valid' && isCityValid === 'valid' && isPinCodeValid === 'valid'){
             return true
         }else{
             return false
@@ -245,6 +265,7 @@ const LoginForm = ({loadUserDataFunction})=> {
                 phone: parseInt(newUserData.phoneNum),
                 state: newUserData.state,
                 city: newUserData.city,
+                district: newUserData.district,
                 pincode: newUserData.pinCode,
                 profileimg: dpImageLink
             };
@@ -542,9 +563,9 @@ const LoginForm = ({loadUserDataFunction})=> {
                 <select className="form-select" id="state" name="state" value={newUserData.state} onChange={(e)=>handlenewUserInput(e)} form-valid={stateErr.isValid} select-color={newUserData.state === ''?'novalue':'withvalue'}>
                     <option value="" disabled>Choose your state</option>
                     {
-                        Costant_Variables.states.map((data,index)=>{
+                        Costant_Variables.states_districts.map((data,index)=>{
                             return(
-                                <option value={data} key={index}>{data}</option>
+                                <option value={data.state} key={index}>{data.state}</option>
                             )
                         })
                     }
@@ -557,6 +578,34 @@ const LoginForm = ({loadUserDataFunction})=> {
                     :
                     <div className="valid-feedback">
                         {stateErr.err_mssg}
+                    </div>
+                }
+            </div>
+            <div className="col-md-6 col-sm-12 new-form-field">
+                <label htmlFor="district" className="form-label">District<span style={{color:"red"}}>*</span></label>
+                <select className="form-select" id="district" name="district" value={newUserData.district} onChange={(e)=>handlenewUserInput(e)} form-valid={districtErr.isValid} select-color={newUserData.district === ''?'novalue':'withvalue'}>
+                    <option value="" disabled>Choose your district</option>
+                    {
+                        Costant_Variables.states_districts.map((data,index)=>
+                            (data.state === newUserData.state)?
+                            data.districts.map((d,i)=>{
+                             return(
+                                 <option value={d} key={i}>{d}</option>
+                             )
+                            })
+                            :
+                            <></>
+                         )
+                    }
+                </select>
+                {
+                    (districtErr.err_mssg !== 'valid')?
+                    <div className="invalid-feedback">
+                        {districtErr.err_mssg}
+                    </div>
+                    :
+                    <div className="valid-feedback">
+                        {districtErr.err_mssg}
                     </div>
                 }
             </div>

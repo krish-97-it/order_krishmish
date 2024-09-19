@@ -7,7 +7,7 @@ import GoToTop from "../components/go-to-top";
 export default function CombosPage({comboItemList, getHomeCuisineName, addToCartFunction, addedCartItem, totalCartItem}){
       
     return(
-        <div className="app-body">
+        <div className="app-body" page-transition="on">
             <div className="main-content">
                 <div className="combo-banner-section">
                     <div className="container">
