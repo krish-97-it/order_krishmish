@@ -42,6 +42,9 @@ const customerSchema = new Schema(
         state:{
             type: String
         },
+        district:{
+            type: String
+        },
         city: {
             type: String
         },

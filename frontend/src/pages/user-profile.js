@@ -41,6 +41,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
         phoneNum: '',
         emailId: '',
         state: '',
+        district: '',
         city: '',
         pinCode: '',
 
@@ -56,9 +57,10 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
         updateEmailIdErr({});
         updatePhoneNumErr({});
         updateStateErr({});
+        updateDistrictErr({});
         updateCityErr({});
         updatePinCodeErr({});
-        setNewUserData({...newUserData, 'firstName' : loadUserData.firstname, 'lastName':loadUserData.lastname, 'nickName':loadUserData.nickname, 'dob':loadUserData.dob, 'gender':loadUserData.gender, 'emailId':loadUserData.email, 'phoneNum':loadUserData.phone, 'state':loadUserData.state, 'city':loadUserData.city, 'pinCode' : loadUserData.pincode});
+        setNewUserData({...newUserData, 'firstName' : loadUserData.firstname, 'lastName':loadUserData.lastname, 'nickName':loadUserData.nickname, 'dob':loadUserData.dob, 'gender':loadUserData.gender, 'emailId':loadUserData.email, 'phoneNum':loadUserData.phone, 'state':loadUserData.state, 'district':loadUserData.district, 'city':loadUserData.city, 'pinCode' : loadUserData.pincode});
     }
 
     const [dpImageLink, setDpImageLink] = useState('https://img.perceptpixel.com/pykhlszs/default_dp.webp')
@@ -76,6 +78,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
     const [emailIdErr, updateEmailIdErr]        = useState({});
     const [phoneNumErr, updatePhoneNumErr]      = useState({});
     const [stateErr, updateStateErr]            = useState({});
+    const [districtErr, updateDistrictErr]      = useState({});
     const [cityErr, updateCityErr]              = useState({});
     const [pinCodeErr, updatePinCodeErr]        = useState({});
 
@@ -155,6 +158,16 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
                 updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "invalid"})
             }else{
                 updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "valid"})
+                let dist = "district";
+                setNewUserData({...newUserData, [ele] : ele_val, [dist]:''});
+            }
+        }else if(ele === 'district'){
+            let isDistrictValid = ValidationFunctions.requiredValidation("district",ele_val);
+
+            if(isDistrictValid !== 'valid'){
+                updateDistrictErr({...districtErr, err_mssg: isDistrictValid, isValid: "invalid"})
+            }else{
+                updateDistrictErr({...districtErr, err_mssg: isDistrictValid, isValid: "valid"})
 
             }
         }else if(ele === 'city'){
@@ -231,6 +244,13 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
             updatePhoneNumErr({...phoneNumErr, err_mssg: isPhoneNumValid, isValid: "valid"})
         }
 
+        let isDistrictValid = ValidationFunctions.requiredValidation("district",data.district);
+        if(isDistrictValid !== 'valid'){
+            updateDistrictErr({...districtErr, err_mssg: isDistrictValid, isValid: "invalid"})
+        }else{
+            updateDistrictErr({...districtErr, err_mssg: isDistrictValid, isValid: "valid"})
+        }
+
         let isStateValid = ValidationFunctions.requiredValidation("State",data.state);
         if(isStateValid !== 'valid'){
             updateStateErr({...stateErr, err_mssg: isStateValid, isValid: "invalid"})
@@ -253,7 +273,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
         }
 
 
-        if(isfirstNameValid === 'valid' && isLastNameValid === 'valid' && isNickNameValid === 'valid' && isGenderValid === 'valid' && isDobValid === 'valid' && isEmailValid === 'valid' && isPhoneNumValid === 'valid' && isStateValid === 'valid' && isCityValid === 'valid' && isPinCodeValid === 'valid'){
+        if(isfirstNameValid === 'valid' && isLastNameValid === 'valid' && isNickNameValid === 'valid' && isGenderValid === 'valid' && isDobValid === 'valid' && isEmailValid === 'valid' && isPhoneNumValid === 'valid' && isStateValid === 'valid' && isDistrictValid === 'valid' && isCityValid === 'valid' && isPinCodeValid === 'valid'){
             return true
         }else{
             return false
@@ -275,6 +295,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
                 email: newUserData.emailId,
                 phone: parseInt(newUserData.phoneNum),
                 state: newUserData.state,
+                district: newUserData.district,
                 city: newUserData.city,
                 pincode: newUserData.pinCode,
                 profileimg: dpImageLink
@@ -366,7 +387,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
     }
 
     return (
-        <div className="app-body">
+        <div className="app-body" page-transition="on">
             <div className="main-content" style={{marginTop:"61px"}}>
                 <div id="userProfilePage">
                     <div className="profile-heading-section" id="myprofilepage">
@@ -394,276 +415,302 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
                                 </h2>
                                 <div id="personalDetails" className="accordion-collapse collapse show" data-bs-parent="#profileAccordation">
                                     <div className="accordion-body">
-
-                                    <div id="profileFormSlide" className="carousel slide" data-bs-interval="false">
-                                        <div className="carousel-inner">
-                                            <div className="carousel-item active">
-                                                <div className="edit-profile-btn-section">
-                                                    <button className="btn btn-primary edit-profile-btn" type="button" data-bs-target="#profileFormSlide" data-bs-slide="next" onClick={enableEditBtn}>Edit Profile</button>
+                                        <div id="profileFormSlide" className="carousel slide" data-bs-interval="false" data-bs-touch="false">
+                                            <div className="carousel-inner">
+                                                <div className="carousel-item active">
+                                                    <div className="edit-profile-btn-section">
+                                                        <button className="btn btn-primary edit-profile-btn" type="button" data-bs-target="#profileFormSlide" data-bs-slide="next" onClick={enableEditBtn}>Edit Profile</button>
+                                                    </div>
+                                                    <div style={{marginTop:"15px"}}>
+                                                        <div className="profile-data-row">
+                                                            <div className="profile-label-section">
+                                                                <p>Nick Name</p>
+                                                                <p>:</p>
+                                                            </div>
+                                                            <div className="profile-data-section">
+                                                                {loadUserData.firstname} {loadUserData.lastname}
+                                                            </div>
+                                                        </div>
+                                                        <div className="profile-data-row">
+                                                            <div className="profile-label-section">
+                                                                <p>Dob</p>
+                                                                <p>:</p>
+                                                            </div>
+                                                            <div className="profile-data-section">
+                                                                {loadUserData.dob}
+                                                            </div>
+                                                        </div>
+                                                        <div className="profile-data-row">
+                                                            <div className="profile-label-section">
+                                                                <p>Gender</p>
+                                                                <p>:</p>
+                                                            </div>
+                                                            <div className="profile-data-section">
+                                                                {loadUserData.gender}
+                                                            </div>
+                                                        </div>
+                                                        <div className="profile-data-row">
+                                                            <div className="profile-label-section">
+                                                                <p>Nick Name</p>
+                                                                <p>:</p>
+                                                            </div>
+                                                            <div className="profile-data-section">
+                                                                {loadUserData.nickname}
+                                                            </div>
+                                                        </div>
+                                                        <div className="profile-data-row">
+                                                            <div className="profile-label-section">
+                                                                <p>Phone No.</p>
+                                                                <p>:</p>
+                                                            </div>
+                                                            <div className="profile-data-section">
+                                                                {loadUserData.phone}
+                                                            </div>
+                                                        </div>
+                                                        <div className="profile-data-row">
+                                                            <div className="profile-label-section">
+                                                                <p>Email id</p>
+                                                                <p>:</p>
+                                                            </div>
+                                                            <div className="profile-data-section">
+                                                                {loadUserData.email}
+                                                            </div>
+                                                        </div>
+                                                        <div className="profile-data-row">
+                                                            <div className="profile-label-section">
+                                                                <p>Address</p>
+                                                                <p>:</p>
+                                                            </div>
+                                                            <div className="profile-data-section">
+                                                                {loadUserData.city ? loadUserData.city+", ":""} {loadUserData.district? loadUserData.district+", ":""} {loadUserData.state? loadUserData.state+", ":""} {loadUserData.pincode}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div style={{marginTop:"15px"}}>
-                                                    <div className="profile-data-row">
-                                                        <div className="profile-label-section">
-                                                            <p>Nick Name</p>
-                                                            <p>:</p>
-                                                        </div>
-                                                        <div className="profile-data-section">
-                                                            {loadUserData.firstname} {loadUserData.lastname}
-                                                        </div>
+                                                <div className="carousel-item">
+                                                    <div className="cancel-update-btn" style={{textAlign:"right"}}>
+                                                        <button className="btn btn-danger edit-profile-btn back-to-profile" type="button" data-bs-target="#profileFormSlide" data-bs-slide="prev">Cancel</button>
                                                     </div>
-                                                    <div className="profile-data-row">
-                                                        <div className="profile-label-section">
-                                                            <p>Dob</p>
-                                                            <p>:</p>
-                                                        </div>
-                                                        <div className="profile-data-section">
-                                                            {loadUserData.dob}
-                                                        </div>
-                                                    </div>
-                                                    <div className="profile-data-row">
-                                                        <div className="profile-label-section">
-                                                            <p>Gender</p>
-                                                            <p>:</p>
-                                                        </div>
-                                                        <div className="profile-data-section">
-                                                            {loadUserData.gender}
-                                                        </div>
-                                                    </div>
-                                                    <div className="profile-data-row">
-                                                        <div className="profile-label-section">
-                                                            <p>Nick Name</p>
-                                                            <p>:</p>
-                                                        </div>
-                                                        <div className="profile-data-section">
-                                                            {loadUserData.nickname}
-                                                        </div>
-                                                    </div>
-                                                    <div className="profile-data-row">
-                                                        <div className="profile-label-section">
-                                                            <p>Phone No.</p>
-                                                            <p>:</p>
-                                                        </div>
-                                                        <div className="profile-data-section">
-                                                            {loadUserData.phone}
-                                                        </div>
-                                                    </div>
-                                                    <div className="profile-data-row">
-                                                        <div className="profile-label-section">
-                                                            <p>Email id</p>
-                                                            <p>:</p>
-                                                        </div>
-                                                        <div className="profile-data-section">
-                                                            {loadUserData.email}
-                                                        </div>
-                                                    </div>
-                                                    <div className="profile-data-row">
-                                                        <div className="profile-label-section">
-                                                            <p>Address</p>
-                                                            <p>:</p>
-                                                        </div>
-                                                        <div className="profile-data-section">
-                                                            {loadUserData.city ? loadUserData.city+", ":""} {loadUserData.state? loadUserData.state+", ":""} {loadUserData.pincode}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="carousel-item">
-                                                <div className="cancel-update-btn" style={{textAlign:"right"}}>
-                                                    <button className="btn btn-danger edit-profile-btn back-to-profile" type="button" data-bs-target="#profileFormSlide" data-bs-slide="prev">Cancel</button>
-                                                </div>
-                                                <form className="row g-3 needs-validation new-user-form" id="newUserForm" onSubmit={newUserFormSubmit}>
-                                                    <div className="col-md-12 col-sm-12 new-form-field">
-                                                        <label htmlFor="firstName" className="form-label">First name</label>
-                                                        <input type="text" className="form-control" id="firstName" name="firstName" placeholder="Enter your first name" value={newUserData.firstName} onChange={(e)=>handlenewUserInput(e)} form-valid={firstNameErr.isValid}/>
-                                                        {
-                                                            (firstNameErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {firstNameErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {firstNameErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12 new-form-field">
-                                                        <label htmlFor="lastName" className="form-label">Last name</label>
-                                                        <input type="text" className="form-control" id="lastName" name="lastName" placeholder="Enter your last name" value={newUserData.lastName} onChange={(e)=>handlenewUserInput(e)} form-valid={lastNameErr.isValid}/>
-                                                        {
-                                                            (lastNameErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {lastNameErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {lastNameErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12 new-form-field">
-                                                        <label htmlFor="nickName" className="form-label">Nick Name</label>
-                                                        <input type="text" className="form-control" id="nickName" name="nickName" placeholder="Enter your nick name" value={newUserData.nickName} onChange={(e)=>handlenewUserInput(e)} form-valid={nickNameErr.isValid}/>
-                                                        {
-                                                            (nickNameErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {nickNameErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {nickNameErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12 new-form-field">
-                                                        <label htmlFor="dob" className="form-label">Date Of Birth</label>
-                                                        <input type="date" className="form-control" id="dob" name="dob" value={newUserData.dob} onChange={(e)=>handlenewUserInput(e)} form-valid={dobErr.isValid} select-color={newUserData.dob === ''?'novalue':'withvalue'} maxLength={10}/>
-                                                        {
-                                                            (dobErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {dobErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {dobErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12 new-form-field">
-                                                    <label htmlFor="gender" className="form-label">Gender</label>
-                                                        <select className="form-select" id="gender" name="gender" onChange={(e)=>handlenewUserInput(e)} form-valid={genderErr.isValid} value={newUserData.gender} select-color={newUserData.gender === ''?'novalue':'withvalue'}>
-                                                            <option disabled value="">Select your gender</option>
-                                                            <option value="male">Male</option>
-                                                            <option value="female">Female</option>
-                                                            <option value="others">Others</option>
-                                                        </select>
-                                                        {
-                                                            (genderErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {genderErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {genderErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12 new-form-field">
-                                                        <label htmlFor="phoneNum" className="form-label">Phone no.</label>
-                                                        <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={newUserData.phoneNum} onChange={(e)=>handlenewUserInput(e)} form-valid={phoneNumErr.isValid} maxLength="10"/>
-                                                        {
-                                                            (phoneNumErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {phoneNumErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {phoneNumErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12 new-form-field">
-                                                        <label htmlFor="emailId" className="form-label">Email</label>
-                                                        <input type="text" className="form-control" id="emailId" name="emailId" placeholder="Enter your email..." value={newUserData.emailId} onChange={(e)=>handlenewUserInput(e)} form-valid={emailIdErr.isValid} disabled/>
-                                                        {
-                                                            (emailIdErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {emailIdErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {emailIdErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12 new-form-field">
-                                                        <label htmlFor="state" className="form-label">State</label>
-                                                        <select className="form-select" id="state" name="state" value={newUserData.state} onChange={(e)=>handlenewUserInput(e)} form-valid={stateErr.isValid} select-color={newUserData.state === ''?'novalue':'withvalue'}>
-                                                            <option value="" disabled>Choose your state</option>
+                                                    <form className="row g-3 needs-validation new-user-form" id="newUserForm" onSubmit={newUserFormSubmit}>
+                                                        <div className="col-md-12 col-sm-12 new-form-field">
+                                                            <label htmlFor="firstName" className="form-label">First name</label>
+                                                            <input type="text" className="form-control" id="firstName" name="firstName" placeholder="Enter your first name" value={newUserData.firstName} onChange={(e)=>handlenewUserInput(e)} form-valid={firstNameErr.isValid}/>
                                                             {
-                                                                Costant_Variables.states.map((data,index)=>{
-                                                                    return(
-                                                                        <option value={data} key={index}>{data}</option>
-                                                                    )
-                                                                })
+                                                                (firstNameErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {firstNameErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {firstNameErr.err_mssg}
+                                                                </div>
                                                             }
-                                                        </select>
-                                                        {
-                                                            (stateErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {stateErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {stateErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12 new-form-field">
-                                                        <label htmlFor="city" className="form-label">City</label>
-                                                        <input type="text" className="form-control" id="city" name="city" placeholder="Enter your city" value={newUserData.city} onChange={(e)=>handlenewUserInput(e)} form-valid={cityErr.isValid}/>
-                                                        {
-                                                            (cityErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {cityErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {cityErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-lg-6 col-sm-12 last-two-fields">
-                                                        <label htmlFor="pinCode" className="form-label">Pin code</label>
-                                                        <input type="text" className="form-control" id="pinCode" name="pinCode" placeholder="Enter your Pin code" value={newUserData.pinCode} onChange={(e)=>handlenewUserInput(e)} form-valid={pinCodeErr.isValid}/>
-                                                        {
-                                                            (pinCodeErr.err_mssg !== 'valid')?
-                                                            <div className="invalid-feedback">
-                                                                {pinCodeErr.err_mssg}
-                                                            </div>
-                                                            :
-                                                            <div className="valid-feedback">
-                                                                {pinCodeErr.err_mssg}
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                    <div className="col-lg-6 col-sm-12 last-two-fields">
-                                                        <label htmlFor="profilePicture" className="form-label dp-label">Choose a profile picture</label>
-                                                        <div className="dp-image-input-section">
-                                                            <div className="choose-profile-images">
+                                                        </div>
+                                                        <div className="col-md-6 col-sm-12 new-form-field">
+                                                            <label htmlFor="lastName" className="form-label">Last name</label>
+                                                            <input type="text" className="form-control" id="lastName" name="lastName" placeholder="Enter your last name" value={newUserData.lastName} onChange={(e)=>handlenewUserInput(e)} form-valid={lastNameErr.isValid}/>
+                                                            {
+                                                                (lastNameErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {lastNameErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {lastNameErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-md-6 col-sm-12 new-form-field">
+                                                            <label htmlFor="nickName" className="form-label">Nick Name</label>
+                                                            <input type="text" className="form-control" id="nickName" name="nickName" placeholder="Enter your nick name" value={newUserData.nickName} onChange={(e)=>handlenewUserInput(e)} form-valid={nickNameErr.isValid}/>
+                                                            {
+                                                                (nickNameErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {nickNameErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {nickNameErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-md-6 col-sm-12 new-form-field">
+                                                            <label htmlFor="dob" className="form-label">Date Of Birth</label>
+                                                            <input type="date" className="form-control" id="dob" name="dob" value={newUserData.dob} onChange={(e)=>handlenewUserInput(e)} form-valid={dobErr.isValid} select-color={newUserData.dob === ''?'novalue':'withvalue'} maxLength={10}/>
+                                                            {
+                                                                (dobErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {dobErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {dobErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-md-6 col-sm-12 new-form-field">
+                                                        <label htmlFor="gender" className="form-label">Gender</label>
+                                                            <select className="form-select" id="gender" name="gender" onChange={(e)=>handlenewUserInput(e)} form-valid={genderErr.isValid} value={newUserData.gender} select-color={newUserData.gender === ''?'novalue':'withvalue'}>
+                                                                <option disabled value="">Select your gender</option>
+                                                                <option value="male">Male</option>
+                                                                <option value="female">Female</option>
+                                                                <option value="others">Others</option>
+                                                            </select>
+                                                            {
+                                                                (genderErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {genderErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {genderErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-md-6 col-sm-12 new-form-field">
+                                                            <label htmlFor="phoneNum" className="form-label">Phone no.</label>
+                                                            <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={newUserData.phoneNum} onChange={(e)=>handlenewUserInput(e)} form-valid={phoneNumErr.isValid} maxLength="10"/>
+                                                            {
+                                                                (phoneNumErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {phoneNumErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {phoneNumErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-md-6 col-sm-12 new-form-field">
+                                                            <label htmlFor="emailId" className="form-label">Email</label>
+                                                            <input type="text" className="form-control" id="emailId" name="emailId" placeholder="Enter your email..." value={newUserData.emailId} onChange={(e)=>handlenewUserInput(e)} form-valid={emailIdErr.isValid} disabled/>
+                                                            {
+                                                                (emailIdErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {emailIdErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {emailIdErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-md-6 col-sm-12 new-form-field">
+                                                            <label htmlFor="state" className="form-label">State</label>
+                                                            <select className="form-select address-select" id="state" name="state" value={newUserData.state} onChange={(e)=>handlenewUserInput(e)} form-valid={stateErr.isValid} select-color={newUserData.state === ''?'novalue':'withvalue'}>
+                                                                <option value="" disabled>Choose your state</option>
                                                                 {
-                                                                    Costant_Variables.dp_array.map((data,index)=>{
-                                                                        return (
-                                                                            <button className="dp-img-select-btn" id="dpImgBtn" onClick={chooseProfilePicture} value={data.img_link} key={index} data-active={(dpImageLink === data.img_link)?'true':'false'}>
-                                                                                <img src={data.img_link} className="border-rounded" alt="Food Category" style={{width:"40px", height:"40px"}}/>
-                                                                            </button>
+                                                                    Costant_Variables.states_districts.map((data,index)=>{
+                                                                        return(
+                                                                            <option value={data.state} key={index}>{data.state}</option>
                                                                         )
                                                                     })
                                                                 }
-                                                            </div>
-                                                            <div>
-                                                                {/* <img src={dpImageLink} className="border-rounded top-pics-item-img" alt="Food Category"/> */}
-                                                                <input type="text" className="form-control" id="pinCode" name="profilePicture" value={dpImageLink} placeholder="Choose your profile picture" disabled hidden/>
+                                                            </select>
+                                                            {
+                                                                (stateErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {stateErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {stateErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-md-6 col-sm-12 new-form-field">
+                                                            <label htmlFor="district" className="form-label">District</label>
+                                                            <select className="form-select address-select" id="district" name="district" value={newUserData.district} onChange={(e)=>handlenewUserInput(e)} form-valid={districtErr.isValid} select-color={newUserData.district === ''?'novalue':'withvalue'}>
+                                                                <option value="" disabled>Choose your district</option>
+                                                                {
+                                                                    Costant_Variables.states_districts.map((data)=>
+                                                                    (data.state === newUserData.state)?
+                                                                    data.districts.map((d,i)=>{
+                                                                        return(
+                                                                            <option value={d} key={i}>{d}</option>
+                                                                        )
+                                                                    })
+                                                                    :
+                                                                    <></>
+                                                                    )
+                                                                }
+                                                            </select>
+                                                            {
+                                                                (districtErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {districtErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {districtErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-md-6 col-sm-12 new-form-field">
+                                                            <label htmlFor="city" className="form-label">City</label>
+                                                            <input type="text" className="form-control" id="city" name="city" placeholder="Enter your city" value={newUserData.city} onChange={(e)=>handlenewUserInput(e)} form-valid={cityErr.isValid}/>
+                                                            {
+                                                                (cityErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {cityErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {cityErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-lg-6 col-sm-12 last-two-fields">
+                                                            <label htmlFor="pinCode" className="form-label">Pin code</label>
+                                                            <input type="text" className="form-control" id="pinCode" name="pinCode" placeholder="Enter your Pin code" value={newUserData.pinCode} onChange={(e)=>handlenewUserInput(e)} form-valid={pinCodeErr.isValid}/>
+                                                            {
+                                                                (pinCodeErr.err_mssg !== 'valid')?
+                                                                <div className="invalid-feedback">
+                                                                    {pinCodeErr.err_mssg}
+                                                                </div>
+                                                                :
+                                                                <div className="valid-feedback">
+                                                                    {pinCodeErr.err_mssg}
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div className="col-lg-6 col-sm-12 last-two-fields">
+                                                            <label htmlFor="profilePicture" className="form-label dp-label">Choose a profile picture</label>
+                                                            <div className="dp-image-input-section">
+                                                                <div className="choose-profile-images">
+                                                                    {
+                                                                        Costant_Variables.dp_array.map((data,index)=>{
+                                                                            return (
+                                                                                <button className="dp-img-select-btn" id="dpImgBtn" onClick={chooseProfilePicture} value={data.img_link} key={index} data-active={(dpImageLink === data.img_link)?'true':'false'}>
+                                                                                    <img src={data.img_link} className="border-rounded" alt="Food Category" style={{width:"40px", height:"40px"}}/>
+                                                                                </button>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </div>
+                                                                <div>
+                                                                    {/* <img src={dpImageLink} className="border-rounded top-pics-item-img" alt="Food Category"/> */}
+                                                                    <input type="text" className="form-control" id="pinCode" name="profilePicture" value={dpImageLink} placeholder="Choose your profile picture" disabled hidden/>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="col-sm-12 mt-5">
-                                                        <button className="btn btn-primary update-data-btn" style={{width:"120px"}} type="submit">Update</button>
-                                                        <p style={{fontWeight:"600"}} error-mssg-style="success">{loadingMssg}</p>
-                                                    </div>
-                                                </form>
+                                                        <div className="col-sm-12 mt-5">
+                                                            <button className="btn btn-primary update-data-btn" style={{width:"120px"}} type="submit">Update</button>
+                                                            <p style={{fontWeight:"600"}} error-mssg-style="success">{loadingMssg}</p>
+                                                        </div>
+                                                    </form>
 
+                                                </div>
                                             </div>
+                                            {/* <button className="carousel-control-prev" type="button" data-bs-target="#profileFormSlide" data-bs-slide="prev">
+                                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span className="visually-hidden">Previous</span>
+                                            </button> */}
+                                            {/* <button className="carousel-control-next" type="button" data-bs-target="#profileFormSlide" data-bs-slide="next">
+                                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span className="visually-hidden">Next</span>
+                                            </button> */}
                                         </div>
-                                        {/* <button className="carousel-control-prev" type="button" data-bs-target="#profileFormSlide" data-bs-slide="prev">
-                                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span className="visually-hidden">Previous</span>
-                                        </button> */}
-                                        {/* <button className="carousel-control-next" type="button" data-bs-target="#profileFormSlide" data-bs-slide="next">
-                                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span className="visually-hidden">Next</span>
-                                        </button> */}
-                                    </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -676,9 +723,14 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
                                 <div id="myWishList" className="accordion-collapse collapse" data-bs-parent="#profileAccordation">
                                     <div className="accordion-body">
                                         <WishList addToCartFunction={addToCartFunction} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={6} parentClass={"profile-wishlist-section"}/>
-                                        <div>
-                                            <NavLink className="btn btn-primary" to="/myprofile/wishlist">View All</NavLink>
-                                        </div>
+                                        {
+                                            (favouriteItems.length > 0)?
+                                            <div>
+                                                <NavLink className="btn btn-primary" to="/myprofile/wishlist">View All</NavLink>
+                                            </div>
+                                            :
+                                            <></>
+                                        }
                                     </div>
                                 </div>
                             </div>

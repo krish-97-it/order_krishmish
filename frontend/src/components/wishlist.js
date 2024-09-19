@@ -22,7 +22,7 @@ const WishList = ({addToCartFunction, favouriteItems, addToFavourite, showItems,
                                             <div style={{display:"flex", justifyContent:"space-between", alignItems:"start"}}>
                                                 <p className="price-section" style={{textAlign:"left"}}>Price: ₹{item.product.price}</p>
                                                 <button className="heart-btn-style profile-page-heart-btn" onClick={()=>addToFavourite(item.product)}>
-                                                    <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"20px"}}></i>
+                                                    <i className="fa fa-trash-o heart-icon-color heart-icon-red" style={{fontSize:"20px"}}></i>
                                                 </button>
                                             </div>
                                             <div className="pos-bottom">
