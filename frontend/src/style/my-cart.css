@@ -28,9 +28,9 @@
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 24px 20px -15px #7a3e864f;
+    min-height: 600px;
     max-height: 600px;
-    overflow-y: hidden;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 .added-cart-item{
     border: 1px solid rgb(214, 214, 214);
@@ -98,16 +98,172 @@
     text-align: left;
 }
 
+.billing-section{
+    position: relative;
+}
 .billing-details-secton{
     display: flex;
     flex-direction: column;
-    padding: 10px 20px;
+    padding: 10px;
     background-color: #f7f7f7;
     border-radius: 8px;
-    flex: 2 1;
-    justify-content: center;
+    justify-content: start;
     box-shadow: 0 24px 20px -15px #7a3e864f;
     border: 1px solid #e1e1e1;
+    gap: 15px;
+    min-height: 600px;
+    max-height: 600px;
+    overflow-y: scroll;
+}
+[show-section="show"]{
+    display: block;
+}
+[show-section="hide"]{
+    display: none;
+}
+
+.order-details-sub-heading{
+    text-align: left;
+    padding: 6px 10px;
+    background-color: #494949;
+    color: #ffffff;
+    border-radius: 5px 5px 0px 0px;
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-top: -10px;
+}
+.delivery-address-section, .item-amount-details{
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid rgb(184, 184, 184);
+}
+.item-amount-details{
+    margin-bottom: 58px;
+}
+.delivery-address-form label{
+    float: left;
+    margin-bottom: 3px;
+    font-size: 14px;
+}
+.edit-address-btn{
+    text-align: right;
+    /* background-image: linear-gradient(to right, #ffd95c, #f7fa5b); */
+    background-color: white;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 0px 8px;
+    border-radius: 4px;
+    border: none;
+    float: right;
+}
+.edit-address-btn-section{
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left;
+    gap: 10px;
+    padding-bottom: 6px;
+}
+.edit-address-btn-section button{
+    width: 75px;
+    height: 28px;
+    padding-top: 0px !important;
+    border-radius: 5px;
+}
+.address-select{
+        padding: 4px 36px 4px 10px;
+        font-size: 14px;
+        text-align: left;
+}
+.delivery-time-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 10px 10px ;
+    border-radius: 8px;
+    border: 1px solid rgb(184, 184, 184);
+}
+.delivery-time-txt{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 6px;
+}
+.delivery-time-section p, .delivery-time-section h6{
+    margin-bottom: 0px;
+}
+.apply-offer-section{
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid rgb(184, 184, 184);
+}
+.offers-check-btn-section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px !important;
+    color: rgb(0, 0, 0);
+}
+.offers-check-btn-section h6{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: left;
+    margin-bottom: 2px;
+}
+.offers-check-button{
+    width: 75px;
+    border: none;
+    border-radius: 4px;
+    background-image: linear-gradient(to right, #ff7b7b, #b345ff);
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+.offers-lists-section{
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(to right, #ffcb99ba, #dfa4ffa6);
+    border-radius: 0px 0px 8px 8px;
+}
+.avail-offer{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 10px;
+    padding: 5px 0px 5px 0px;
+    font-size: 12px;
+    font-weight: 500;
+}
+.avail-offer p{
+    text-align: left;
+    margin-bottom: 0px;
+    width: 100%;
+}
+.avail-offer button{
+    width: 56px;
+    background-image: linear-gradient(to right, #ff000098, #000000);
+    color: white;
+    height: 22px;
+    padding: 0px;
+    border: none;
+    font-size: 12px;
+}
+.avail-offer button:active{
+    background-color: rgb(255, 0, 0) !important;
+    color: white !important;
+}
+.avail-offer button:hover{
+    background-color: rgb(82, 82, 82);
+    color: white;
 }
 .total-item-count{
     display: flex;
@@ -118,9 +274,12 @@ hr{
 }
 .order-now-btn{
     width: 100%;
-    padding: 12px;
-    background-color: #e1f2d8;
-    border-radius: 8px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 0px 0px 8px 8px;
+    position: absolute;
+    margin-top: -58px;
+    border: 1px solid #e1e1e1;
 }
 .order-now-btn button{
     width: 100%;
@@ -129,8 +288,43 @@ hr{
     border: none;
     color: white;
     font-weight: 600;
-    padding: 10px;
 }
+
+[active-slide="true"]{
+    display: block;
+}
+[active-slide="false"]{
+    display: none;
+}
+.slide-transition{
+    animation-name: slide-transition;
+    animation-duration: .5s;
+}
+@keyframes slide-transition {
+    0%{
+        transform: translate(100%, 0%);
+    }
+}
+.address-select::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #ecdeff;
+}
+
+.address-select::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #c340ff;
+}
+
+.address-select::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #c340ff;
+}
+
 @media(max-width:991.98px){
     .cart-item-btn-section{
         flex-direction: column;

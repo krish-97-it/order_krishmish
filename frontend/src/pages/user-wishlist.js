@@ -4,7 +4,7 @@ import GoToTop from "../components/go-to-top";
 
 const WishListPage = ({addToCartFunction, favouriteItems, addToFavourite, showItems, parentClass, userLoggedIn, openLoginModal}) => {
     return(
-        <div className="app-body">
+        <div className="app-body" page-transition="on">
             <div className="main-content mb-3" style={{marginTop:"61px"}}>
                 <div className="wishlist-banner-section">
                     <div className="container">
