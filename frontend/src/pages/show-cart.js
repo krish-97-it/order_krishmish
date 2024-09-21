@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import GoToTop from "../components/go-to-top";
 import Costant_Variables from "../controller/constant-variables";
 import ValidationFunctions from "../controller/validation-functions";
+import DiscountIcon from '../assets/discount_icon.png';
+import Swal from 'sweetalert2';
+import axios from "axios";
 
-export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCost, increaseItemQuantity, decreaseItemQuantity, loadUserData}){
+export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCost, increaseItemQuantity, decreaseItemQuantity, loadUserData, openLoginModal, userLoggedIn}){
     
     const [showAddress, setShowAddress] = useState('show');
     const [editAddress, setEditAddress] = useState('hide');
@@ -13,13 +16,18 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
         city: '',
         pinCode: '',
     });
+
     const [deliveryAddressData, setdeliveryAddressData] = useState({
         state: '',
         district: '',
         city: '',
         pinCode: '',
     });
-    
+
+    const APIUrls                                   =   {
+        "saveOrderDetails"  : Costant_Variables.SERVER_BASE_URL+'/saveorderdetails'
+    };
+
     const [showCartSlide, setCartSlide]   = useState('true');
     const [showOrderSlide, setOrderSlide] = useState('false');
     function cancelOrder(){
@@ -31,17 +39,81 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
             setOrderSlide('false');
         },420)
     }
+
     function placeOrder(){
-        setTimeout(function(){
-            window.scrollTo({ top:0, behavior: "smooth" });
-        }, 200);
-        setTimeout(function(){
-            setCartSlide('false');
-            setOrderSlide('true');
-        },420)
+        if(addedCartItem.length > 1){
+            let del_Address;
+            if(showAddressData.state === '' || showAddressData === 'undefined'){
+                del_Address = {
+                    state: loadUserData.state,
+                    district: loadUserData.district,
+                    city: loadUserData.city,
+                    pincode: loadUserData.pincode
+                }
+            }else{
+                del_Address = {
+                    state: showAddressData.state,
+                    district: showAddressData.district,
+                    city: showAddressData.city,
+                    pincode: showAddressData.pinCode
+                }
+            }
+            const formData  =   {
+                userid    : loadUserData._id,
+                useremail : loadUserData.email,
+                address   : del_Address,
+                offers    : appliedOffer,
+                items     : addedCartItem,
+            }
+            const config = {
+                headers: { 'Content-Type': 'application/json'}
+            }
+            axios.post(APIUrls.saveOrderDetails, formData, {config})
+            .then(
+                (response) => {
+                    if(response.data.success === true){
+                        localStorage.setItem("cartData", JSON.stringify([]));
+                        Swal.fire(
+                            {
+                                title: "Great!!",
+                                text: response.data.message,
+                                icon: "success"
+                            }
+                        ).then(
+                            (result) =>{
+                                if (result.isConfirmed) {
+                                    window.location.href = window.location.origin;;
+                                }
+                            }
+                        )
+                    }else{
+                        console.log("Faied to palced order")
+                    }
+                }
+            ).catch(error => {
+                console.log(error);
+            });
+
+            // setTimeout(function(){
+            //     window.scrollTo({ top:0, behavior: "smooth" });
+            // }, 200);
+            // setTimeout(function(){
+            //     setCartSlide('false');
+            //     setOrderSlide('true');
+            // },420)
+        }else{
+            Swal.fire(
+                {
+                    title: "Empty Cart!",
+                    text: "Your Cart is Empty. Please add some food first",
+                    icon: "warning"
+                }
+            )
+        }
     }
 
-    function enableEditBtn(){
+    function enableEditBtn(e){
+        e.preventDefault();
         setShowAddress('hide');
         setEditAddress('show');
         updateStateErr({});
@@ -51,7 +123,8 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
         setdeliveryAddressData({...deliveryAddressData, 'state':deliveryAddressData.state, 'district':deliveryAddressData.district, 'city':deliveryAddressData.city, 'pinCode' : deliveryAddressData.pinCode});
     }
 
-    function cancelEditForm(){
+    function cancelEditForm(e){
+        e.preventDefault();
         setShowAddress('show');
         setEditAddress('hide');
     }
@@ -153,12 +226,194 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
         }
     }
 
+    function splitar(val){
+        const a = val.split("-");
+        return (parseInt(a[0]));
+    }
+    function gethighestDuration(){
+        if(addedCartItem.length > 1){
+            const temp_array = addedCartItem.sort(function(a, b){return splitar(b.product.preptime)-splitar(a.product.preptime)});
+            return (temp_array[0].product.preptime);
+        }else{
+            return "";
+        }
+    }
+
+    const [appliedOffer, setAppliedOffer] = useState('');
+    const [offerAmt, setOfferAmt] = useState('');
+    function selectOffers(e,amt){
+        e.preventDefault();
+        if(addedCartItem.length > 1){
+            const offer_val = e.target.value;
+            const offer_name = e.target.name;
+            if(offer_name === 'FISH20'){
+                const ItemList     =   addedCartItem.filter((item) =>
+                    item.product.tags.toLowerCase().includes('fish')
+                ) 
+                if(ItemList.length === addedCartItem.length){
+                    setAppliedOffer(offer_name);
+                    setOfferAmt(offer_val);
+                    Swal.fire(
+                        {
+                            title: "",
+                            text: "Offers applied successfully!",
+                            icon: "success"
+                        }
+                    )
+                }
+                else{
+                    Swal.fire(
+                        {
+                            title: "Failed!",
+                            text: "Failed to apply selected cupon code. All Items in your cart should be Fish Items",
+                            icon: "error"
+                        }
+                    )
+                    setAppliedOffer('');
+                    setOfferAmt('');
+                }
+            }else if(offer_name === 'VEG25'){
+                const ItemList     =   addedCartItem.filter((item) =>
+                    item.product.tags.toLowerCase().includes('veg')
+                ) 
+                if(ItemList.length === addedCartItem.length){
+                    setAppliedOffer(offer_name);
+                    setOfferAmt(offer_val);
+                    Swal.fire(
+                        {
+                            title: "",
+                            text: "Offers applied successfully!",
+                            icon: "success"
+                        }
+                    )
+                }else{
+                    Swal.fire(
+                        {
+                            title: "Failed!",
+                            text: "Failed to apply selected cupon code. All Items in your cart should be veg",
+                            icon: "error"
+                        }
+                    )
+                    setAppliedOffer('');
+                    setOfferAmt('');
+                }
+            }else if(offer_name === 'DESSERT35'){
+                const ItemList     =   addedCartItem.filter((item) =>
+                    item.product.tags.toLowerCase().includes('dessert')
+                ) 
+                if(ItemList.length === addedCartItem.length){
+                    setAppliedOffer(offer_name);
+                    setOfferAmt(offer_val);
+                    Swal.fire(
+                        {
+                            title: "",
+                            text: "Offers applied successfully!",
+                            icon: "success"
+                        }
+                    )
+                }else{
+                    Swal.fire(
+                        {
+                            title: "Failed!",
+                            text: "Failed to apply selected cupon code. All Items in your cart should be under dessert category",
+                            icon: "error"
+                        }
+                    )
+                    setAppliedOffer('');
+                    setOfferAmt('');
+                }
+            }else if(offer_name === 'FAN50'){
+                if(amt > 1000){
+                    setAppliedOffer(offer_name);
+                    setOfferAmt(offer_val);
+                    Swal.fire(
+                        {
+                            title: "",
+                            text: "Offers applied successfully!",
+                            icon: "success"
+                        }
+                    )
+                }else{
+                    Swal.fire(
+                        {
+                            title: "Failed!",
+                            text: "Failed to apply selected cupon code. Ordered Item should be greater than 1000",
+                            icon: "error"
+                        }
+                    )
+                    setAppliedOffer('');
+                    setOfferAmt('');
+                }
+            }
+            else if(offer_name === 'FIRST30'){
+                if(amt > 1000){
+                    setAppliedOffer(offer_name);
+                    setOfferAmt(offer_val);
+                    Swal.fire(
+                        {
+                            title: "",
+                            text: "Offers applied successfully!",
+                            icon: "success"
+                        }
+                    )
+                }else{
+                    Swal.fire(
+                        {
+                            title: "Failed",
+                            text: "This Offers is applicable only for first Order for a user",
+                            icon: "error"
+                        }
+                    )
+                    setAppliedOffer('');
+                    setOfferAmt('');
+                }
+            }else{
+                setAppliedOffer('not applied');
+                setOfferAmt('');
+            }
+
+            document.querySelector("button.offers-check-btn-section").click();
+        }else{
+            Swal.fire(
+                {
+                    title: "Failed!",
+                    text: "Your Cart is empty.",
+                    icon: "error"
+                }
+            )
+        }
+    }
+
+
+    // const [totalAmt, setTotalAmt] = useState()
+    function calculateTotalAmount(amt, offer_amt){
+        const total = amt === 0 ? '0' : (amt - ((amt*10)/100))
+        if(offer_amt !== ''){
+            return (total - ((total*parseInt(offer_amt))/100)) 
+        }
+        return total;
+    }
+    
+    document.addEventListener('click', function(){
+        closeAccordion();
+    })
+
+    function closeAccordion(){
+        let ele = document.querySelector("button.offers-check-btn-section");
+        if(ele){
+            let className = (ele.className).split(" ");
+            if(className.length <= 1){
+                document.querySelector("button.offers-check-btn-section").click();
+            }
+        }
+    }
+
     return(
         <div className="app-body custom-margin-top" page-transition="on">
             <div className="main-content container cart-page-container">
                 <div className="cart-slide" active-slide={showCartSlide}>
                     <div className="cart-item-billing-section">
-                        <div style={{flex:2}}>
+                        <div className="cart-section" style={{flex:2}}>
                             <h3 className="gradient-bg added-item-txt">Added Items</h3>
                             <div className="cart-item-section">
                                 {
@@ -199,7 +454,7 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                                 }
                             </div>
                         </div>
-                        <div style={{flex:2}}>
+                        <div className="billing-section" style={{flex:2}}>
                             <h3 className="gradient-bg">Order Details</h3>
                             <div className="billing-details-secton">
                                 <div className="delivery-address-section">
@@ -301,6 +556,48 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                                         </div>
                                     </div>
                                 </div>
+                                <div className="delivery-time-section">
+                                    <h6>Delivery In:</h6>
+                                    <div className="delivery-time-txt">
+                                        <i className="fa fa-clock-o" style={{fontSize:"28px", color: "green"}}></i>
+                                        {
+                                            (gethighestDuration() !== '')?
+                                            <p>{gethighestDuration()}</p>
+                                            :
+                                            <p>30-35min</p>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="accordion accordion-flush apply-offer-section" id="applyOfferSection">
+                                    <button className="offers-check-btn-section collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#applyOffersCollapse" aria-controls="applyOffersCollapse">
+                                        <h6>Apply Offers <img src={DiscountIcon} alt="discount" style={{width:"24px"}}/></h6>
+                                        <p className="offers-check-button">Check</p>
+                                    </button>
+                                    <div id="applyOffersCollapse" className="accordion-collapse collapse offers-lists-section">
+                                        <div className="offers-lists-body">
+                                            <div className="avail-offer">
+                                                <p>Get Flat 30% OFF on your First Order above Rs. 100</p>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="FIRST30" value="30">Claim</button>
+                                            </div>
+                                            <div className="avail-offer">
+                                                <p>Get Flat 20% OFF on any Fish Dish above Rs. 100</p>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="FISH20" value="20">Claim</button>
+                                            </div>
+                                            <div className="avail-offer">
+                                                <p>Get Upto 30% OFF on Ice Cream and Sweets above Rs. 100</p>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="DESSERT35" value="30">Claim</button>
+                                            </div>
+                                            <div className="avail-offer">
+                                                <p>Get FLAT 50% Off on order over RS. 1000 by this One time applicable offer.</p>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="FAN50" value="50">Claim</button>
+                                            </div>
+                                            <div className="avail-offer">
+                                                <p>Get Flat 25% OFF on Veg Dishes above Rs. 100</p>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="VEG25" value="25">Claim</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="item-amount-details">
                                 <h6 className="order-details-sub-heading">Billing Summary</h6>
                                     <div className="total-item-count">
@@ -315,15 +612,24 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                                         <p>Dicount:&nbsp;</p>
                                         <p>10%</p>
                                     </div>
+                                    <div className="total-item-count">
+                                        <p>Offers:&nbsp;</p>
+                                        <p>{(appliedOffer !== '')?appliedOffer:"not applied"}</p>
+                                    </div>
                                     <hr className="hr-line"></hr>
                                     <div className="total-item-count">
                                         <p>Amount after Discount:&nbsp;</p>
-                                        <p>{getTotalCost() === 0 ? '0' : (getTotalCost() - ((getTotalCost()*10)/100))}</p>
+                                        <p>{calculateTotalAmount(getTotalCost(), offerAmt)}</p>
+                                    </div>
                                     </div>
                                 </div>
                                 <div className="order-now-btn">
+                                {
+                                    (userLoggedIn !== 'true')?
+                                    <button className="btn btn-primary place-order-btn" type="button" onClick={openLoginModal}>Place Your Order</button>
+                                    :
                                     <button className="btn btn-primary place-order-btn" type="button" onClick={placeOrder}>Place Your Order</button>
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>

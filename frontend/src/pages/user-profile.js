@@ -8,7 +8,6 @@ import WishList from "../components/wishlist";
 import OrderHistory from "../components/order-history";
 
 const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favouriteItems, addToCartFunction}) => {
-
     function scrollToWishList(){
         const aria_expand = document.querySelector("button.open-wishlist-btn").getAttribute('aria-expanded');
         if(aria_expand === 'true'){
