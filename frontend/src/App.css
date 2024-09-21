@@ -141,3 +141,24 @@ body{
 body:has([show-modal="show"]){
   overflow-y: hidden !important;
 }
+
+[page-transition="on"]{
+  animation-name: page-transition;
+  animation-duration: 1.5s;
+  animation-delay: .2s;
+  /* animation-direction: reverse; */
+}
+@keyframes page-transition {
+	/* 0%{
+    transform: translate(0%, 95%);
+  } */
+  /* from{transform: scale(3,2);} */
+  from{
+    transform: rotateY(-95deg);
+  }
+  to{
+    transform: rotateY(0deg);
+  }
+  /* from {opacity: .4} 
+  to {opacity: 1} */
+}
