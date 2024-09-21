@@ -201,9 +201,9 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                             <button onClick={()=>addToFavourite(item)}>
                                                                 {
                                                                     (favouriteItems.find(data => data.product._id === item._id))?
-                                                                    <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"24px"}}></i>
+                                                                    <i className="fa fa-bookmark heart-icon-color heart-icon-red" style={{fontSize:"24px"}}></i>
                                                                     :
-                                                                    <i className="fa fa-heart heart-icon-color" style={{fontSize:"24px"}}></i>
+                                                                    <i className="fa fa-bookmark heart-icon-color" style={{fontSize:"24px"}}></i>
                                                                 }
                                                             </button>
                                                         </div>
@@ -241,9 +241,9 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                             <button onClick={()=>addToFavourite(item)}>
                                                                 {
                                                                     (favouriteItems.find(data => data.product._id === item._id))?
-                                                                    <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"24px"}}></i>
+                                                                    <i className="fa fa-bookmark heart-icon-color heart-icon-red" style={{fontSize:"24px"}}></i>
                                                                     :
-                                                                    <i className="fa fa-heart heart-icon-color" style={{fontSize:"24px"}}></i>
+                                                                    <i className="fa fa-bookmark heart-icon-color" style={{fontSize:"24px"}}></i>
                                                                 }
                                                             </button>
                                                         </div>
@@ -290,9 +290,9 @@ export default function Cuisine({getItemList, getFilteredItemList, getInputCuisi
                                                                 <button onClick={()=>addToFavourite(item)}>
                                                                     {
                                                                         (favouriteItems.find(data => data.product._id === item._id))?
-                                                                        <i className="fa fa-heart heart-icon-color heart-icon-red" style={{fontSize:"24px"}}></i>
+                                                                        <i className="fa fa-bookmark heart-icon-color heart-icon-red" style={{fontSize:"24px"}}></i>
                                                                         :
-                                                                        <i className="fa fa-heart heart-icon-color" style={{fontSize:"24px"}}></i>
+                                                                        <i className="fa fa-bookmark heart-icon-color" style={{fontSize:"24px"}}></i>
                                                                     }
                                                                 </button>
                                                             </div>
