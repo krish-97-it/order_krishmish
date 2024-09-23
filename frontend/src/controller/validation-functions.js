@@ -76,12 +76,17 @@ var custom_functions = {
         }
     },
 
-    cityValidation : function(ele,val){
+    cityValidation : function(ele,val, isOptional){
         let reg_exp  = /^[a-zA-Z][a-zA-Z\-\ \.]{0,}$/i;
 
         if(!val || val === '' || val === null || val === 'undefined'){
-            let err_mssg = 'valid';
-            return err_mssg;
+            if(isOptional === true){
+                let err_mssg = 'valid';
+                return err_mssg;
+            }else{
+                let err_mssg    =   ele+" is required";
+                return err_mssg;
+            }
         }else if(!reg_exp.test(val)){
             let err_mssg = 'Accepts Alphabels Only';
             return err_mssg;
@@ -91,14 +96,23 @@ var custom_functions = {
         }
     },
 
-    pinCodeValidation: function (ele,val){
+    pinCodeValidation: function (ele,val, isOptional){
         let reg_exp  = /^\d{0,}$/;
+        let ind_pin_exp  = /^[1-9]{1}[0-9]{2}\s{0,1}[0-9]{3}$/;
 
         if(!val || val === '' || val === null || val === 'undefined'){
-            let err_mssg = 'valid';
-            return err_mssg;
+            if(isOptional === true){
+                let err_mssg = 'valid';
+                return err_mssg;
+            }else{
+                let err_mssg    =   "Pin code is required";
+                return err_mssg;
+            }
         }else if(!reg_exp.test(val)){
             let err_mssg = 'Pin code should be digits.';
+            return err_mssg;
+        }else if(!ind_pin_exp.test(val)){
+            let err_mssg = 'Invalid Indian Pincode.';
             return err_mssg;
         }else{
             let err_mssg = 'valid';

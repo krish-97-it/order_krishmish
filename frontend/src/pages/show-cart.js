@@ -6,17 +6,28 @@ import DiscountIcon from '../assets/discount_icon.png';
 import Swal from 'sweetalert2';
 import axios from "axios";
 
-export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCost, increaseItemQuantity, decreaseItemQuantity, loadUserData, openLoginModal, userLoggedIn}){
-    
-    const [showAddress, setShowAddress] = useState('show');
-    const [editAddress, setEditAddress] = useState('hide');
-    const [showAddressData, setShowAddressData] = useState({
-        state: '',
-        district: '',
-        city: '',
-        pinCode: '',
-    });
+export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCost, getTotalDiscountCost, increaseItemQuantity, decreaseItemQuantity, loadUserData, openLoginModal, userLoggedIn, loadDeliveryAddress, orderAddress}){
+    const [showAddress, setShowAddress]         = useState('show');
+    const [editAddress, setEditAddress]         = useState('hide');
+    const [stateErr, updateStateErr]            = useState({});
+    const [districtErr, updateDistrictErr]      = useState({});
+    const [cityErr, updateCityErr]              = useState({});
+    const [pinCodeErr, updatePinCodeErr]        = useState({});
+    const [contactNum, setContactNum]           = useState('');
+    const [contactNumErr, updateContactNumErr]  = useState({});
 
+    function handlePhoneInput(e){
+        let ele_val = e.target.value;
+        setContactNum(ele_val);
+
+        let isNumValid = ValidationFunctions.phoneValidation("Phone no.",ele_val);
+        if(isNumValid !== 'valid'){
+            updateContactNumErr({...contactNumErr, err_mssg: isNumValid, isValid: "invalid"})
+        }else{
+            updateContactNumErr({...contactNumErr, err_mssg: isNumValid, isValid: "valid"});
+        }
+
+    }
     const [deliveryAddressData, setdeliveryAddressData] = useState({
         state: '',
         district: '',
@@ -24,7 +35,7 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
         pinCode: '',
     });
 
-    const APIUrls                                   =   {
+    const APIUrls   =   {
         "saveOrderDetails"  : Costant_Variables.SERVER_BASE_URL+'/saveorderdetails'
     };
 
@@ -41,66 +52,28 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
     }
 
     function placeOrder(){
-        if(addedCartItem.length > 1){
-            let del_Address;
-            if(showAddressData.state === '' || showAddressData === 'undefined'){
-                del_Address = {
-                    state: loadUserData.state,
-                    district: loadUserData.district,
-                    city: loadUserData.city,
-                    pincode: loadUserData.pincode
-                }
+        if(addedCartItem.length > 0){
+            let isPhoneNumValid = ValidationFunctions.phoneValidation("Phone no.",contactNum);
+            if(isPhoneNumValid !== 'valid'){
+                updateContactNumErr({...contactNumErr, err_mssg: isPhoneNumValid, isValid: "invalid"})
             }else{
-                del_Address = {
-                    state: showAddressData.state,
-                    district: showAddressData.district,
-                    city: showAddressData.city,
-                    pincode: showAddressData.pinCode
+                updateContactNumErr({...contactNumErr, err_mssg: isPhoneNumValid, isValid: "valid"});
+                Swal.fire({
+                    title: 'Confirm to Place Order',
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "OK",
+                    cancelButtonText: "Cancel",
+                    icon: 'warning'
                 }
-            }
-            const formData  =   {
-                userid    : loadUserData._id,
-                useremail : loadUserData.email,
-                address   : del_Address,
-                offers    : appliedOffer,
-                items     : addedCartItem,
-            }
-            const config = {
-                headers: { 'Content-Type': 'application/json'}
-            }
-            axios.post(APIUrls.saveOrderDetails, formData, {config})
-            .then(
-                (response) => {
-                    if(response.data.success === true){
-                        localStorage.setItem("cartData", JSON.stringify([]));
-                        Swal.fire(
-                            {
-                                title: "Great!!",
-                                text: response.data.message,
-                                icon: "success"
-                            }
-                        ).then(
-                            (result) =>{
-                                if (result.isConfirmed) {
-                                    window.location.href = window.location.origin;;
-                                }
-                            }
-                        )
-                    }else{
-                        console.log("Faied to palced order")
+                ).then((result) => {
+                    if (result.isConfirmed) {
+                        orderApiCall()
+                    } else{
+                        Swal.close();
                     }
-                }
-            ).catch(error => {
-                console.log(error);
-            });
-
-            // setTimeout(function(){
-            //     window.scrollTo({ top:0, behavior: "smooth" });
-            // }, 200);
-            // setTimeout(function(){
-            //     setCartSlide('false');
-            //     setOrderSlide('true');
-            // },420)
+                })
+            }
         }else{
             Swal.fire(
                 {
@@ -109,6 +82,71 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                     icon: "warning"
                 }
             )
+        }
+
+        function orderApiCall(){
+                let del_Address;
+                if(orderAddress.district !=='' || orderAddress.pinCode !==''){
+                    del_Address = {
+                        state: orderAddress.state,
+                        district: orderAddress.district,
+                        city: orderAddress.city,
+                        pincode: parseInt(orderAddress.pinCode)
+                    }
+                }else{
+                    del_Address = {
+                        state: loadUserData.state,
+                        district: loadUserData.district,
+                        city: loadUserData.city,
+                        pincode: loadUserData.pincode
+                    }
+                }
+                const formData  =   {
+                    userid     : loadUserData._id,
+                    useremail  : loadUserData.email,
+                    phone      : parseInt(contactNum),
+                    address    : del_Address,
+                    offers     : appliedOffer,
+                    items      : addedCartItem,
+                    price      : getTotalDiscountCost(offerAmt)
+                }
+                const config = {
+                    headers: { 'Content-Type': 'application/json'}
+                }
+                axios.post(APIUrls.saveOrderDetails, formData, {config})
+                .then(
+                    (response) => {
+                        if(response.data.success === true){
+                            localStorage.setItem("cartData", JSON.stringify([]));
+                            Swal.fire(
+                                {
+                                    title: "Great!!",
+                                    text: response.data.message,
+                                    icon: "success"
+                                }
+                            ).then(
+                                (result) =>{
+                                    if (result.isConfirmed) {
+                                        window.location.href = window.location.origin;;
+                                    }
+                                }
+                            )
+                        }else{
+                            console.log("Faied to palced order")
+                        }
+                    }
+                ).catch(error => {
+                    console.log(error);
+                });
+    
+                // setTimeout(function(){
+                //     window.scrollTo({ top:0, behavior: "smooth" });
+                // }, 200);
+                // setTimeout(function(){
+                //     setCartSlide('false');
+                //     setOrderSlide('true');
+                // },420)
+            
         }
     }
 
@@ -132,16 +170,13 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
     function saveAddress(){
         let validationFlag = onSubmitValidation(deliveryAddressData);
         if(validationFlag){
-            setShowAddressData({...showAddressData, 'state':deliveryAddressData.state, 'district':deliveryAddressData.district, 'city':deliveryAddressData.city, 'pinCode' : deliveryAddressData.pinCode});
+            let convertAddressToStringData = JSON.stringify(deliveryAddressData);
+            localStorage.setItem("delivery_address", convertAddressToStringData);
+            loadDeliveryAddress();
             setShowAddress('show');
             setEditAddress('hide');
         }
     }
-
-    const [stateErr, updateStateErr]            = useState({});
-    const [districtErr, updateDistrictErr]      = useState({});
-    const [cityErr, updateCityErr]              = useState({});
-    const [pinCodeErr, updatePinCodeErr]        = useState({});
 
     const handledeliveryAddressInput = (e) => {
         let ele         =   e.target.name;
@@ -169,21 +204,21 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
 
             }
         }else if(ele === 'city'){
-            let isCityValid = ValidationFunctions.cityValidation(ele,ele_val);
+            let isCityValid = ValidationFunctions.cityValidation(ele,ele_val,false);
 
             if(isCityValid !== 'valid'){
                 updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "invalid"})
             }else{
-                updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "optional"})
+                updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "valid"})
 
             }
         }else if(ele === 'pinCode'){
-            let isPinCodeValid = ValidationFunctions.pinCodeValidation(ele,ele_val);
+            let isPinCodeValid = ValidationFunctions.pinCodeValidation(ele,ele_val,false);
 
             if(isPinCodeValid !== 'valid'){
                 updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "invalid"})
             }else{
-                updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "optional"})
+                updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "valid"})
 
             }
         }
@@ -211,11 +246,11 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
             updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "optional"})
         }
 
-        let isPinCodeValid = ValidationFunctions.pinCodeValidation("pinCode",data.pinCode);
+        let isPinCodeValid = ValidationFunctions.pinCodeValidation("pinCode",data.pinCode,false);
         if(isPinCodeValid !== 'valid'){
             updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "invalid"})
         }else{
-            updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "optional"})
+            updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "valid"})
         }
 
 
@@ -243,7 +278,7 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
     const [offerAmt, setOfferAmt] = useState('');
     function selectOffers(e,amt){
         e.preventDefault();
-        if(addedCartItem.length > 1){
+        if(addedCartItem.length > 0){
             const offer_val = e.target.value;
             const offer_name = e.target.name;
             if(offer_name === 'FISH20'){
@@ -383,16 +418,6 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
             )
         }
     }
-
-
-    // const [totalAmt, setTotalAmt] = useState()
-    function calculateTotalAmount(amt, offer_amt){
-        const total = amt === 0 ? '0' : (amt - ((amt*10)/100))
-        if(offer_amt !== ''){
-            return (total - ((total*parseInt(offer_amt))/100)) 
-        }
-        return total;
-    }
     
     document.addEventListener('click', function(){
         closeAccordion();
@@ -456,15 +481,15 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                         </div>
                         <div className="billing-section" style={{flex:2}}>
                             <h3 className="gradient-bg">Order Details</h3>
-                            <div className="billing-details-secton">
+                            <div className="billing-details-section">
                                 <div className="delivery-address-section">
                                     <div className="show-address" show-section={showAddress}>
                                         <h6 className="order-details-sub-heading">Delivery Address:<button className="btn btn-primary edit-address-btn" onClick={enableEditBtn}>Edit</button></h6>
                                         {
-                                            (showAddressData.district !== '' && showAddressData.pinCode !== '' )?
-                                            <p style={{textAlign:"left"}}>{showAddressData.city ? showAddressData.city+", ":""} {showAddressData.district? showAddressData.district+", ":""} {showAddressData.state? showAddressData.state+", ":""} {showAddressData.pinCode}</p>
+                                            (orderAddress.district !=='' || orderAddress.pinCode !=='')?
+                                            <p style={{textAlign:"left"}}>{orderAddress.city ? orderAddress.city+", ":""} {orderAddress.district? orderAddress.district+", ":""} {orderAddress.state? orderAddress.state+", ":""} {orderAddress.pinCode? orderAddress.pinCode:""}</p>
                                             :
-                                            <p style={{textAlign:"left"}}>{loadUserData.city ? loadUserData.city+", ":""} {loadUserData.district? loadUserData.district+", ":""} {loadUserData.state? loadUserData.state+", ":""} {loadUserData.pincode}</p>
+                                            <p style={{textAlign:"left"}}>{loadUserData.city ? loadUserData.city+", ":""} {loadUserData.district? loadUserData.district+", ":""} {loadUserData.state? loadUserData.state+", ":""} {loadUserData.pincode? loadUserData.pincode:""}</p>
                                         }
                                     </div>
                                     <div className="edit-address" show-section={editAddress}>
@@ -537,7 +562,7 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                                             </div>
                                             <div className="col-lg-6 col-sm-12 last-two-fields">
                                                 <label htmlFor="pinCode" className="form-label">Pin code</label>
-                                                <input type="text" className="form-control" id="pinCode" name="pinCode" placeholder="Enter your Pin code" value={deliveryAddressData.pinCode} onChange={(e)=>handledeliveryAddressInput(e)} form-valid={pinCodeErr.isValid}/>
+                                                <input type="text" className="form-control" id="pinCode" name="pinCode" placeholder="Enter your Pin code" maxLength={6} value={deliveryAddressData.pinCode} onChange={(e)=>handledeliveryAddressInput(e)} form-valid={pinCodeErr.isValid}/>
                                                 {
                                                     (pinCodeErr.err_mssg !== 'valid')?
                                                     <div className="invalid-feedback">
@@ -554,6 +579,22 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                                             <button className="btn btn-primary cancel-edit-address-btn" onClick={cancelEditForm}>Cancel</button>
                                             <button className="btn btn-primary save-address-btn" onClick={saveAddress}>Save</button>
                                         </div>
+                                    </div>
+                                </div>
+                                <div className="delivery-contact-number">
+                                    <h6>Contact Number:<span style={{color:"red"}}>*</span></h6>
+                                    <div className="del-phone-field">
+                                        <input type="tel" className="form-control" id="phoneNum" name="phoneNum" placeholder="Enter your Phone no..." value={contactNum} onChange={(e)=>handlePhoneInput(e)} form-valid={contactNumErr.isValid} maxLength="10"/>
+                                        {
+                                            (contactNumErr.err_mssg !== 'valid')?
+                                            <div className="invalid-feedback">
+                                                {contactNumErr.err_mssg}
+                                            </div>
+                                            :
+                                            <div className="valid-feedback">
+                                                {contactNumErr.err_mssg}
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                                 <div className="delivery-time-section">
@@ -577,36 +618,36 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                                         <div className="offers-lists-body">
                                             <div className="avail-offer">
                                                 <p>Get Flat 30% OFF on your First Order above Rs. 100</p>
-                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="FIRST30" value="30">Claim</button>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="FIRST30" value="30">Claim</button>
                                             </div>
                                             <div className="avail-offer">
                                                 <p>Get Flat 20% OFF on any Fish Dish above Rs. 100</p>
-                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="FISH20" value="20">Claim</button>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="FISH20" value="20">Claim</button>
                                             </div>
                                             <div className="avail-offer">
                                                 <p>Get Upto 30% OFF on Ice Cream and Sweets above Rs. 100</p>
-                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="DESSERT35" value="30">Claim</button>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="DESSERT35" value="30">Claim</button>
                                             </div>
                                             <div className="avail-offer">
                                                 <p>Get FLAT 50% Off on order over RS. 1000 by this One time applicable offer.</p>
-                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="FAN50" value="50">Claim</button>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="FAN50" value="50">Claim</button>
                                             </div>
                                             <div className="avail-offer">
                                                 <p>Get Flat 25% OFF on Veg Dishes above Rs. 100</p>
-                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,getTotalCost())}} name="VEG25" value="25">Claim</button>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="VEG25" value="25">Claim</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="item-amount-details">
-                                <h6 className="order-details-sub-heading">Billing Summary</h6>
+                                    <h6 className="order-details-sub-heading">Billing Summary</h6>
                                     <div className="total-item-count">
                                         <p>Total Items:&nbsp;</p>
                                         <p>{(addedCartItem.length)}</p>
                                     </div>
                                     <div className="total-item-count">
                                         <p>Total Amount:&nbsp;</p>
-                                        <p>{getTotalCost()}</p>
+                                        <p>{totalCartCost()}</p>
                                     </div>
                                     <div className="total-item-count">
                                         <p>Dicount:&nbsp;</p>
@@ -619,17 +660,17 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, getTotalCos
                                     <hr className="hr-line"></hr>
                                     <div className="total-item-count">
                                         <p>Amount after Discount:&nbsp;</p>
-                                        <p>{calculateTotalAmount(getTotalCost(), offerAmt)}</p>
-                                    </div>
+                                        <p>{getTotalDiscountCost(offerAmt)}</p>
                                     </div>
                                 </div>
-                                <div className="order-now-btn">
-                                {
-                                    (userLoggedIn !== 'true')?
-                                    <button className="btn btn-primary place-order-btn" type="button" onClick={openLoginModal}>Place Your Order</button>
-                                    :
-                                    <button className="btn btn-primary place-order-btn" type="button" onClick={placeOrder}>Place Your Order</button>
-                                }
+                            </div>
+                            <div className="order-now-btn">
+                            {
+                                (userLoggedIn !== 'true')?
+                                <button className="btn btn-primary place-order-btn" type="button" onClick={openLoginModal}>Place Your Order</button>
+                                :
+                                <button className="btn btn-primary place-order-btn" type="button" onClick={placeOrder}>Place Your Order</button>
+                            }
                             </div>
                         </div>
                     </div>

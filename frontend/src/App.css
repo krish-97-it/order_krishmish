@@ -75,9 +75,10 @@ body{
   color: white;
 }
 
-[dark-theme="on"] .billing-details-secton{
+[dark-theme="on"] .billing-details-section{
   background-color: #2e2e2e;
   transition: background-color 2s;
+  color: #000000;
 }
 
 [dark-theme="on"] .food-cat-name{
@@ -105,7 +106,7 @@ body{
   color: black !important;
 }
 
-[dark-theme="off"] .billing-details-secton{
+[dark-theme="off"] .billing-details-section{
   background-color: #f7f7f7;
   transition: background-color 2s;
 }

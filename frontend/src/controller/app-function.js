@@ -36,6 +36,9 @@ export default function AppFunction(){
         "fetchFavItemsAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getwishlist',
         "fetchCartItemApiUrl" : Costant_Variables.SERVER_BASE_URL+'/getcartitems',
         "saveCartItemApiUrl"  : Costant_Variables.SERVER_BASE_URL+'/savecartitems',
+        "fetchOrderHistory"   : Costant_Variables.SERVER_BASE_URL+'/orderhistory',
+        "saveRatedItemApiUrl" : Costant_Variables.SERVER_BASE_URL+'/updateratings',
+        "getRatedItemsUrl"    : Costant_Variables.SERVER_BASE_URL+'/getrateditems',
     };
 
     function loadCuisineData(){
@@ -112,6 +115,7 @@ export default function AppFunction(){
             if (result.isConfirmed) {
                 localStorage.setItem("krishmish@regUserId", "");
                 localStorage.setItem("favouriteItems", JSON.stringify([]));
+                localStorage.setItem("ratedItems", JSON.stringify([]));
                 localStorage.setItem("cartData", JSON.stringify([]));
                 window.location.href = websiteBaseUrl;
                 // window.location.reload();
@@ -141,6 +145,8 @@ export default function AppFunction(){
                         updateShowLoginModal('hide');
                         fetchFavouriteItemsFromDb(resData[0]._id);
                         fetchCartDataFromDb(resData[0]._id);
+                        fetchOrderHistoryFromDb(resData[0]._id);
+                        getRatedItemsFromDb(resData[0]._id);
                         localStorage.setItem("krishmish@regUserId", "krishmish@"+resData[0].email);
                     }else{
                         setTimeout(function(){
@@ -410,12 +416,30 @@ export default function AppFunction(){
     }
 
     // Evaluate Total Cost and helps to generate bill
-    const getTotalCost  = () =>{
+    const totalCartCost  = () =>{
         let total_cost = 0;
         for(let i=0; i<cartItem.length; i++){
             total_cost  = total_cost + ((cartItem[i].item_quantity)*(cartItem[i].product.price));
         }
         return total_cost;
+    }
+
+    const getTotalDiscountCost = (discount_amt) =>{
+        let total_cost = 0;
+        for(let i=0; i<cartItem.length; i++){
+            total_cost  = total_cost + ((cartItem[i].item_quantity)*(cartItem[i].product.price));
+        }
+
+        // after evaluate total price of items apply complementary 10% Off
+        const total = total_cost === 0 ? 0 : (total_cost - ((total_cost*10)/100));
+
+        // Check any offer/discount percentage is present or not. apply it and then return
+        if(discount_amt !== ''){
+            const t_cost = total - ((total*parseInt(discount_amt))/100);
+            return t_cost
+        }
+
+        return total;
     }
 
     // increase / decrease item from cart
@@ -576,6 +600,142 @@ export default function AppFunction(){
     let convertFavItemsToStringData = JSON.stringify(favouriteItems);
     localStorage.setItem("favouriteItems", convertFavItemsToStringData);
 
+    // This function fetch cartItem data from localstorage.
+    const [orderAddress, setOrderAddress]   =   useState(fetchDeliveryAddressFromLocalStorage());
+    function fetchDeliveryAddressFromLocalStorage(){
+        let retaddressStringFromLocalStorage   = localStorage.getItem("delivery_address");
+        let retaddressFromLocalStorage         = JSON.parse(retaddressStringFromLocalStorage);
+
+        if(retaddressFromLocalStorage === null){
+            return {state:'', city:'', district:'', pinCode:''};
+        }else{
+            return retaddressFromLocalStorage;
+        }
+    }
+
+    function loadDeliveryAddress(){
+        setOrderAddress(fetchDeliveryAddressFromLocalStorage());
+    }
+
+    //Fetch Order History
+    const [orderHistoryData, setOrderHistoryData] = useState([]);
+    function fetchOrderHistoryFromDb(id){
+        const formData  =   {
+            userid   : id,
+        }
+        const config = {
+            headers: { 'Content-Type': 'application/json'}
+        }
+        axios.post(APIUrls.fetchOrderHistory, formData, {config})
+        .then(
+            (response) => {
+                if(response.data.success === true){
+                    const resData = response.data.data;
+                    const dataLen = resData.length;
+                    if(dataLen > 0){
+                        setOrderHistoryData(resData.reverse());
+                    }else{
+                        console.log("No Items found in Order History");
+                    }
+                }else{
+                    console.log("Faied to fetch order history")
+                }
+            }
+        ).catch(error => {
+            console.log(error)
+        });
+    }
+
+
+        // Rate Items
+        const [ratedItems, updateRatedItems]   =   useState(getRatedItemsFromLocalStorage());
+    
+        function getRatedItemsFromLocalStorage(){
+            let ratingStringFromLocalStorage   = localStorage.getItem("ratedItems");
+            let ratedItemsFromLocalStorage     = JSON.parse(ratingStringFromLocalStorage);
+    
+            if(ratedItemsFromLocalStorage === null){
+                return [];
+            }else{
+                return ratedItemsFromLocalStorage;
+            }
+        }
+    
+        function getRatedItemsFromDb(user_id){
+            const formData  =   {
+                userid   : user_id,
+            }
+            const config = {
+                headers: { 'Content-Type': 'application/json'}
+            }
+            axios.post(APIUrls.getRatedItemsUrl, formData, {config})
+            .then(
+                (response) => {
+                    if(response.data.success === true){
+                        const resData = response.data.data;
+                        if(resData.length > 0){
+                            const convertItemsToStringData = JSON.stringify(resData[0].rated_items);
+                            localStorage.setItem("ratedItems", convertItemsToStringData);
+                            updateRatedItems(resData[0].rated_items);
+                        }else{
+                            console.log("No Items rated yet");
+                        }
+                    }else{
+                        console.log("Faied to fetch item lists")
+                    }
+                }
+            ).catch(error => {
+                console.log(error);
+            });
+        }
+    
+        const addRating = (Itemid, item_rating) =>{
+            const findProduct = ratedItems.find(item => item.p_id === Itemid);
+            if (!findProduct){
+                updateRatedItems([...ratedItems, {p_id:Itemid, rating:item_rating}]);
+            }else{
+                const tempData = ratedItems.map(item =>
+                    item.p_id === Itemid ? { 
+                    ...item, rating: item_rating } 
+                    : item
+                );
+                updateRatedItems(tempData);
+
+            }
+    
+            setTimeout((saveItemRatings),2000)
+        }
+    
+        function saveItemRatings(){
+            const ratedItemsFromLocal  =  getRatedItemsFromLocalStorage();
+            const formData  =   {
+                userid     : loadUserData._id,
+                ratedItems : ratedItemsFromLocal
+            }
+            const config = {
+                headers: { 'Content-Type': 'application/json'}
+            }
+            axios.post(APIUrls.saveRatedItemApiUrl, formData, {config})
+            .then(
+                (response) => {
+                    if(response.data.success === true){
+                        const resData = response.data.data;
+                        if(resData.length > 0){
+                            console.log("Item List updated successfully");
+                        }else{
+                            console.log("No Items added to List");
+                        }
+                    }else{
+                        console.log("Faied to save item rating")
+                    }
+                }
+            ).catch(error => {
+                console.log(error);
+            });
+        }
+    
+        let convertRatedItemsToStringData = JSON.stringify(ratedItems);
+        localStorage.setItem("ratedItems", convertRatedItemsToStringData);
 
     return (
         <Router>
@@ -586,10 +746,10 @@ export default function AppFunction(){
                 <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getSortFilterInput={getSortFilterInput} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length} addToFavourite={addToFavourite} favouriteItems={favouriteItems}/>} />
                 <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
-                <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} getTotalCost={getTotalCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} loadUserData = {loadUserData} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn} />} />
+                <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} totalCartCost={totalCartCost} getTotalDiscountCost={getTotalDiscountCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} loadUserData = {loadUserData} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn} loadDeliveryAddress={loadDeliveryAddress} orderAddress={orderAddress} />} />
                 <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} addToFavourite={addToFavourite} favouriteItems={favouriteItems} addToCartFunction={addItemToCart} addedCartItem = {cartItem} />} />
                 <Route exact path="/myprofile/wishlist" element={<WishListPage addToCartFunction={addItemToCart} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={favouriteItems.length} parentClass={"wishlist-page-section"} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn}/>} />
-                <Route exact path="/myprofile/order-history" element={<OrderHistoryPage userLoggedIn={userLoggedIn}/>}/>
+                <Route exact path="/myprofile/order-history" element={<OrderHistoryPage orderHistoryData={orderHistoryData} userLoggedIn={userLoggedIn} addToCartFunction={addItemToCart} ratedItems={ratedItems} addRating={addRating} />}/>
                 <Route exact path="*" element={<Errorpage />} />
             </Routes>
             <Footer/>
