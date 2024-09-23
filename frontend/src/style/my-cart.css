@@ -28,7 +28,6 @@
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 24px 20px -15px #7a3e864f;
-    min-height: 600px;
     max-height: 600px;
     overflow-y: scroll;
 }
@@ -101,7 +100,7 @@
 .billing-section{
     position: relative;
 }
-.billing-details-secton{
+.billing-details-section{
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -111,7 +110,6 @@
     box-shadow: 0 24px 20px -15px #7a3e864f;
     border: 1px solid #e1e1e1;
     gap: 15px;
-    min-height: 600px;
     max-height: 600px;
     overflow-y: scroll;
 }
@@ -176,6 +174,23 @@
         padding: 4px 36px 4px 10px;
         font-size: 14px;
         text-align: left;
+}
+.delivery-contact-number{
+    background-color: white;
+    border: 1px solid #b8b8b8;
+    border-radius: 7px;
+}
+.delivery-contact-number h6{
+    text-align: left;
+    background-color: #494949;
+    padding: 6px 10px;
+    border-radius: 5px 5px 0px 0px;
+    color: white;
+}
+.del-phone-field{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
 }
 .delivery-time-section{
     display: flex;
@@ -275,7 +290,7 @@ hr{
 .order-now-btn{
     width: 100%;
     padding: 10px;
-    background-color: #f7f7f7;
+    background-color: #a8ff95;
     border-radius: 0px 0px 8px 8px;
     position: absolute;
     margin-top: -58px;
@@ -335,6 +350,11 @@ hr{
     }
     .cart-item-billing-section {
         gap: 10px;
+    }
+}
+@media(min-width:768px){
+    .billing-details-section, .cart-item-section{
+        min-height: 600px;
     }
 }
 @media(max-width:767.98px){

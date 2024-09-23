@@ -8,6 +8,9 @@ const orderSchema = new Schema(
         user_email : {
            type: String
         },
+        contact_num : {
+            type: Number
+         },
         delivery_address: {
             type: Array
         },
@@ -16,6 +19,9 @@ const orderSchema = new Schema(
         },
         ordered_items: {
             type: Array
+        },
+        order_amt:{
+            type: Number
         },
         status: {
             type: String

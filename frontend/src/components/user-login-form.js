@@ -129,7 +129,7 @@ const LoginForm = ({loadUserDataFunction})=> {
 
             }
         }else if(ele === 'city'){
-            let isCityValid = ValidationFunctions.cityValidation(ele,ele_val);
+            let isCityValid = ValidationFunctions.cityValidation(ele,ele_val,true);
 
             if(isCityValid !== 'valid'){
                 updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "invalid"})
@@ -147,7 +147,7 @@ const LoginForm = ({loadUserDataFunction})=> {
 
             }
         }else if(ele === 'pinCode'){
-            let isPinCodeValid = ValidationFunctions.pinCodeValidation(ele,ele_val);
+            let isPinCodeValid = ValidationFunctions.pinCodeValidation(ele,ele_val,true);
 
             if(isPinCodeValid !== 'valid'){
                 updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "invalid"})
@@ -234,7 +234,7 @@ const LoginForm = ({loadUserDataFunction})=> {
             updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "optional"})
         }
 
-        let isPinCodeValid = ValidationFunctions.pinCodeValidation("pinCode",data.pinCode);
+        let isPinCodeValid = ValidationFunctions.pinCodeValidation("pinCode",data.pinCode,false);
         if(isPinCodeValid !== 'valid'){
             updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "invalid"})
         }else{
@@ -327,7 +327,7 @@ const LoginForm = ({loadUserDataFunction})=> {
     }
 
     const [otpBox, setOtpBox]        = useState('hide');
-    const [otpInput, setotpInput]            = useState('');
+    const [otpInput, setotpInput]    = useState('');
     function otpInputChange(e){
         let ele_val     =   e.target.value;
         setotpInput(ele_val);
@@ -586,16 +586,16 @@ const LoginForm = ({loadUserDataFunction})=> {
                 <select className="form-select" id="district" name="district" value={newUserData.district} onChange={(e)=>handlenewUserInput(e)} form-valid={districtErr.isValid} select-color={newUserData.district === ''?'novalue':'withvalue'}>
                     <option value="" disabled>Choose your district</option>
                     {
-                        Costant_Variables.states_districts.map((data,index)=>
+                        Costant_Variables.states_districts.map((data)=>
                             (data.state === newUserData.state)?
                             data.districts.map((d,i)=>{
                              return(
-                                 <option value={d} key={i}>{d}</option>
+                                <option value={d} key={i}>{d}</option>
                              )
                             })
                             :
                             <></>
-                         )
+                        )
                     }
                 </select>
                 {
@@ -625,7 +625,7 @@ const LoginForm = ({loadUserDataFunction})=> {
             </div>
             <div className="col-lg-6 col-sm-12 last-two-fields">
                 <label htmlFor="pinCode" className="form-label">Pin code</label>
-                <input type="text" className="form-control" id="pinCode" name="pinCode" placeholder="Enter your Pin code" value={newUserData.pinCode} onChange={(e)=>handlenewUserInput(e)} form-valid={pinCodeErr.isValid}/>
+                <input type="text" className="form-control" id="pinCode" name="pinCode" placeholder="Enter your Pin code" maxLength={6} value={newUserData.pinCode} onChange={(e)=>handlenewUserInput(e)} form-valid={pinCodeErr.isValid}/>
                 {
                     (pinCodeErr.err_mssg !== 'valid')?
                     <div className="invalid-feedback">

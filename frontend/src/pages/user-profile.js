@@ -170,7 +170,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
 
             }
         }else if(ele === 'city'){
-            let isCityValid = ValidationFunctions.cityValidation(ele,ele_val);
+            let isCityValid = ValidationFunctions.cityValidation(ele,ele_val,true);
 
             if(isCityValid !== 'valid'){
                 updateCityErr({...cityErr, err_mssg: isCityValid, isValid: "invalid"})
@@ -179,7 +179,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
 
             }
         }else if(ele === 'pinCode'){
-            let isPinCodeValid = ValidationFunctions.pinCodeValidation(ele,ele_val);
+            let isPinCodeValid = ValidationFunctions.pinCodeValidation(ele,ele_val,true);
 
             if(isPinCodeValid !== 'valid'){
                 updatePinCodeErr({...pinCodeErr, err_mssg: isPinCodeValid, isValid: "invalid"})
@@ -661,7 +661,7 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
                                                         </div>
                                                         <div className="col-lg-6 col-sm-12 last-two-fields">
                                                             <label htmlFor="pinCode" className="form-label">Pin code</label>
-                                                            <input type="text" className="form-control" id="pinCode" name="pinCode" placeholder="Enter your Pin code" value={newUserData.pinCode} onChange={(e)=>handlenewUserInput(e)} form-valid={pinCodeErr.isValid}/>
+                                                            <input type="text" className="form-control" id="pinCode" name="pinCode" placeholder="Enter your Pin code" maxLength={6} value={newUserData.pinCode} onChange={(e)=>handlenewUserInput(e)} form-valid={pinCodeErr.isValid}/>
                                                             {
                                                                 (pinCodeErr.err_mssg !== 'valid')?
                                                                 <div className="invalid-feedback">
