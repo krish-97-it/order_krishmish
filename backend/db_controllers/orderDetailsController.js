@@ -6,10 +6,12 @@ exports.orderPlaced = async(req,res) => {
     const insertParameters  = {
         user_id          : req.body.userid,
         user_email       : req.body.useremail,
+        contact_num      : req.body.phone,
         delivery_address : req.body.address,
         cupon_code       : req.body.offers,
         ordered_items    : req.body.items,
-        status           : "Ordered",
+        order_amt        : req.body.price,
+        status           : "Ordered Successfully",
         track_details    : "Your Order is in processing and will be delivered soon",
         updated_at       : new Date()
     }
@@ -41,3 +43,24 @@ exports.orderPlaced = async(req,res) => {
         })
     }
 }
+
+exports.getOrderHistory = async (req,res) => {
+    await orderModel.find({user_id:req.body.userid}).then(
+        (orderData) =>{
+            if(orderData.length > 0){
+                return res.status(200).json({success:true, message: "Successfully fetched Order History!", data: orderData});
+            }else{
+                return res.status(200).json({success:false, message: "No Order History found"});
+            }
+        }
+    ).catch(
+        (error)=>{
+            return res.status(500).json({
+                success: false,
+                message: "Internal server error",
+                error: error.message
+            })
+        }
+    )
+}
+

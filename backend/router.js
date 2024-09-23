@@ -7,6 +7,7 @@ const emailOtpController   =   require('./db_controllers/emailOtpController');
 const wishlistController   =   require('./db_controllers/wishlistController');
 const userCartController   =   require('./db_controllers/userCartController');
 const userOrderController  =   require('./db_controllers/orderDetailsController');
+const itemRatingController =   require('./db_controllers/itemRatingController');
 
 
 
@@ -33,6 +34,10 @@ router.post('/savecartitems', userCartController.updateCartData);
 
 //Place User Order
 router.post('/saveorderdetails', userOrderController.orderPlaced);
+router.post('/orderhistory', userOrderController.getOrderHistory);
 
+//Place User Order
+router.post('/updateratings', itemRatingController.updateRatedItems);
+router.post('/getrateditems', itemRatingController.getRatedItems);
 
 module.exports = router;
