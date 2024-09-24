@@ -100,6 +100,12 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Open Sans', s
     z-index: 1000;
     bottom: 0px;
 }
+[show-toast-conatiner="true"]{
+    display: none;
+}
+[show-toast-conatiner="false"]{
+    display: block;
+}
 .checkout-cart-toast{
     width: 100%;
     border-radius: 8px;
