@@ -33,12 +33,12 @@ const OffersInfo = ({getHomeCuisineName}) => {
             <div className="accordion-item">
                 <h2 className="accordion-header">
                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                        Flat 150 Off on your first Order
+                        Flat 30% Off on your first Order
                     </button>
                 </h2>
                 <div id="flush-collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div className="accordion-body" style={{display:"flex", justifyContent:"space-between", alignItems:"baseline",flexWrap:"no-wrap", flexDirection:"column"}}>
-                        <p style={{flex:3, textAlign:"start"}}>Avail Flat 150 discount on any item<code>. Terms & Condition</code> applied. Total Order Amount should be greater than 300</p>
+                        <p style={{flex:3, textAlign:"start"}}>Avail 30% discount on any item<code>. Terms & Condition</code> applied. Total Order Amount should be greater than 300 and is applicable once per user.</p>
                         <Link to="/cuisine" className="btn btn-primary" style={{}}>Order Now</Link>
                     </div>
                 </div>
@@ -46,12 +46,12 @@ const OffersInfo = ({getHomeCuisineName}) => {
             <div className="accordion-item">
                 <h2 className="accordion-header">
                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
-                        Flat 10% Off on Fish Item
+                        Flat 20% Off on Fish Item
                     </button>
                 </h2>
                 <div id="flush-collapseFour" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                     <div className="accordion-body" style={{display:"flex", justifyContent:"space-between", alignItems:"baseline", flexWrap:"no-wrap", flexDirection:"column"}}>
-                        <p style={{flex:3, textAlign:"start"}}>Avail Flat 10% Off discount on Fish item<code>{"(For all Cuisine)"}</code></p>
+                        <p style={{flex:3, textAlign:"start"}}>Avail Flat 20% Off discount on Fish item<code>{"(For all Cuisine)"}</code>. Total Order Amount should be greater than 350.</p>
                         <Link to="/cuisine" className="btn btn-primary" style={{}} onClick={()=>getHomeCuisineName("fish")} value="fish">Order Now</Link>
                     </div>
                 </div>
@@ -91,6 +91,32 @@ const OffersInfo = ({getHomeCuisineName}) => {
                     <div className="accordion-body" style={{display:"flex", justifyContent:"space-between", alignItems:"baseline", flexWrap:"no-wrap", flexDirection:"column"}}>
                         <p style={{flex:3, textAlign:"start"}}>Upto 20% Off on all items under snacks. <code>Terms & Condition</code> applied. Minimum Order Value 150</p>
                         <Link to="/cuisine" className="btn btn-primary" style={{}} onClick={()=>getHomeCuisineName("snack")} value="snack">Order Now</Link>
+                    </div>
+                </div>
+            </div>
+            <div className="accordion-item">
+                <h2 className="accordion-header">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEight" aria-expanded="false" aria-controls="flush-collapseEight">
+                        Upto 35% off on Dessert
+                    </button>
+                </h2>
+                <div id="flush-collapseEight" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div className="accordion-body" style={{display:"flex", justifyContent:"space-between", alignItems:"baseline", flexWrap:"no-wrap", flexDirection:"column"}}>
+                        <p style={{flex:3, textAlign:"start"}}>Upto 35% Off on Ice-cream and sweets. <code>Terms & Condition</code> applied. Minimum Order Value should be greater than 400</p>
+                        <Link to="/cuisine" className="btn btn-primary" style={{}} onClick={()=>getHomeCuisineName("dessert")} value="snack">Order Now</Link>
+                    </div>
+                </div>
+            </div>
+            <div className="accordion-item">
+                <h2 className="accordion-header">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false" aria-controls="flush-collapseNine">
+                        Flat 35% off on any dish
+                    </button>
+                </h2>
+                <div id="flush-collapseNine" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div className="accordion-body" style={{display:"flex", justifyContent:"space-between", alignItems:"baseline", flexWrap:"no-wrap", flexDirection:"column"}}>
+                        <p style={{flex:3, textAlign:"start"}}>Flat 35% Off on all items. <code>Terms & Condition</code> applied. Minimum Order Value should be greater than 1200 and applicable for once per month for a user.</p>
+                        <Link to="/cuisine" className="btn btn-primary" value="snack">Order Now</Link>
                     </div>
                 </div>
             </div>
