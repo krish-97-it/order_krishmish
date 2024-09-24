@@ -5,9 +5,8 @@ import ValidationFunctions from "../controller/validation-functions";
 import Swal from 'sweetalert2';
 import GoToTop from "../components/go-to-top";
 import WishList from "../components/wishlist";
-import OrderHistory from "../components/order-history";
 
-const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favouriteItems, addToCartFunction}) => {
+const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favouriteItems, addToCartFunction, orderHistoryData}) => {
     function scrollToWishList(){
         const aria_expand = document.querySelector("button.open-wishlist-btn").getAttribute('aria-expanded');
         if(aria_expand === 'true'){
@@ -741,7 +740,15 @@ const MyProfile = ({loadUserDataFunction, loadUserData, addToFavourite, favourit
                                 </h2>
                                 <div id="orderHistory" className="accordion-collapse collapse" data-bs-parent="#profileAccordation">
                                     <div className="accordion-body">
-                                        <OrderHistory/>
+                                        {
+                                            (orderHistoryData.length > 0)?
+                                            <div>
+                                                <p style={{color:"black", fontSize:"22px", fontWeight:"500px"}}>You can check all your order details on Order History Page. Click on below button to see your last ordered items.</p>
+                                                <NavLink className="btn btn-primary" to="/myprofile/order-history">View All</NavLink>
+                                            </div>
+                                            :
+                                            <p style={{color:"grey", fontSize:"22px", fontWeight:"600px"}}>It seems like you have not ordered yet! Place your first order at Flat 30% discount.</p>
+                                        }
                                     </div>
                                 </div>
                             </div>

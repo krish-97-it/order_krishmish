@@ -18,7 +18,7 @@ export default function SearchBar({searchItem, getSearchInput, clearInput, getIn
 
     function onClickSearchBar(e){
         if(currentPath.includes('/cuisine')){
-            e.preventDefault()
+            e.preventDefault();
         }
     }
 
