@@ -183,6 +183,9 @@ export default function AppFunction(){
             );
             updateTempFoodList(abc);
         }
+        if(search_text !== ''){
+            document.getElementById("showAllProducts").scrollIntoView({ behavior: "smooth" });
+        }
     }
     // clear search field
     const clearInput = (event) => {
@@ -747,7 +750,7 @@ export default function AppFunction(){
                 <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
                 <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} deleteCartItem={deleteItemToCart} totalCartCost={totalCartCost} getTotalDiscountCost={getTotalDiscountCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} loadUserData = {loadUserData} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn} loadDeliveryAddress={loadDeliveryAddress} orderAddress={orderAddress} />} />
-                <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} addToFavourite={addToFavourite} favouriteItems={favouriteItems} addToCartFunction={addItemToCart} addedCartItem = {cartItem} />} />
+                <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} addToFavourite={addToFavourite} favouriteItems={favouriteItems} addToCartFunction={addItemToCart} addedCartItem = {cartItem} orderHistoryData={orderHistoryData}/>} />
                 <Route exact path="/myprofile/wishlist" element={<WishListPage addToCartFunction={addItemToCart} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={favouriteItems.length} parentClass={"wishlist-page-section"} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn}/>} />
                 <Route exact path="/myprofile/order-history" element={<OrderHistoryPage orderHistoryData={orderHistoryData} userLoggedIn={userLoggedIn} addToCartFunction={addItemToCart} ratedItems={ratedItems} addRating={addRating} />}/>
                 <Route exact path="*" element={<Errorpage />} />

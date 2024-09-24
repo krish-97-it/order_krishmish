@@ -2,22 +2,24 @@ import React from "react";
 
 export default function OrderHistory({orderHistoryData, userLoggedIn, addToCartFunction, ratedItems, addRating}){
     function convertDate(date){
-        let d       = new Date(date);
-        // const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-        // const day   = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Sturday"];
+        let d               = new Date(date);
+        // const month      = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        // const day        = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Sturday"];
 
-        // let month_Name = month[d.getMonth()];
-        // let day_Name   = day[d.getDay()];
-        // let year       = d.getFullYear();
-        // let time       = d.toLocaleTimeString();
-        let dateString = d.toDateString();
+        // let month_Name   = month[d.getMonth()];
+        // let day_Name     = day[d.getDay()];
+        // let year         = d.getFullYear();
+        let time            = d.toLocaleTimeString();
+        let dateString      = d.toDateString();
 
-        return dateString
-        // console.log(month_Name);
-        // console.log(day_Name);
-        // console.log(time);
-        // console.log(year);
+        const date_time     = {
+            date : dateString,
+            time : time
+        }
+
+        return date_time
     }
+
     return(
         <>
         {
@@ -26,22 +28,24 @@ export default function OrderHistory({orderHistoryData, userLoggedIn, addToCartF
                 return(
                     <div className="each-order-section" key={i}>
                         <div className="order-date-section">
-                            <span>{convertDate((data.created_at),0)}</span>
+                            <span>{convertDate((data.created_at)).date}</span>
+                            <span>{convertDate((data.created_at)).time}</span>
                         </div>
                         <div className="order-details-section">
                             <p className="order-status">Order Status: <span>{data.status}</span></p>
                             <p className="track-order">Track Order: <span>{data.track_details}</span></p>
                             <p className="total-order-item">Total Items: <span>{data.ordered_items.length}</span></p>
                             <p className="order-amt">Total Price: <span>₹{data.order_amt}</span></p>
+                            <p className="order-contact-num">Contact Number: <span>{data.contact_num}</span></p>
                             <p className="delivery-order-address">Delivery Address: <span>{data.delivery_address[0].city}, {data.delivery_address[0].district}, {data.delivery_address[0].state}, {data.delivery_address[0].pincode}</span></p>
                         </div>
 
                         <div className="accordion accordion-flush view-ordered-items" id="orderHistoryAccordion">
                             <div className="view-ordered-items-btn-section">
                                 <p className="view-ordered-item-heading">Ordered items:</p>
-                                <button className="view-ordered-items-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#ordereditemcollapse"+i} aria-expanded="false" aria-controls={"#ordereditemcollapse"+i}>View list</button>
+                                <button className="view-ordered-items-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target={"#ordereditemcollapse"+i} aria-controls={"#ordereditemcollapse"+i}>View list</button>
                             </div>
-                            <div id={"ordereditemcollapse"+i} className="accordion-collapse collapse ordered-item-lists" data-bs-parent="#orderHistoryAccordion">
+                            <div id={"ordereditemcollapse"+i} className="accordion-collapse collapse ordered-item-lists">
                                 <div className="order-item-section">
                                     {
                                         data.ordered_items.map((item,j)=>{

@@ -10,6 +10,7 @@
 .brand-logo-footer{
     height: 100px !important;
     width: 100px !important;
+    border-radius: 8px;
 }
 .footer-intro{
     padding-top:4px;
@@ -134,13 +135,23 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Open Sans', s
     justify-content: space-between;
     align-items: center;
 }
+.copyright-text span{
+    color: white;
+}
+.copyright-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0px;
+    font-size: 14px;
+}
 @media(min-width:768px){
     .logo-contact-info{
         padding-right: 25px
     }
 }
 
- @media(max-width:767.98px){
+@media(max-width:767.98px){
     .footer-col {text-align: center;}
     .footer-social{
         justify-content: center;
@@ -153,4 +164,13 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Open Sans', s
         padding-bottom:12px !important;
         border-bottom:1px solid white;
     }
- }
+}
+
+@media(max-width:483.98px){
+    .copyright-section{
+        flex-direction: column;
+    }
+    .copyright-email a{
+        font-size: 12px;
+    }
+}
