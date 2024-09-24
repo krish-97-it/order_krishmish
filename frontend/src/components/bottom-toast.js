@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 export default function BottomToast(){
 
-
     const [hideContainer, updateHideContainer] = useState('false')
     function hideToastContainer(){
         updateHideContainer('true');
