@@ -5,8 +5,9 @@ import ValidationFunctions from "../controller/validation-functions";
 import DiscountIcon from '../assets/discount_icon.png';
 import Swal from 'sweetalert2';
 import axios from "axios";
+import LastOrderedItemCarousel from '../components/last-ordered-carousel';
 
-export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCost, getTotalDiscountCost, increaseItemQuantity, decreaseItemQuantity, loadUserData, openLoginModal, userLoggedIn, loadDeliveryAddress, orderAddress}){
+export default function ShowCartPage({addedCartItem, addToCartFunction, deleteCartItem, totalCartCost, getTotalDiscountCost, increaseItemQuantity, decreaseItemQuantity, loadUserData, openLoginModal, userLoggedIn, loadDeliveryAddress, orderAddress, orderHistoryData}){
     const [showAddress, setShowAddress]         = useState('show');
     const [editAddress, setEditAddress]         = useState('hide');
     const [stateErr, updateStateErr]            = useState({});
@@ -286,15 +287,27 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCo
                     item.product.tags.toLowerCase().includes('fish')
                 ) 
                 if(ItemList.length === addedCartItem.length){
-                    setAppliedOffer(offer_name);
-                    setOfferAmt(offer_val);
-                    Swal.fire(
-                        {
-                            title: "",
-                            text: "Offers applied successfully!",
-                            icon: "success"
-                        }
-                    )
+                    if(amt > 350){
+                        setAppliedOffer(offer_name);
+                        setOfferAmt(offer_val);
+                        Swal.fire(
+                            {
+                                title: "",
+                                text: "Offers applied successfully!",
+                                icon: "success"
+                            }
+                        )
+                    }else{
+                        Swal.fire(
+                            {
+                                title: "Failed!",
+                                text: "Failed to apply selected cupon code. Ordered Item should be greater than 350",
+                                icon: "error"
+                            }
+                        )
+                        setAppliedOffer('');
+                        setOfferAmt('');
+                    }
                 }
                 else{
                     Swal.fire(
@@ -308,19 +321,30 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCo
                     setOfferAmt('');
                 }
             }else if(offer_name === 'VEG25'){
-                const ItemList     =   addedCartItem.filter((item) =>
-                    item.product.tags.toLowerCase().includes('veg')
-                ) 
-                if(ItemList.length === addedCartItem.length){
-                    setAppliedOffer(offer_name);
-                    setOfferAmt(offer_val);
-                    Swal.fire(
-                        {
-                            title: "",
-                            text: "Offers applied successfully!",
-                            icon: "success"
-                        }
-                    )
+                console.log(addedCartItem);
+                const findProduct = addedCartItem.find(item => item.product.category === 'non veg');
+                if(!findProduct){
+                    if(amt > 400){
+                        setAppliedOffer(offer_name);
+                        setOfferAmt(offer_val);
+                        Swal.fire(
+                            {
+                                title: "",
+                                text: "Offers applied successfully!",
+                                icon: "success"
+                            }
+                        )
+                    }else{
+                        Swal.fire(
+                            {
+                                title: "Failed!",
+                                text: "Failed to apply selected cupon code. Ordered Item should be greater than 400",
+                                icon: "error"
+                            }
+                        )
+                        setAppliedOffer('');
+                        setOfferAmt('');
+                    }
                 }else{
                     Swal.fire(
                         {
@@ -337,15 +361,25 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCo
                     item.product.tags.toLowerCase().includes('dessert')
                 ) 
                 if(ItemList.length === addedCartItem.length){
-                    setAppliedOffer(offer_name);
-                    setOfferAmt(offer_val);
-                    Swal.fire(
+                    if(amt > 400){
+                        setAppliedOffer(offer_name);
+                        setOfferAmt(offer_val);
+                        Swal.fire(
+                            {
+                                title: "",
+                                text: "Offers applied successfully!",
+                                icon: "success"
+                            }
+                        )
+                    }Swal.fire(
                         {
-                            title: "",
-                            text: "Offers applied successfully!",
-                            icon: "success"
+                            title: "Failed!",
+                            text: "Failed to apply selected cupon code. Ordered Item should be greater than 400",
+                            icon: "error"
                         }
                     )
+                    setAppliedOffer('');
+                    setOfferAmt('');
                 }else{
                     Swal.fire(
                         {
@@ -357,22 +391,35 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCo
                     setAppliedOffer('');
                     setOfferAmt('');
                 }
-            }else if(offer_name === 'FAN50'){
-                if(amt > 1000){
-                    setAppliedOffer(offer_name);
-                    setOfferAmt(offer_val);
-                    Swal.fire(
-                        {
-                            title: "",
-                            text: "Offers applied successfully!",
-                            icon: "success"
-                        }
-                    )
+            }else if(offer_name === "FAN35"){
+                if(amt > 1200){
+                    const get_time_period = getIntervalOfLastOffer('FAN35');
+                    if(get_time_period >= 30){
+                        setAppliedOffer(offer_name);
+                        setOfferAmt(offer_val);
+                        Swal.fire(
+                            {
+                                title: "",
+                                text: "Offers applied successfully!",
+                                icon: "success"
+                            }
+                        )
+                    }else{
+                        Swal.fire(
+                            {
+                                title: "Failed!",
+                                text: "Failed to apply selected cupon code. You can avail this offer once in a month",
+                                icon: "error"
+                            }
+                        )
+                        setAppliedOffer('');
+                        setOfferAmt('');
+                    }
                 }else{
                     Swal.fire(
                         {
                             title: "Failed!",
-                            text: "Failed to apply selected cupon code. Ordered Item should be greater than 1000",
+                            text: "Failed to apply selected cupon code. Ordered Item should be greater than 1200",
                             icon: "error"
                         }
                     )
@@ -381,21 +428,34 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCo
                 }
             }
             else if(offer_name === 'FIRST30'){
-                if(amt > 1000){
-                    setAppliedOffer(offer_name);
-                    setOfferAmt(offer_val);
-                    Swal.fire(
-                        {
-                            title: "",
-                            text: "Offers applied successfully!",
-                            icon: "success"
-                        }
-                    )
+                const is_applied = isOfferApplied(offer_name);
+                if(is_applied === false){
+                    if(amt > 300){
+                        setAppliedOffer(offer_name);
+                        setOfferAmt(offer_val);
+                        Swal.fire(
+                            {
+                                title: "",
+                                text: "Offers applied successfully!",
+                                icon: "success"
+                            }
+                        )
+                    }else{
+                        Swal.fire(
+                            {
+                                title: "Failed!",
+                                text: "Failed to apply selected cupon code. Ordered Item should be greater than 300",
+                                icon: "error"
+                            }
+                        )
+                        setAppliedOffer('');
+                        setOfferAmt('');
+                    }
                 }else{
                     Swal.fire(
                         {
                             title: "Failed",
-                            text: "This Offers is applicable only for first Order for a user",
+                            text: "This Offer is applicable only for once for a user",
                             icon: "error"
                         }
                     )
@@ -418,10 +478,43 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCo
             )
         }
     }
+
+    function isOfferApplied(offer){
+        if(orderHistoryData.length > 0){
+            for(let i=0; i<orderHistoryData.length; i++){
+                if(orderHistoryData[i].cupon_code === offer){
+                    return true;
+                }
+            }
+            return false
+        }else{
+            return false
+        }
+    }
+    function getIntervalOfLastOffer(offer){
+        if(orderHistoryData.length > 0){
+            for(let i=0; i<orderHistoryData.length; i++){
+                if(orderHistoryData[i].cupon_code === offer){
+                    const get_order_date = new Date(orderHistoryData[i].created_at);
+                    // let time             = get_order_date.toLocaleTimeString();
+                    const current_date   = new Date()
+                    const get_interval   = (current_date.getTime() - get_order_date.getTime());
+                    const minute         = 1000 * 60;
+                    const hour           = minute * 60;
+                    const day            = hour * 24;
+                    let days             = Math.round(get_interval / day);
+                    return days;
+                }
+            }
+        }else{
+            return "false"
+        }
+        
+    }
     
     document.addEventListener('click', function(){
         closeAccordion();
-    })
+    });
 
     function closeAccordion(){
         let ele = document.querySelector("button.offers-check-btn-section");
@@ -617,23 +710,23 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCo
                                     <div id="applyOffersCollapse" className="accordion-collapse collapse offers-lists-section">
                                         <div className="offers-lists-body">
                                             <div className="avail-offer">
-                                                <p>Get Flat 30% OFF on your First Order above Rs. 100</p>
+                                                <p>Get Flat 30% OFF on your Order above Rs.300. Applicable only for one time</p>
                                                 <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="FIRST30" value="30">Claim</button>
                                             </div>
                                             <div className="avail-offer">
-                                                <p>Get Flat 20% OFF on any Fish Dish above Rs. 100</p>
+                                                <p>Get Flat 20% OFF on any Fish Dish above Rs. 350</p>
                                                 <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="FISH20" value="20">Claim</button>
                                             </div>
                                             <div className="avail-offer">
-                                                <p>Get Upto 30% OFF on Ice Cream and Sweets above Rs. 100</p>
+                                                <p>Get Upto 35% OFF on Ice Cream and Sweets above Rs. 400</p>
                                                 <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="DESSERT35" value="30">Claim</button>
                                             </div>
                                             <div className="avail-offer">
-                                                <p>Get FLAT 50% Off on order over RS. 1000 by this One time applicable offer.</p>
-                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="FAN50" value="50">Claim</button>
+                                                <p>Get FLAT 35% Off on order over RS.1200. Offer is applicable once per month.</p>
+                                                <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="FAN35" value="35">Claim</button>
                                             </div>
                                             <div className="avail-offer">
-                                                <p>Get Flat 25% OFF on Veg Dishes above Rs. 100</p>
+                                                <p>Get Flat 25% OFF on Veg Dishes above Rs. 400</p>
                                                 <button type="button" className="btn" onClick={(e)=>{selectOffers(e,totalCartCost())}} name="VEG25" value="25">Claim</button>
                                             </div>
                                         </div>
@@ -674,11 +767,21 @@ export default function ShowCartPage({addedCartItem, deleteCartItem, totalCartCo
                             </div>
                         </div>
                     </div>
-                    <div className="last-order-section">
-                        <h3>
-                            Last Ordered Items
-                        </h3>
-                    </div>
+                    {
+                        (orderHistoryData.length > 0)?
+                        <div className="last-order-section">
+                            <h3 className="gradient-bg">Last Ordered Items</h3>
+                            <LastOrderedItemCarousel orderHistoryData={orderHistoryData} addToCartFunction={addToCartFunction} addedCartItem = {addedCartItem}/>
+                        </div>
+                        :
+                        <div className="promo-banner-section">
+                            <picture>
+                                <source media="(min-width:768px)" srcSet="https://img.perceptpixel.com/pykhlszs/combo-banner.webp"/>
+                                <source media="(max-width:767.98px)" srcSet="https://img.perceptpixel.com/pykhlszs/combo-mob-banner.webp"/>
+                                <img src="https://img.perceptpixel.com/pykhlszs/combo-mob-banner.webp" alt="combo banners" style={{width:"100%", height:"auto"}}/>
+                            </picture>
+                        </div>
+                    }
                 </div>
                 <div className="order-slide slide-transition" active-slide={showOrderSlide}>
                     <div className="cancel-order-btn-section">
