@@ -71,7 +71,7 @@
   "rating": "4.2",
   "subtitle": "with 6 piece Paneer",
   "preptime": "20-30min",
-  "tags": "indian,side dish,veg,paneer manchurian",
+  "tags": "indian,side dish,veg,paneer manchurian,chinese",
   "price": 150
 },
 {
@@ -1353,7 +1353,7 @@
   },
   "name": "Cheese Omelette",
   "image": {
-    "img_one": "https://img.perceptpixel.com/pykhlszs/cheese-omelette.webp",
+    "img_one": "https://img.perceptpixel.com/pykhlszs/cheese_omelettewebp.webp",
     "img_two": ""
   },
   "description": "Fluffy, cheesy and delicious made with egg, butter, cheese, black pepper powder",
@@ -1363,7 +1363,7 @@
   "rating": "4.5",
   "subtitle": "with double egg",
   "preptime": "15-20min",
-  "tags": "american,starter,snacks,non veg,cheese omelette",
+  "tags": "american,starter,snacks,non veg,cheese omelette,egg,omlete",
   "price": 30
 },
 {
@@ -1410,7 +1410,7 @@
   },
   "name": "Fried Rice Combo",
   "image": {
-    "img_one": "https://img.perceptpixel.com/pykhlszs/fried-rice-chili-chicken.webp",
+    "img_one": "https://img.perceptpixel.com/pykhlszs/fried-rice-chili-chicken-combo.webp",
     "img_two": ""
   },
   "description": "mix veg fried rice with authentic chinese chili chicken",
@@ -1574,4 +1574,23 @@
   "preptime": "15-20min",
   "tags": "combos,sweet,dessert,veg,indian,gulab jamun,ice cream",
   "price": 50
+},
+{
+  "_id": {
+    "$oid": "66f278ce752d39df899ac743"
+  },
+  "name": "Chili Chicken",
+  "image": {
+    "img_one": "https://img.perceptpixel.com/pykhlszs/chili_chicken_gravy.webp",
+    "img_two": ""
+  },
+  "description": "Crispy fried chicken bites tossed in a super aromatic sweet, spicy and slightly tangy chili and tomato sauce",
+  "cuisine": "chinese",
+  "category": "non veg",
+  "quantity": "1",
+  "rating": "4.6",
+  "subtitle": "with 6 piece boneless chicken",
+  "preptime": "20-30min",
+  "tags": "side dish,non veg,chinese,chicken, chili chicken",
+  "price": 140
 }]

@@ -43,15 +43,13 @@ export default class Footer extends Component{
                     </div>
                 </div>
                 <div className="container-fluid copyright">
-                    <div className="row">
-                        <div className="col-sm-6">
-                        <p>© 2023 - All Rights with KrishMish</p>
+                    <div className="copyright-section">
+                        <div className="copyright-text">
+                            <span>© 2023 - All Rights with KrishMish</span>
                         </div>
-                        <div className="col-sm-6">
-                            <ul className="bottom_ul">
-                                <li><a className="footer-a-tag" href="/">www.krishmish.com</a></li>
-                                <li><a className="footer-a-tag" href="/">Site Map</a></li>
-                            </ul>
+                        <div className="copyright-email">
+                            <a className="footer-a-tag" href="/">www.krishmish.com / </a>
+                            <a className="footer-a-tag site-map-link" href="/">Site Map</a>
                         </div>
                     </div>
                 </div>

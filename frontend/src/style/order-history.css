@@ -4,7 +4,7 @@
 .each-order-section{
     background-color: #efe5f3;
     margin-bottom: 20px;
-    border-radius: 0px 0px 8px 8px;
+    border-radius: 8px;
 }
 .order-date-section{
     background-image: linear-gradient(45deg, #ffbb006b, #66ffb2a6);
@@ -17,6 +17,9 @@
     line-height: normal;
     padding: 4px 10px;
     text-align: left;
+    border-radius: 8px 8px 0px 0px;
+    display: flex;
+    justify-content: space-between;
 }
 .order-details-section{
     padding: 10px 10px 0px;
@@ -60,6 +63,12 @@
     color: white;
     border-radius: 4px;
 }
+.order-contact-num span{
+    background-color: #202020;
+    padding: 0px 5px;
+    color: white;
+    border-radius: 4px;
+}
 .delivery-order-address span{
     font-weight: 400;
     font-style: italic;
@@ -69,6 +78,7 @@
     border-right: 1px solid #bdbdbd;
     border-bottom: 1px solid #bdbdbd;
     padding: 0px 10px 10px;
+    border-radius: 0px 0px 8px 8px;
 }
 .view-ordered-items-btn-section{
     display: flex;
@@ -80,6 +90,7 @@
     color: black;
     font-size: 14px;
     font-weight: 500;
+    border-radius: 5px;
 }
 .view-ordered-items-btn-section p{
     margin-bottom: 0px;
@@ -96,7 +107,7 @@
 .order-item-section{
     padding: 6px;
     background-color: white;
-    border-radius: 8px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -147,12 +158,12 @@
 }
 .give-rating-star{
     display: flex;
-    gap: 8px;
+    gap: 10px;
     justify-content: left;
 }
 .rating-star-style{
     cursor: pointer;
-    font-size: 15px;
+    font-size: 16px;
 }
 @media(min-width:320px) and (max-width:767.98px){
     .order-history-banner{
