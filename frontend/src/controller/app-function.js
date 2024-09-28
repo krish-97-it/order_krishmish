@@ -28,6 +28,7 @@ export default function AppFunction(){
     const [loadUserData, setUserData]               =   useState([]);
     const [loginErrMssg, setLoginErrMssg]           =   useState('');
     const [userEmailId, updateuserEmailId]          =   useState('');
+    const [userReviews, updateUserReviews]          =   useState([]);
 
     const APIUrls                                   =   {
         "fetchFoodMenuAPIUrl" : Costant_Variables.SERVER_BASE_URL+'/getFoodMenu',
@@ -39,6 +40,7 @@ export default function AppFunction(){
         "fetchOrderHistory"   : Costant_Variables.SERVER_BASE_URL+'/orderhistory',
         "saveRatedItemApiUrl" : Costant_Variables.SERVER_BASE_URL+'/updateratings',
         "getRatedItemsUrl"    : Costant_Variables.SERVER_BASE_URL+'/getrateditems',
+        "getUserReviewsUrl"   : Costant_Variables.SERVER_BASE_URL+'/loadreviews',
     };
 
     function loadCuisineData(){
@@ -50,6 +52,13 @@ export default function AppFunction(){
         });
     }
 
+    function loadUserReviews(){
+        axios.get(APIUrls.getUserReviewsUrl).then((res) => {
+            updateUserReviews(res.data.data);
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
 
     function checkUserLogedIn(){
         // store cartItems to local storage, so that on page load Ites in cart are not deleted
@@ -67,6 +76,7 @@ export default function AppFunction(){
     useEffect(() => {
         loadCuisineData();
         checkUserLogedIn();
+        loadUserReviews();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -748,7 +758,7 @@ export default function AppFunction(){
                 <Route exact path="/" element={<Homepage getHomeCuisineName={getHomeCuisineName} randomComboItemList={randomComboItemList}/>}/>
                 <Route exact path="/cuisine" element={<Cuisine getItemList = {foodlist} getFilteredItemList={ getFilteredItemList } getInputCuisine={ getInputCuisine } getCuisineName={ cuisineData } getFoodName = {getFoodName} getFoodNameByCategory={getFoodNameByCategory} getSortFilterInput={getSortFilterInput} getTopPicsItemList = {cuisineData !== 'cuisines'? getTopPicsItemList : foodlist} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length} addToFavourite={addToFavourite} favouriteItems={favouriteItems}/>} />
                 <Route exact path="/special-combos" element={<CombosPage comboItemList={comboItemList} getHomeCuisineName={getHomeCuisineName} addToCartFunction={addItemToCart} addedCartItem = {cartItem} totalCartItem={cartItem.length}/>} />
-                <Route exact path="/reviews" element={<ReviewPage getItemList = {foodlist}/>} />
+                <Route exact path="/reviews" element={<ReviewPage getReviewList = {userReviews} loadUserData = {loadUserData} isUserLoggedIn={userLoggedIn}/>} />
                 <Route exact path="/mycart" element={<ShowCartPage addedCartItem = {cartItem} addToCartFunction={addItemToCart} deleteCartItem={deleteItemToCart} totalCartCost={totalCartCost} getTotalDiscountCost={getTotalDiscountCost} increaseItemQuantity={increaseItemQuantity} decreaseItemQuantity={decreaseItemQuantity} loadUserData = {loadUserData} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn} loadDeliveryAddress={loadDeliveryAddress} orderAddress={orderAddress} orderHistoryData={orderHistoryData} />} />
                 <Route exact path="/myprofile" element={<MyProfile loadUserDataFunction={loadUserDataFunction} loadUserData = {loadUserData} addToFavourite={addToFavourite} favouriteItems={favouriteItems} addToCartFunction={addItemToCart} addedCartItem = {cartItem} orderHistoryData={orderHistoryData}/>} />
                 <Route exact path="/myprofile/wishlist" element={<WishListPage addToCartFunction={addItemToCart} favouriteItems={favouriteItems} addToFavourite={addToFavourite} showItems={favouriteItems.length} parentClass={"wishlist-page-section"} openLoginModal={openLoginModal} userLoggedIn={userLoggedIn}/>} />

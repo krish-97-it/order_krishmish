@@ -53,6 +53,10 @@ const LoginForm = ({loadUserDataFunction})=> {
     const handlenewUserInput = (e) => {
         let ele         =   e.target.name;
         let ele_val     =   e.target.value;
+
+        if(ele === "emailId"){
+            ele_val = ele_val.toLowerCase();
+        }
         setNewUserData({...newUserData, [ele] : ele_val});
 
         if(ele === 'firstName'){
