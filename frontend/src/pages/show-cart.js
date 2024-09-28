@@ -285,7 +285,7 @@ export default function ShowCartPage({addedCartItem, addToCartFunction, deleteCa
             if(offer_name === 'FISH20'){
                 const ItemList     =   addedCartItem.filter((item) =>
                     item.product.tags.toLowerCase().includes('fish')
-                ) 
+                )
                 if(ItemList.length === addedCartItem.length){
                     if(amt > 350){
                         setAppliedOffer(offer_name);
@@ -359,7 +359,7 @@ export default function ShowCartPage({addedCartItem, addToCartFunction, deleteCa
             }else if(offer_name === 'DESSERT35'){
                 const ItemList     =   addedCartItem.filter((item) =>
                     item.product.tags.toLowerCase().includes('dessert')
-                ) 
+                )
                 if(ItemList.length === addedCartItem.length){
                     if(amt > 400){
                         setAppliedOffer(offer_name);
@@ -371,15 +371,17 @@ export default function ShowCartPage({addedCartItem, addToCartFunction, deleteCa
                                 icon: "success"
                             }
                         )
-                    }Swal.fire(
-                        {
-                            title: "Failed!",
-                            text: "Failed to apply selected cupon code. Ordered Item should be greater than 400",
-                            icon: "error"
-                        }
-                    )
-                    setAppliedOffer('');
-                    setOfferAmt('');
+                    }else{
+                        Swal.fire(
+                            {
+                                title: "Failed!",
+                                text: "Failed to apply selected cupon code. Ordered Item should be greater than 400",
+                                icon: "error"
+                            }
+                        )
+                        setAppliedOffer('');
+                        setOfferAmt('');
+                    }
                 }else{
                     Swal.fire(
                         {
