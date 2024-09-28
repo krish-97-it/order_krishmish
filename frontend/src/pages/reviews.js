@@ -1,95 +1,103 @@
-import React from "react";
-import Slider from "react-slick";
-import sadSvg from '../assets/sad-face-in-rounded-square-svgrepo-com.svg';
+import React, { useState } from "react";
+import GoToTop from "../components/go-to-top";
+import ReviewFormModal from "../components/review-form-modal";
 
+export default function ReviewPage({getReviewList, loadUserData, isUserLoggedIn}){
+	const NumberOfCardsPerLoad         = 12;
+	const [cardCount, updateCardCount] = useState(NumberOfCardsPerLoad);
+	function loadData(){
+		if(getReviewList.length > NumberOfCardsPerLoad && cardCount < getReviewList.length){
+			let loopLimit = cardCount + NumberOfCardsPerLoad;
+			if(((getReviewList.length - cardCount) < NumberOfCardsPerLoad)){
+				loopLimit   = getReviewList.length;
+			}
+			for(let i=cardCount; i<loopLimit; i++){
+				let div = document.createElement('div');
+				div.className   = 'card custom-card-width all-item-card review-card-section';
+				div.id          = 'item'+i;
+				div.key         = i;
+				const card_html =	'<div class="user-img-section">'+
+										'<img class="card-img-top review-user-img" src="'+getReviewList[i].profilepic+'" alt="Food Card"/>'+
+								  	'</div>'+
+								  	'<div class="card-body card-body-style">'+
+										'<h5 class="card-title all-item-card-title">'+getReviewList[i].firstname+' '+getReviewList[i].lastname+'<p>'+getReviewList[i].district+', '+getReviewList[i].state+'</p></h5>'+
+										'<p>'+getReviewList[i].comment+'</p>'+
+										'<p>'+getRatingHtml(getReviewList[i].rating)+'</p>'+
+								  	'</div>';
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+				div.innerHTML   = card_html;
+				document.getElementById('reviewSection').appendChild(div);
+			}
+			updateCardCount(loopLimit);
+		}
+	}
 
-export default function reviewPage({getItemList}){
+	function getRatingHtml(data){
+		let temp = '';
+		for(let j = 1; j<=5; j++){
+			if(j <= data){
+				temp += '<span class="rating-star-style" style="color: #eb9200">'+
+							'<i class="fa fa-star"></i>'+
+						'</span>';
+			}
+		}
+		return temp;
+	}
 
-    var settings = {
-        dots: false,
-        infinite: false,
-        // arrows: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        initialSlide: 0,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3,
-              infinite: true,
-              dots: true
-            }
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 2,
-              initialSlide: 2
-            }
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
-            }
-          }
-        ]
-    };
-  
-    return (
-      <div className="app-body">
-          <div className="main-content container">
-              <div className="error-page-msg-section">
-                  <div className="sad-face-icon" style={{backgroundColor:"white", paddingTop:"10px"}}>
-                      <img src={sadSvg} alt="error"/>
-                  </div>
-                  <h1>Working in Progress !!</h1>
-                  <h3>No reviews added yet</h3>
-                  {/* <div className="mt-2">
-                      <NavLink to="/" type="button" className="btn btn-primary">Go Back</NavLink>
-                  </div> */}
-              </div>
-          </div>
-      </div>
-      // <div className="slider-container" style={{margin:"62px 0px"}}>
-      //     {
-
-            //  {
-              // <Slider {...settings}>
-              // {
-              //     getItemList.map((item,index) => {
-              //         return (
-              //             <div className="" key={"offers-"+index}>
-              //                 <div className="card combo-item-card"> 
-              //                     {/* <a href="/" className="a-tag-style"> */}
-              //                         <img className="card-img-top img-w-100" src={item.image.img_one} alt="Food Card"/>
-              //                         <div className="card-body card-body-style">
-              //                             <h5 className="card-title">{item.name}<p>{item.subtitle}</p></h5>
-              //                             <div className="pos-bottom">
-              //                                 <div className="price-order">
-              //                                     <p>AT ₹{item.price}</p>
-              //                                     <p>{item.preptime}</p>
-              //                                     <a href="/" className="btn btn-primary">Add</a>
-              //                                 </div>
-              //                             </div>
-              //                         </div>
-              //                     {/* </a> */}
-              //                 </div>
-              //             </div>
-              //         )
-              //     })
-              // }
-              // </Slider>
-              // }
-      //     }       
-      // </div>
-    )
+	return (
+		<div className="app-body">
+			<div className="main-content mb-3" style={{marginTop:"61px"}}>
+				<ReviewFormModal loadUserData={loadUserData} isUserLoggedIn = {isUserLoggedIn}/>
+				<h3 className="gradient-bg no-border-radius">User Reviews</h3>
+				{
+					(getReviewList.length > 0)?
+						<div className="container-fluid">
+							<div id='reviewSection' className='review-card-container'>
+								{ 
+								getReviewList.map((data,index)=>{
+									return (
+										(index < 12)?
+										<div className="card custom-card-width all-item-card review-card-section" id={"item"+index} key={index}>
+											<div className="user-img-section"><img className="card-img-top review-user-img" src={data.profilepic} alt="Food Card"/></div>
+											<div className="card-body card-body-style">
+												<h5 className="card-title all-item-card-title">{data.firstname} {data.lastname} <p>{data.district}, {data.state}</p></h5>
+												<p className="">{data.comment}</p>
+												<p>
+													{
+														[1, 2, 3, 4, 5].map((star,index) => {
+															return(
+																(star <= data.rating)?
+																<span className='rating-star-style' key={index} style={{color: '#eb9200'}}>
+																	{/* ★ */}
+																	<i className="fa fa-star"></i>
+																</span>
+																:
+																<></>
+															)
+														})
+													}
+												</p>
+											</div>
+										</div>
+										:
+										<></>
+									)
+								})
+								}
+							</div>
+							<div>
+								<button className="btn load-more-data-btn" onClick={loadData}>Load more</button>
+							</div>
+						</div> 
+					:
+					<div className="container">
+						<p>
+						No Reviews Added Yet
+						</p>
+					</div>
+				}         
+			</div>
+			<GoToTop/>
+		</div>
+	)
 }

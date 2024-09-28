@@ -60,7 +60,8 @@ export default function LoginModal({showLoginModal, closeModal, formNextSlide, f
         }
     }
     function handleEmailIdChange(e){
-        const email_id      =   e.target.value;
+        let email_id      =   e.target.value;
+        email_id          =   email_id.toLowerCase();
         updateEmailId(email_id);
 
         let isLoginNumValid = ValidationFunctions.emailValidation("Email id",email_id);
