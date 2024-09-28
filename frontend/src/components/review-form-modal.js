@@ -168,7 +168,7 @@ const ReviewFormModal = ({loadUserData, isUserLoggedIn}) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="form-slide-two" active-slide={successSlide}>
+                        <div className="form-slide-two review-form-two-slide" active-slide={successSlide}>
                             <div className="modal-header">
                                 <button type="button" className="login-modal-close" data-bs-dismiss="modal">X</button>
                             </div>
