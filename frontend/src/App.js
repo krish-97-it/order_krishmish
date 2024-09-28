@@ -8,6 +8,7 @@ import './style/combo-page.css';
 import './style/user-profile.css';
 import './style/user-wishlist.css';
 import './style/order-history.css';
+import './style/review-page.css';
 import AppFunction from './controller/app-function';
 
 function App() {
